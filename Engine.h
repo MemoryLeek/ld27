@@ -3,7 +3,11 @@
 
 #include <QQmlEngine>
 
-class Engine : public QQmlEngine
+#include "Container.h"
+
+class Engine
+	: public QQmlEngine
+	, public Container
 {
 	public:
 		Engine();

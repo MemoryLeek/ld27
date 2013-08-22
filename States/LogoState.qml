@@ -1,12 +1,18 @@
 import QtQuick 2.0
+import MemoryLeek 1.0
 
-Rectangle
+LogoState
 {
-	anchors.fill: parent
+	focus: true
 
-	Text
+	Rectangle
 	{
-		anchors.centerIn: parent
-		text: "Logo"
+		anchors.fill: parent
+
+		Image
+		{
+			anchors.centerIn: parent
+			source: "../resources/logo.png"
+		}
 	}
 }
