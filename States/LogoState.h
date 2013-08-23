@@ -13,9 +13,11 @@ namespace States
 			LogoState();
 
 		private:
+			void timerEvent(QTimerEvent *) override;
 			void keyPressEvent(QKeyEvent *) override;
 
 			bool m_skipping;
+			int m_timerId;
 
 		private slots:
 			void skip();
