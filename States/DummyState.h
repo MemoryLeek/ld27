@@ -24,7 +24,9 @@ namespace States
 
 			void keyPressEvent(QKeyEvent *event) override;
 			void keyReleaseEvent(QKeyEvent *event) override;
+			void updatePlayerMovement();
 
+			QList<int> m_keyStates;
 			QElapsedTimer m_timer;
 			QSGSimpleRectNode *m_node;
 

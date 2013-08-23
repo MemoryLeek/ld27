@@ -2,6 +2,8 @@
 
 #include "DummyState.h"
 #include "QStringEx.h"
+#include "Key.h"
+#include "Direction.h"
 
 namespace States
 {
@@ -60,36 +62,30 @@ namespace States
 			{
 				case Qt::Key_W:
 				{
-					m_direction = -90;
-					m_velocity = 100;
-
+					m_keyStates << Key::KeyUp;
 					break;
 				}
 
 				case Qt::Key_S:
 				{
-					m_direction = 90;
-					m_velocity = 100;
-
+					m_keyStates << Key::KeyDown;
 					break;
 				}
 
 				case Qt::Key_A:
 				{
-					m_direction = -180;
-					m_velocity = 100;
-
+					m_keyStates << Key::KeyLeft;
 					break;
 				}
 
 				case Qt::Key_D:
 				{
-					m_direction = 0;
-					m_velocity = 100;
-
+					m_keyStates << Key::KeyRight;
 					break;
 				}
 			}
+
+			updatePlayerMovement();
 		}
 	}
 
@@ -100,16 +96,48 @@ namespace States
 			switch(event->key())
 			{
 				case Qt::Key_W:
+				{
+					m_keyStates.removeAll(Key::KeyUp);
+					break;
+				}
+
 				case Qt::Key_S:
+				{
+					m_keyStates.removeAll(Key::KeyDown);
+					break;
+				}
+
 				case Qt::Key_A:
+				{
+					m_keyStates.removeAll(Key::KeyLeft);
+					break;
+				}
+
 				case Qt::Key_D:
 				{
-					m_direction = 0;
-					m_velocity = 0;
-
+					m_keyStates.removeAll(Key::KeyRight);
 					break;
 				}
 			}
+
+			updatePlayerMovement();
+		}
+	}
+
+	void DummyState::updatePlayerMovement()
+	{
+		if(!m_keyStates.isEmpty())
+		{
+			const int key = m_keyStates.last();
+			const int direction = Direction::fromKey(key);
+
+			m_direction = direction;
+			m_velocity = 100;
+		}
+		else
+		{
+			m_direction = 0;
+			m_velocity = 0;
 		}
 	}
 }

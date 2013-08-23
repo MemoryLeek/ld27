@@ -5,7 +5,10 @@ SOURCES += \
     Window.cpp \
     Engine.cpp \
     States/LogoState.cpp \
-    States/DummyState.cpp
+	States/DummyState.cpp \
+	Key.cpp \
+	Direction.cpp \
+	KeyDirectionMapping.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -21,6 +24,9 @@ HEADERS += \
     State.h \
     QTimerEx.h \
 	Container.h \
-	VisualObject.h
+	VisualObject.h \
+	Key.h \
+	Direction.h \
+	KeyDirectionMapping.h
 
 QMAKE_CXXFLAGS += -std=gnu++11

@@ -17,8 +17,13 @@
 moc_*.cpp
 qrc_*.cpp
 Makefile
+Makefile.Debug
+Makefile.Release
 *-build-*
 
 # Project specific
 
 ld27
+ld27.exe
+object_script.ld27.Debug
+object_script.ld27.Release
