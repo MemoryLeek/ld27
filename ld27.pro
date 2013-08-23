@@ -8,7 +8,9 @@ SOURCES += \
 	States/DummyState.cpp \
 	Key.cpp \
 	Direction.cpp \
-	KeyDirectionMapping.cpp
+	KeyDirectionMapping.cpp \
+    Scene.cpp \
+    IDrawable.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -27,6 +29,9 @@ HEADERS += \
 	VisualObject.h \
 	Key.h \
 	Direction.h \
-	KeyDirectionMapping.h
+	KeyDirectionMapping.h \
+    Scene.h \
+	IDrawable.h \
+	QListEx.h
 
 QMAKE_CXXFLAGS += -std=gnu++11
