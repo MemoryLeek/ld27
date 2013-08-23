@@ -1,5 +1,12 @@
 QT += quick
 
+TARGET = ld27
+DESTDIR = bin
+
+OBJECTS_DIR = build
+MOC_DIR = build
+RCC_DIR = build
+
 SOURCES += \
     main.cpp \
     Window.cpp \
