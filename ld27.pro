@@ -21,7 +21,8 @@ SOURCES += \
     Sprite.cpp \
     States/GameState.cpp \
     AnimatedSprite.cpp \
-    States/MenuState.cpp
+    States/MenuState.cpp \
+    LocalImageProvider.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -49,6 +50,10 @@ HEADERS += \
     States/GameState.h \
     AnimatedSprite.h \
     States/MenuState.h \
-    MenuEntry.h
+    MenuEntry.h \
+    LocalImageProvider.h
 
 QMAKE_CXXFLAGS += -std=gnu++11
+
+RESOURCES += \
+    Resources.qrc

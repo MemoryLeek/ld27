@@ -5,12 +5,17 @@
 
 #include "Container.h"
 
+class LocalImageProvider;
+
 class Engine
 	: public QQmlEngine
 	, public Container
 {
 	public:
 		Engine();
+
+	private:
+		LocalImageProvider *m_localImageProvider;
 };
 
 #endif // ENGINE_H

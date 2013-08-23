@@ -11,10 +11,12 @@ int main(int argc, char **argv)
 	QGuiApplication application(argc, argv);
 
 	Engine engine;
-	QQmlComponent component(&engine, "Window.qml");
+
+	QUrl url("qrc:/QML/Window.qml");
+	QQmlComponent component(&engine, url);
 	QObject *object = component.create();
 
-//	QSurfaceFormat format = context.format();
+//	QSurfaceFormat format;
 //	format.setSwapBehavior(QSurfaceFormat::SingleBuffer);
 
 	Window *window = (Window *)object;

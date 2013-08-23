@@ -12,7 +12,7 @@ LogoState
 		Image
 		{
 			anchors.centerIn: parent
-			source: "../resources/logo.png"
+			source: "image://local/resources/logo.png"
 		}
 	}
 }

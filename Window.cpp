@@ -17,7 +17,7 @@ QString Window::activeState() const
 
 QStringList Window::availableStates() const
 {
-	QDir states("States");
+	QDir states(":/QML/States");
 	QStringList files = states.entryList(QStringList() << "*.qml");
 	QStringList results;
 
