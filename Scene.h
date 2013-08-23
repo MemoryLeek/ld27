@@ -6,7 +6,6 @@
 #include <QQuickWindow>
 
 #include "QListEx.h"
-#include "DrawableContainer.h"
 
 class IDrawable;
 
