@@ -4,24 +4,20 @@
 #include "QStringEx.h"
 #include "Key.h"
 #include "Direction.h"
+#include "Scene.h"
+#include "Sprite.h"
 
 namespace States
 {
 	DummyState::DummyState()
-		: m_x(0)
-		, m_y(0)
-		, m_direction(0)
-		, m_velocity(0)
-		, m_fpsTimer(0)
-		, m_lastFps(0)
 	{
-		m_node = new QSGSimpleRectNode();
-		m_node->setColor(Qt::red);
-		m_node->setRect(0, 0, 10, 10);
-
-		m_timer.start();
-
-		setFlag(QQuickItem::ItemHasContents);
+		m_x = 0;
+		m_y = 0;
+		m_direction = 0;
+		m_velocity = 0;
+		m_fpsTimer = 0;
+		m_lastFps = 0;
+		m_sprite = 0;
 	}
 
 	QString DummyState::fps() const
@@ -29,99 +25,96 @@ namespace States
 		return QStringEx::format("%1 FPS", m_lastFps);
 	}
 
-	QSGNode *DummyState::updatePaintNode(QSGNode *, QQuickItem::UpdatePaintNodeData *)
+	void DummyState::initialize(Scene *scene)
 	{
-		const float delta = m_timer.restart() / 1000.0f;
-		const float x = m_x + qCos(m_direction * M_PI / 180) * delta * m_velocity;
-		const float y = m_y + qSin(m_direction * M_PI / 180) * delta * m_velocity;
+		m_sprite = new Sprite("resources/medkit.png", scene);
+	}
 
-		m_node->setRect(m_x, m_y, 10, 10);
+	void DummyState::tick(long delta)
+	{
+		const float multiplier = delta / 1000.0f;
+		const float x = m_x + qCos(m_direction * M_PI / 180) * multiplier * m_velocity;
+		const float y = m_y + qSin(m_direction * M_PI / 180) * multiplier * m_velocity;
+
+		m_sprite->setX(x);
+		m_sprite->setY(y);
+
 		m_fps++;
 		m_x = x;
 		m_y = y;
 
-		if((m_fpsTimer += delta) >= 1)
+		if((m_fpsTimer += delta) >= 1000)
 		{
 			emit fpsChanged();
 
 			m_lastFps = m_fps;
-			m_fps = 0;
 			m_fpsTimer = 0;
-		}
-
-		update();
-
-		return m_node;
-	}
-
-	void DummyState::keyPressEvent(QKeyEvent *event)
-	{
-		if(!event->isAutoRepeat())
-		{
-			switch(event->key())
-			{
-				case Qt::Key_W:
-				{
-					m_keyStates << Key::KeyUp;
-					break;
-				}
-
-				case Qt::Key_S:
-				{
-					m_keyStates << Key::KeyDown;
-					break;
-				}
-
-				case Qt::Key_A:
-				{
-					m_keyStates << Key::KeyLeft;
-					break;
-				}
-
-				case Qt::Key_D:
-				{
-					m_keyStates << Key::KeyRight;
-					break;
-				}
-			}
-
-			updatePlayerMovement();
+			m_fps = 0;
 		}
 	}
 
-	void DummyState::keyReleaseEvent(QKeyEvent *event)
+	void DummyState::keyPressed(QKeyEvent *event)
 	{
-		if(!event->isAutoRepeat())
+		switch(event->key())
 		{
-			switch(event->key())
+			case Qt::Key_W:
 			{
-				case Qt::Key_W:
-				{
-					m_keyStates.removeAll(Key::KeyUp);
-					break;
-				}
-
-				case Qt::Key_S:
-				{
-					m_keyStates.removeAll(Key::KeyDown);
-					break;
-				}
-
-				case Qt::Key_A:
-				{
-					m_keyStates.removeAll(Key::KeyLeft);
-					break;
-				}
-
-				case Qt::Key_D:
-				{
-					m_keyStates.removeAll(Key::KeyRight);
-					break;
-				}
+				m_keyStates << Key::KeyUp;
+				break;
 			}
 
-			updatePlayerMovement();
+			case Qt::Key_S:
+			{
+				m_keyStates << Key::KeyDown;
+				break;
+			}
+
+			case Qt::Key_A:
+			{
+				m_keyStates << Key::KeyLeft;
+				break;
+			}
+
+			case Qt::Key_D:
+			{
+				m_keyStates << Key::KeyRight;
+				break;
+			}
 		}
+
+		updatePlayerMovement();
+	}
+
+	void DummyState::keyReleased(QKeyEvent *event)
+	{
+		switch(event->key())
+		{
+			case Qt::Key_W:
+			{
+				m_keyStates.removeAll(Key::KeyUp);
+				break;
+			}
+
+			case Qt::Key_S:
+			{
+				m_keyStates.removeAll(Key::KeyDown);
+				break;
+			}
+
+			case Qt::Key_A:
+			{
+				m_keyStates.removeAll(Key::KeyLeft);
+				break;
+			}
+
+			case Qt::Key_D:
+			{
+				m_keyStates.removeAll(Key::KeyRight);
+				break;
+			}
+		}
+
+		updatePlayerMovement();
 	}
 
 	void DummyState::updatePlayerMovement()

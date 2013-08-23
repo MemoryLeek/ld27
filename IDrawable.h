@@ -6,8 +6,10 @@
 
 class Scene;
 
-class IDrawable : public QSGSimpleTextureNode
+class IDrawable : private QSGSimpleTextureNode
 {
+	friend class Scene;
+
 	public:
 		IDrawable(Scene *scene);
 

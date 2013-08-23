@@ -1,4 +1,5 @@
 #include <QDir>
+#include <QOpenGLContext>
 
 #include "Window.h"
 #include "QStringEx.h"

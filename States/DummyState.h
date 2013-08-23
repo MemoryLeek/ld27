@@ -5,10 +5,14 @@
 #include <QElapsedTimer>
 
 #include "State.h"
+#include "GameState.h"
+
+class Scene;
+class Sprite;
 
 namespace States
 {
-	class DummyState : public State
+	class DummyState : public GameState
 	{
 		Q_OBJECT
 
@@ -20,15 +24,15 @@ namespace States
 			QString fps() const;
 
 		private:
-			QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *) override;
-
-			void keyPressEvent(QKeyEvent *event) override;
-			void keyReleaseEvent(QKeyEvent *event) override;
+			void initialize(Scene *scene) override;
+			void tick(long delta) override;
+			void keyPressed(QKeyEvent *event) override;
+			void keyReleased(QKeyEvent *event) override;
 			void updatePlayerMovement();
 
 			QList<int> m_keyStates;
-			QElapsedTimer m_timer;
-			QSGSimpleRectNode *m_node;
+
+			Sprite *m_sprite;
 
 			float m_x;
 			float m_y;

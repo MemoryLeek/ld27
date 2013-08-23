@@ -10,7 +10,9 @@ SOURCES += \
 	Direction.cpp \
 	KeyDirectionMapping.cpp \
     Scene.cpp \
-    IDrawable.cpp
+    IDrawable.cpp \
+    Sprite.cpp \
+    States/GameState.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -32,6 +34,8 @@ HEADERS += \
 	KeyDirectionMapping.h \
     Scene.h \
 	IDrawable.h \
-	QListEx.h
+	QListEx.h \
+    Sprite.h \
+    States/GameState.h
 
 QMAKE_CXXFLAGS += -std=gnu++11
