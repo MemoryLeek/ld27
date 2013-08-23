@@ -8,7 +8,7 @@
 #include "GameState.h"
 
 class Scene;
-class Sprite;
+class AnimatedSprite;
 
 namespace States
 {
@@ -32,7 +32,7 @@ namespace States
 
 			QList<int> m_keyStates;
 
-			Sprite *m_sprite;
+			AnimatedSprite *m_sprite;
 
 			float m_x;
 			float m_y;

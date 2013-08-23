@@ -5,7 +5,7 @@
 #include "Key.h"
 #include "Direction.h"
 #include "Scene.h"
-#include "Sprite.h"
+#include "AnimatedSprite.h"
 
 namespace States
 {
@@ -27,7 +27,7 @@ namespace States
 
 	void DummyState::initialize(Scene *scene)
 	{
-		m_sprite = new Sprite("resources/medkit.png", scene);
+		m_sprite = new AnimatedSprite("resources/lone-walking.gif", scene);
 	}
 
 	void DummyState::tick(long delta)
@@ -72,12 +72,16 @@ namespace States
 			case Qt::Key_A:
 			{
 				m_keyStates << Key::KeyLeft;
+				m_sprite->setFlipped(true);
+
 				break;
 			}
 
 			case Qt::Key_D:
 			{
 				m_keyStates << Key::KeyRight;
+				m_sprite->setFlipped(false);
+
 				break;
 			}
 		}

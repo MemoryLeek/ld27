@@ -16,7 +16,7 @@ class Sprite : public IDrawable
 
 		unsigned int drawingOrder() const override;
 
-		QSGTexture *texture() const override;
+		QSGTexture *texture() override;
 
 	private:
 		QSGTexture *m_texture;

@@ -34,7 +34,7 @@ unsigned int Sprite::drawingOrder() const
 	return 0;
 }
 
-QSGTexture *Sprite::texture() const
+QSGTexture *Sprite::texture()
 {
 	return m_texture;
 }

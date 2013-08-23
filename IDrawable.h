@@ -18,7 +18,7 @@ class IDrawable : private QSGSimpleTextureNode
 		virtual float x() const = 0;
 		virtual float y() const = 0;
 		virtual unsigned int drawingOrder() const = 0;
-		virtual QSGTexture *texture() const = 0;
+		virtual QSGTexture *texture() = 0;
 
 		static bool compare(IDrawable *d1, IDrawable *d2);
 

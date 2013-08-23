@@ -12,7 +12,8 @@ SOURCES += \
     Scene.cpp \
     IDrawable.cpp \
     Sprite.cpp \
-    States/GameState.cpp
+    States/GameState.cpp \
+    AnimatedSprite.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -36,6 +37,7 @@ HEADERS += \
 	IDrawable.h \
 	QListEx.h \
     Sprite.h \
-    States/GameState.h
+    States/GameState.h \
+    AnimatedSprite.h
 
 QMAKE_CXXFLAGS += -std=gnu++11
