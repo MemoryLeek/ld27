@@ -1,7 +1,7 @@
 #include "LogoState.h"
 #include "QTimerEx.h"
 
-#include "States/DummyState.h"
+#include "States/MenuState.h"
 
 namespace States
 {
@@ -23,6 +23,6 @@ namespace States
 	{
 		m_skipping = true;
 
-		changeState<States::DummyState>();
+		changeState<States::MenuState>();
 	}
 }
