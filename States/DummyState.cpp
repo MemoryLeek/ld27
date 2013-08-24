@@ -131,8 +131,16 @@ namespace States
 
 	void DummyState::joystickEvent(const JoystickEvent &event)
 	{
-		m_player->setDirection(event.getAxis().x() / abs(event.getAxis().x()));
-		m_player->setVelocity(abs(event.getAxis().x()));
+		if((m_lastJoystickEvent.buttons() & JoystickEvent::ButtonJump) != (event.buttons() & JoystickEvent::ButtonJump))
+		{
+			if(m_lastJoystickEvent.buttons() & JoystickEvent::ButtonJump)
+				m_player->jump();
+		}
+
+		m_player->setDirection(event.axis().x() / abs(event.axis().x()));
+		m_player->setVelocity(abs(event.axis().x()));
+
+		m_lastJoystickEvent = event;
 	}
 
 	void DummyState::updatePlayerMovement()
