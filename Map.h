@@ -6,19 +6,11 @@
 #include <QHash>
 #include <QImage>
 
-class CollisionMapEntry;
 class Scene;
 
 class Map : public IDrawable
 {
 	public:
-		enum LayerType
-		{
-			Background,
-			Foreground,
-			Collision
-		};
-
 		Map(Scene *scene);
 
 		float x() const;
@@ -28,11 +20,9 @@ class Map : public IDrawable
 
 		QSGTexture *texture();
 
-		void setBackground(const QImage &background);
-		void setForeground(const QImage &foreground);
-		void addCollisionMapEntry(CollisionMapEntry *entry);
-
 	private:
+		friend QDataStream &operator >>(QDataStream &stream, Map &map);
+
 		Scene *m_scene;
 
 		QImage m_foreground;

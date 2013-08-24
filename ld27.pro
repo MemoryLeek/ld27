@@ -31,12 +31,7 @@ SOURCES += \
     States/MainMenuState.cpp \
     States/SettingsMenuState.cpp \
     MapLoader.cpp \
-    Map.cpp \
-    CollisionMapAnalyzer.cpp \
-    CollisionMapAnalyzerResult.cpp \
-    CollisionMapEntry.cpp \
-    OuterBounds.cpp \
-    LookupResult.cpp
+	Map.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -75,11 +70,7 @@ HEADERS += \
     States/SettingsMenuState.h \
     MapLoader.h \
     Map.h \
-    CollisionMapAnalyzer.h \
-    CollisionMapAnalyzerResult.h \
-    CollisionMapEntry.h \
-    OuterBounds.h \
-    LookupResult.h
+    MapLoader.h
 
 QMAKE_CXXFLAGS += -std=gnu++11
 

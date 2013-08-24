@@ -1,7 +1,6 @@
 #include <QPainter>
 
 #include "Map.h"
-#include "CollisionMapEntry.h"
 #include "Scene.h"
 
 Map::Map(Scene *scene)
@@ -46,17 +45,11 @@ QSGTexture *Map::texture()
 	return m_texture;
 }
 
-void Map::setBackground(const QImage &background)
+QDataStream &operator >>(QDataStream &stream, Map &map)
 {
-	m_background = background;
-}
+	stream >> map.m_foreground;
+	stream >> map.m_background;
+	stream >> map.m_collidables;
 
-void Map::setForeground(const QImage &foreground)
-{
-	m_foreground = foreground;
-}
-
-void Map::addCollisionMapEntry(CollisionMapEntry *entry)
-{
-	m_collidables << entry->compile();
+	return stream;
 }

@@ -1,11 +1,6 @@
 #include "CollisionMapAnalyzerResult.h"
 #include "CollisionMapEntry.h"
 
-CollisionMapAnalyzerResult::CollisionMapAnalyzerResult()
-{
-
-}
-
 CollisionMapEntry *CollisionMapAnalyzerResult::find(const int x, const int y)
 {
 	const int offset = 5;

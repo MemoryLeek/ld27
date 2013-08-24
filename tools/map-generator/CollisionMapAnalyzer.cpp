@@ -2,11 +2,6 @@
 #include "CollisionMapAnalyzerResult.h"
 #include "CollisionMapEntry.h"
 
-CollisionMapAnalyzer::CollisionMapAnalyzer()
-{
-
-}
-
 CollisionMapAnalyzerResult CollisionMapAnalyzer::analyze(const QImage &image)
 {
 	CollisionMapAnalyzerResult result;

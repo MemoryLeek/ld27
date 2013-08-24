@@ -26,7 +26,7 @@ namespace States
 	void DummyState::initialize(Scene *scene)
 	{
 		MapLoader mapLoader(scene);
-		Map *map = mapLoader.load("resources/maps/1");
+		Map *map = mapLoader.load("resources/maps/1.map");
 
 		m_player = new Player(scene);
 

@@ -3,15 +3,8 @@
 #include "CollisionMapEntry.h"
 #include "LookupResult.h"
 
-CollisionMapEntry::CollisionMapEntry()
-{
-
-}
-
 void CollisionMapEntry::addPoint(const int x, const int y)
 {
-	m_topLeft.tryExtend(OuterBounds::TopLeft, x, y);
-	m_bottomRight.tryExtend(OuterBounds::BottomRight, x, y);
 	m_coordinates << Coordinate(x, y);
 }
 

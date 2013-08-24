@@ -9,8 +9,6 @@ class CollisionMapAnalyzerResult;
 class CollisionMapAnalyzer
 {
 	public:
-		CollisionMapAnalyzer();
-
 		CollisionMapAnalyzerResult analyze(const QImage &image);
 
 	private:

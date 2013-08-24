@@ -8,8 +8,6 @@
 class CollisionMapAnalyzerResult
 {
 	public:
-		CollisionMapAnalyzerResult();
-
 		CollisionMapEntry *find(const int x, const int y);
 		CollisionMapEntry *createEntry(const int x, const int y);
 
