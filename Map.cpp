@@ -7,6 +7,7 @@ Map::Map(Scene *scene)
 	: IDrawable(scene)
 {
 	m_scene = scene;
+	m_texture = 0;
 }
 
 float Map::x() const
