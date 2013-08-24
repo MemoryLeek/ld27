@@ -1,3 +1,5 @@
+#include "Scene.h"
+
 #include "Player.h"
 
 Player::Player(Scene *scene)
@@ -24,6 +26,10 @@ void Player::tick(const long delta)
 {
 	m_sprite.update(delta);
 	m_x += m_velocity * (delta / 1000.0f);
+
+	QSize playerSize = texture()->textureSize();
+	QPointF playerCenter(playerSize.width() / 2, playerSize.height() / 2);
+	m_scene->setCameraPosition(QPointF(m_x + playerCenter.x(), m_y + playerCenter.y()));
 }
 
 void Player::setVelocity(const float velocity)

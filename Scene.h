@@ -19,6 +19,8 @@ class Scene : public QSGNode
 		QSGTexture *createTexture(const QImage &image);
 		QSGTexture *createTexture(const QString &filename);
 
+		void setCameraPosition(const QPointF &position);
+
 	private:
 		void add(IDrawable *drawable);
 		void remove(IDrawable *drawable);
@@ -28,6 +30,8 @@ class Scene : public QSGNode
 		QQuickWindow *m_window;
 
 		bool m_dirty;
+
+		QPointF m_cameraPosition;
 };
 
 #endif // SCENE_H

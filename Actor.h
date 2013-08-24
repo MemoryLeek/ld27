@@ -26,11 +26,10 @@ class Actor : public IDrawable
 			Falling
 		};
 
+		Scene *m_scene;
+
 		SpriteBundle m_sprite;
 		bool m_flipped;
-
-	private:
-		Scene *m_scene;
 };
 
 #endif // ACTOR_H

@@ -6,6 +6,7 @@ Scene::Scene(QQuickWindow *window)
 	, m_dirty(false)
 {
 	setFlag(QSGNode::UsePreprocess);
+	setCameraPosition(QPointF(0, 0));
 }
 
 QSGTexture *Scene::createTexture(const QImage &image)
@@ -19,6 +20,12 @@ QSGTexture *Scene::createTexture(const QString &filename)
 	QSGTexture *texture = createTexture(image);
 
 	return texture;
+}
+
+void Scene::setCameraPosition(const QPointF &position)
+{
+	QPointF windowCenter(m_window->width() / 2, m_window->height() / 2);
+	m_cameraPosition = position - windowCenter;
 }
 
 void Scene::add(IDrawable *drawable)
@@ -47,9 +54,10 @@ void Scene::preprocess()
 	for(IDrawable *drawable : m_drawables)
 	{
 		QSGTexture *texture = drawable->texture();
-		QPoint position(drawable->x(), drawable->y());
+		QPointF position(drawable->x(), drawable->y());
+		position -= m_cameraPosition;
 		QSize size = texture->textureSize();
-		QRect rect(position, size);
+		QRectF rect(position, size);
 
 		QSGSimpleTextureNode *node = (QSGSimpleTextureNode *)drawable;
 		node->setRect(rect);
