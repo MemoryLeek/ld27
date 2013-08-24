@@ -8,9 +8,7 @@
 #include "MutableSpriteBundle.h"
 #include "QStringEx.h"
 
-#include "shared/Sprite.h"
-
-MutableSprite foo(const QString &filename)
+MutableSprite process(const QString &filename)
 {
 	qDebug() << QStringEx::format("Processing file %1", filename);
 
@@ -60,7 +58,7 @@ int main(int argc, char **argv)
 				foreach(const QString &filename, fileList)
 				{
 					const QString path = QStringEx::format("%1/%2", folder, filename);
-					const MutableSprite sprite = foo(path);
+					const MutableSprite sprite = process(path);
 
 					if(sprite.isValid())
 					{
@@ -71,7 +69,7 @@ int main(int argc, char **argv)
 			else
 			{
 				const QString filename = arguments[2];
-				const MutableSprite sprite = foo(filename);
+				const MutableSprite sprite = process(filename);
 
 				spriteBundle.addSprite(sprite);
 			}

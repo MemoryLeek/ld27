@@ -27,7 +27,6 @@ class SpriteBundle
 		QList<Sprite> m_sprites;
 
 	private:
-		friend QDataStream &operator <<(QDataStream &stream, const SpriteBundle &bundle);
 		friend QDataStream &operator >>(QDataStream &stream, SpriteBundle &bundle);
 
 		int m_index;

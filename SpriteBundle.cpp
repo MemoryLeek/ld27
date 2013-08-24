@@ -37,13 +37,6 @@ int SpriteBundle::imageIndex() const
 	return m_index;
 }
 
-QDataStream &operator <<(QDataStream &stream, const SpriteBundle &bundle)
-{
-	stream << bundle.m_sprites;
-
-	return stream;
-}
-
 QDataStream &operator >>(QDataStream &stream, SpriteBundle &bundle)
 {
 	stream >> bundle.m_sprites;

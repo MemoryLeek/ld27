@@ -23,7 +23,6 @@ class Sprite
 	private:
 		QSGTexture *createTexture(Scene *scene, const int index, const bool flipped);
 
-		friend QDataStream &operator <<(QDataStream &stream, const Sprite &sprite);
 		friend QDataStream &operator >>(QDataStream &stream, Sprite &sprite);
 
 		QList<QImage> m_frames;

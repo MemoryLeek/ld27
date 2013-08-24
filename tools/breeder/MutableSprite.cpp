@@ -14,3 +14,11 @@ bool MutableSprite::isValid() const
 {
 	return !m_frames.isEmpty();
 }
+
+QDataStream &operator <<(QDataStream &stream, const MutableSprite &sprite)
+{
+	stream << sprite.m_delay;
+	stream << sprite.m_frames;
+
+	return stream;
+}

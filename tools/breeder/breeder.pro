@@ -9,3 +9,5 @@ INCLUDEPATH += .
 # Input
 HEADERS += MutableSprite.h MutableSpriteBundle.h QStringEx.h
 SOURCES += main.cpp MutableSprite.cpp MutableSpriteBundle.cpp
+
+QMAKE_CXXFLAGS += -std=gnu++11

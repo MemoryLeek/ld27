@@ -1,14 +1,19 @@
 #ifndef MUTABLESPRITEBUNDLE_H
 #define MUTABLESPRITEBUNDLE_H
 
-#include "shared/SpriteBundle.h"
+#include "MutableSprite.h"
 
-class MutableSpriteBundle : public SpriteBundle
+class MutableSpriteBundle
 {
 	public:
 		MutableSpriteBundle();
 
-		void addSprite(const Sprite sprite);
+		void addSprite(const MutableSprite sprite);
+
+	private:
+		friend QDataStream &operator <<(QDataStream &stream, const MutableSpriteBundle &bundle);
+
+		QList<MutableSprite> m_sprites;
 };
 
 #endif // MUTABLESPRITEBUNDLE_H

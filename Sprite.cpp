@@ -52,14 +52,6 @@ QSGTexture *Sprite::createTexture(Scene *scene, const int index, const bool flip
 		.value();
 }
 
-QDataStream &operator <<(QDataStream &stream, const Sprite &sprite)
-{
-	stream << sprite.m_delay;
-	stream << sprite.m_frames;
-
-	return stream;
-}
-
 QDataStream &operator >>(QDataStream &stream, Sprite &sprite)
 {
 	stream >> sprite.m_delay;
