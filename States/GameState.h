@@ -3,6 +3,10 @@
 
 #include <QElapsedTimer>
 
+#include <SDL2/SDL_joystick.h>
+
+#include "JoystickEvent.h"
+
 #include "State.h"
 
 class Scene;
@@ -20,6 +24,7 @@ namespace States
 			virtual void tick(long delta) = 0;
 			virtual void keyPressed(QKeyEvent *event) = 0;
 			virtual void keyReleased(QKeyEvent *event) = 0;
+			virtual void joystickEvent(const JoystickEvent &event) = 0;
 
 		private:
 			QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *) override;
@@ -29,6 +34,9 @@ namespace States
 
 			QElapsedTimer m_timer;
 			Scene *m_scene;
+
+			SDL_Joystick *m_joystick;
+			JoystickEvent m_lastJoystickEvent;
 	};
 }
 

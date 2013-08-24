@@ -32,7 +32,8 @@ SOURCES += \
     States/SettingsMenuState.cpp \
     MapLoader.cpp \
 	Map.cpp \
-    MapSurface.cpp
+	MapSurface.cpp \
+    JoystickEvent.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -72,7 +73,10 @@ HEADERS += \
     MapLoader.h \
     Map.h \
     MapLoader.h \
-    MapSurface.h
+	MapSurface.h \
+    JoystickEvent.h
+
+LIBS += -lSDL2
 
 QMAKE_CXXFLAGS += -std=gnu++11
 

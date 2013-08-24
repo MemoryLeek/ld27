@@ -129,6 +129,11 @@ namespace States
 //		updatePlayerMovement();
 	}
 
+	void DummyState::joystickEvent(const JoystickEvent &event)
+	{
+		m_player->setVelocity(event.getAxis().x());
+	}
+
 	void DummyState::updatePlayerMovement()
 	{
 //		if(!m_keyStates.isEmpty())

@@ -29,6 +29,7 @@ namespace States
 			void tick(long delta) override;
 			void keyPressed(QKeyEvent *event) override;
 			void keyReleased(QKeyEvent *event) override;
+			void joystickEvent(const JoystickEvent &event) override;
 			void updatePlayerMovement();
 
 			QList<int> m_keyStates;

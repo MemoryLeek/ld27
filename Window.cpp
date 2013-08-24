@@ -1,6 +1,8 @@
 #include <QDir>
 #include <QOpenGLContext>
 
+#include <SDL2/SDL.h>
+
 #include "Window.h"
 #include "QStringEx.h"
 
@@ -39,4 +41,6 @@ void Window::setActiveState(const QString &activeState)
 void Window::initialize()
 {
 	registerComponent(this);
+
+	SDL_Init(SDL_INIT_JOYSTICK);
 }

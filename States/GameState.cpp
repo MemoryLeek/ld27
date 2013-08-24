@@ -1,3 +1,5 @@
+#include <SDL2/SDL.h>
+
 #include "GameState.h"
 #include "Window.h"
 #include "Scene.h"
@@ -8,6 +10,7 @@ namespace States
 	{
 		m_scene = 0;
 		m_timer.start();
+		m_joystick = NULL;
 
 		setFlag(QQuickItem::ItemHasContents);
 	}
@@ -26,6 +29,12 @@ namespace States
 
 			m_scene = scene;
 
+			if(SDL_NumJoysticks() > 0)
+			{
+				qDebug() << "Opening joystick 0";
+				m_joystick = SDL_JoystickOpen(0);
+			}
+
 			initialize(m_scene);
 			update();
 		}
@@ -34,6 +43,36 @@ namespace States
 			m_scene->markDirty(QSGNode::DirtyForceUpdate);
 
 			const long delta = m_timer.restart();
+
+			if(m_joystick)
+			{
+				SDL_JoystickUpdate();
+				float x = SDL_JoystickGetAxis(m_joystick, 0) / 300.f;
+				float y = SDL_JoystickGetAxis(m_joystick, 1) / 300.f;
+
+				// Deadzone
+				if(x > -10 && x < 10)
+					x = 0;
+				if(y > -10 && y < 10)
+					y = 0;
+
+				// Limits
+				if(x > 100)
+					x = 100;
+				if(x < -100)
+					x = -100;
+				if(y > 100)
+					y = 100;
+				if(y < -100)
+					y = -100;
+
+				JoystickEvent jsEvent(QVector2D(x, y));
+				if(jsEvent != m_lastJoystickEvent)
+				{
+					joystickEvent(jsEvent);
+					m_lastJoystickEvent = jsEvent;
+				}
+			}
 
 			tick(delta);
 			update();
