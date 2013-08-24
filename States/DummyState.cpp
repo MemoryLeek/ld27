@@ -6,6 +6,7 @@
 #include "Direction.h"
 #include "Scene.h"
 #include "Player.h"
+#include "Bot.h"
 
 namespace States
 {
@@ -24,11 +25,15 @@ namespace States
 	void DummyState::initialize(Scene *scene)
 	{
 		m_player = new Player(scene);
+		m_bots.append(new Bot(QPolygon(QVector<QPoint>({QPoint(100, 0), QPoint(300, 0), QPoint(500, 200)})), scene));
+		m_bots.append(new Bot(QPolygon(QVector<QPoint>({QPoint(500, 400), QPoint(200, 400)})), scene));
 	}
 
 	void DummyState::tick(long delta)
 	{
 		m_player->tick(delta);
+		for(Bot *bot : m_bots)
+			bot->tick(delta);
 		m_fps++;
 
 		if((m_fpsTimer += delta) >= 1000)

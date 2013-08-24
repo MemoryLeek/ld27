@@ -9,6 +9,7 @@
 
 class Scene;
 class Player;
+class Bot;
 
 namespace States
 {
@@ -33,6 +34,7 @@ namespace States
 			QList<int> m_keyStates;
 
 			Player *m_player;
+			QVector<Bot*> m_bots;
 
 			float m_fpsTimer;
 			float m_fps;

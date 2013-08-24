@@ -25,7 +25,8 @@ SOURCES += \
     LocalImageProvider.cpp \
     Actor.cpp \
     Player.cpp \
-    SpriteLoader.cpp
+    SpriteLoader.cpp \
+    Bot.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -57,7 +58,8 @@ HEADERS += \
     LocalImageProvider.h \
     Actor.h \
     Player.h \
-    SpriteLoader.h
+    SpriteLoader.h \
+    Bot.h
 
 QMAKE_CXXFLAGS += -std=gnu++11
 
