@@ -36,11 +36,10 @@ void Scene::setCameraPosition(const QPointF &position, Map *map)
 	if(!map)
 		return;
 
-	QSize mapSize = map->texture()->textureSize();
-	if(m_cameraPosition.x() + m_window->width() > mapSize.width())
-		m_cameraPosition.setX(mapSize.width() - m_window->width());
-	if(m_cameraPosition.y() + m_window->height() > mapSize.height())
-		m_cameraPosition.setY(mapSize.height() - m_window->height());
+	if(m_cameraPosition.x() + m_window->width() > map->width())
+		m_cameraPosition.setX(map->width() - m_window->width());
+	if(m_cameraPosition.y() + m_window->height() > map->height())
+		m_cameraPosition.setY(map->height() - m_window->height());
 }
 
 void Scene::add(IDrawable *drawable)
@@ -64,6 +63,13 @@ void Scene::preprocess()
 	{
 		m_drawables.sort(&IDrawable::compare);
 		m_dirty = false;
+
+		removeAllChildNodes();
+
+		for(IDrawable *drawable : m_drawables)
+		{
+			appendChildNode(drawable);
+		}
 	}
 
 	for(IDrawable *drawable : m_drawables)

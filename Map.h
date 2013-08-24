@@ -7,28 +7,27 @@
 #include <QImage>
 
 class Scene;
+class MapSurface;
 
-class Map : public IDrawable
+class Map
 {
 	public:
-		Map(Scene *scene);
+		void initialize(Scene *scene);
 
-		float x() const;
-		float y() const;
+		int width() const;
+		int height() const;
 
-		unsigned int drawingOrder() const;
-
-		QSGTexture *texture();
+		bool isCollidable(const int x, const int y);
 
 	private:
 		friend QDataStream &operator >>(QDataStream &stream, Map &map);
 
-		Scene *m_scene;
+		MapSurface *m_backgroundSurface;
+		MapSurface *m_foregroundSurface;
 
 		QImage m_foreground;
 		QImage m_background;
 		QList<QPoint> m_collidables;
-		QSGTexture *m_texture;
 };
 
 #endif // MAP_H

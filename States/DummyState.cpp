@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Bot.h"
 #include "MapLoader.h"
+#include "Map.h"
 
 namespace States
 {
@@ -27,6 +28,7 @@ namespace States
 	{
 		MapLoader mapLoader(scene);
 		Map *map = mapLoader.load("resources/maps/1.map");
+		map->initialize(scene);
 
 		m_player = new Player(map, scene);
 
@@ -71,15 +73,21 @@ namespace States
 
 			case Qt::Key_A:
 			{
-				m_player->setVelocity(-100);
+				m_player->setDirection(-1);
 //				m_keyStates << Key::KeyLeft;
 				break;
 			}
 
 			case Qt::Key_D:
 			{
-				m_player->setVelocity(100);
+				m_player->setDirection(1);
 //				m_keyStates << Key::KeyRight;
+				break;
+			}
+
+			case Qt::Key_Space:
+			{
+				m_player->jump();
 				break;
 			}
 		}
@@ -105,14 +113,14 @@ namespace States
 
 			case Qt::Key_A:
 			{
-				m_player->setVelocity(0);
+				m_player->setDirection(0);
 //				m_keyStates.removeAll(Key::KeyLeft);
 				break;
 			}
 
 			case Qt::Key_D:
 			{
-				m_player->setVelocity(0);
+				m_player->setDirection(0);
 //				m_keyStates.removeAll(Key::KeyRight);
 				break;
 			}

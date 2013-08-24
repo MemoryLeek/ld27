@@ -31,7 +31,8 @@ SOURCES += \
     States/MainMenuState.cpp \
     States/SettingsMenuState.cpp \
     MapLoader.cpp \
-	Map.cpp
+	Map.cpp \
+    MapSurface.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -70,7 +71,8 @@ HEADERS += \
     States/SettingsMenuState.h \
     MapLoader.h \
     Map.h \
-    MapLoader.h
+    MapLoader.h \
+    MapSurface.h
 
 QMAKE_CXXFLAGS += -std=gnu++11
 

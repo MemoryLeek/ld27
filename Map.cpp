@@ -2,50 +2,42 @@
 
 #include "Map.h"
 #include "Scene.h"
+#include "MapSurface.h"
 
-Map::Map(Scene *scene)
-	: IDrawable(scene)
+void Map::initialize(Scene *scene)
 {
-	m_scene = scene;
-	m_texture = 0;
-}
+	m_backgroundSurface = new MapSurface(MapSurface::Background, m_background, scene);
+	m_foregroundSurface = new MapSurface(MapSurface::Foreground, m_foreground, scene);
 
-float Map::x() const
-{
-	return 0;
-}
+	QSize size = m_background.size();
+	QImage foo(size, QImage::Format_ARGB32);
+	QPainter painter(&foo);
 
-float Map::y() const
-{
-	return 0;
-}
-
-unsigned int Map::drawingOrder() const
-{
-	return 0;
-}
-
-QSGTexture *Map::texture()
-{
-	if(!m_texture)
+	for(const QPoint &point : m_collidables)
 	{
-		QSize size = m_background.size();
-		QImage image(size, QImage::Format_ARGB32);
-		QPainter painter(&image);
-
-		painter.drawImage(0, 0, m_background);
-
-		for(const QPoint &point : m_collidables)
-		{
-			painter.setBrush(Qt::red);
-			painter.setPen(Qt::red);
-			painter.drawPoint(point);
-		}
-
-		m_texture = m_scene->createTexture(image);
+		painter.setPen(Qt::red);
+		painter.setBrush(Qt::red);
+		painter.drawPoint(point);
 	}
 
-	return m_texture;
+	new MapSurface(MapSurface::Foreground, foo, scene);
+}
+
+int Map::width() const
+{
+	return m_background.width();
+}
+
+int Map::height() const
+{
+	return m_background.height();
+}
+
+bool Map::isCollidable(const int x, const int y)
+{
+	QPoint p(x, y);
+
+	return m_collidables.contains(p);
 }
 
 QDataStream &operator >>(QDataStream &stream, Map &map)

@@ -15,7 +15,7 @@ Map *MapLoader::load(const QString &filename)
 
 	if(file.open(QIODevice::ReadOnly))
 	{
-		Map *map = new Map(m_scene);
+		Map *map = new Map();
 
 		QDataStream stream(&file);
 		stream >> *map;
