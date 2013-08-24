@@ -79,6 +79,7 @@ HEADERS += \
 LIBS += -lSDL2
 
 QMAKE_CXXFLAGS += -std=gnu++11
+QMAKE_LFLAGS += -static-libgcc -static-libstdc++
 
 RESOURCES += \
     Resources.qrc
