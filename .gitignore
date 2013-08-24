@@ -24,6 +24,7 @@ Makefile.Release
 # Project specific
 
 ld27
-ld27.exe
+ld27.tar.gz
+ld27.zip
 object_script.ld27.Debug
 object_script.ld27.Release
