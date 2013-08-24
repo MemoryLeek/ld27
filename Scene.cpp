@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "IDrawable.h"
+#include "Map.h"
 
 Scene::Scene(QQuickWindow *window)
 	: m_window(window)
@@ -22,10 +23,24 @@ QSGTexture *Scene::createTexture(const QString &filename)
 	return texture;
 }
 
-void Scene::setCameraPosition(const QPointF &position)
+void Scene::setCameraPosition(const QPointF &position, Map *map)
 {
 	QPointF windowCenter(m_window->width() / 2, m_window->height() / 2);
 	m_cameraPosition = position - windowCenter;
+
+	if(m_cameraPosition.x() < 0)
+		m_cameraPosition.setX(0);
+	if(m_cameraPosition.y() < 0)
+		m_cameraPosition.setY(0);
+
+	if(!map)
+		return;
+
+	QSize mapSize = map->texture()->textureSize();
+	if(m_cameraPosition.x() + m_window->width() > mapSize.width())
+		m_cameraPosition.setX(mapSize.width() - m_window->width());
+	if(m_cameraPosition.y() + m_window->height() > mapSize.height())
+		m_cameraPosition.setY(mapSize.height() - m_window->height());
 }
 
 void Scene::add(IDrawable *drawable)

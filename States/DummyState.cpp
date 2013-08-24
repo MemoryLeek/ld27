@@ -28,7 +28,7 @@ namespace States
 		MapLoader mapLoader(scene);
 		Map *map = mapLoader.load("resources/maps/1.map");
 
-		m_player = new Player(scene);
+		m_player = new Player(map, scene);
 
 		m_bots.append(new Bot(QPolygon(QVector<QPoint>({QPoint(100, 0), QPoint(300, 0), QPoint(500, 200)})), scene));
 		m_bots.last()->addPlayerTracking(m_player);

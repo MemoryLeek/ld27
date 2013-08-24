@@ -8,6 +8,7 @@
 #include "QListEx.h"
 
 class IDrawable;
+class Map;
 
 class Scene : public QSGNode
 {
@@ -19,7 +20,7 @@ class Scene : public QSGNode
 		QSGTexture *createTexture(const QImage &image);
 		QSGTexture *createTexture(const QString &filename);
 
-		void setCameraPosition(const QPointF &position);
+		void setCameraPosition(const QPointF &position, Map *map = NULL);
 
 	private:
 		void add(IDrawable *drawable);

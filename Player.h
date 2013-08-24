@@ -3,10 +3,12 @@
 
 #include "Actor.h"
 
+class Map;
+
 class Player : public Actor
 {
 	public:
-		Player(Scene *scene);
+		Player(Map *map, Scene *scene);
 
 		float x() const override;
 		float y() const override;
@@ -20,6 +22,8 @@ class Player : public Actor
 		float m_lastVelocity;
 		float m_x;
 		float m_y;
+
+		Map *m_map;
 };
 
 #endif // PLAYER_H
