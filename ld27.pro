@@ -12,17 +12,20 @@ SOURCES += \
     Window.cpp \
     Engine.cpp \
     States/LogoState.cpp \
-	States/DummyState.cpp \
-	Key.cpp \
-	Direction.cpp \
-	KeyDirectionMapping.cpp \
+    States/DummyState.cpp \
+    Key.cpp \
+    Direction.cpp \
+    KeyDirectionMapping.cpp \
     Scene.cpp \
     IDrawable.cpp \
     Sprite.cpp \
+    SpriteBundle.cpp \
     States/GameState.cpp \
-    AnimatedSprite.cpp \
     States/MenuState.cpp \
-    LocalImageProvider.cpp
+    LocalImageProvider.cpp \
+    Actor.cpp \
+    Player.cpp \
+    SpriteLoader.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -47,11 +50,14 @@ HEADERS += \
 	IDrawable.h \
 	QListEx.h \
     Sprite.h \
+    SpriteBundle.h \
     States/GameState.h \
-    AnimatedSprite.h \
     States/MenuState.h \
     MenuEntry.h \
-    LocalImageProvider.h
+    LocalImageProvider.h \
+    Actor.h \
+    Player.h \
+    SpriteLoader.h
 
 QMAKE_CXXFLAGS += -std=gnu++11
 

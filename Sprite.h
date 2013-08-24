@@ -1,28 +1,36 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include "IDrawable.h"
+#include <QImage>
+#include <QDataStream>
+#include <QSGTexture>
+#include <QHash>
 
-class Sprite : public IDrawable
+class Scene;
+
+class Sprite
 {
 	public:
-		Sprite(const QString &filename, Scene *scene);
+		Sprite();
 
-		float x() const override;
-		void setX(const float x);
+		void update(const int delta);
 
-		float y() const override;
-		void setY(const float y);
+		QSGTexture *currentFrame(Scene *scene, const bool flipped);
 
-		unsigned int drawingOrder() const override;
-
-		QSGTexture *texture() override;
+		float delay() const;
+		int frameCount() const;
 
 	private:
-		QSGTexture *m_texture;
+		QSGTexture *createTexture(Scene *scene, const int index, const bool flipped);
 
-		float m_x;
-		float m_y;
+		friend QDataStream &operator <<(QDataStream &stream, const Sprite &sprite);
+		friend QDataStream &operator >>(QDataStream &stream, Sprite &sprite);
+
+		QList<QImage> m_frames;
+		QHash<int, QSGTexture *> m_textures;
+
+		float m_delay;
+		float m_index;
 };
 
 #endif // SPRITE_H
