@@ -33,6 +33,8 @@ QSGTexture *Map::texture()
 		QImage image(size, QImage::Format_ARGB32);
 		QPainter painter(&image);
 
+		painter.drawImage(0, 0, m_background);
+
 		for(const QPoint &point : m_collidables)
 		{
 			painter.setBrush(Qt::red);
@@ -48,8 +50,8 @@ QSGTexture *Map::texture()
 
 QDataStream &operator >>(QDataStream &stream, Map &map)
 {
-	stream >> map.m_foreground;
 	stream >> map.m_background;
+	stream >> map.m_foreground;
 	stream >> map.m_collidables;
 
 	return stream;

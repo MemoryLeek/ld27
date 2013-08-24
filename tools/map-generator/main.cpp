@@ -2,6 +2,7 @@
 #include <QStringList>
 #include <QDataStream>
 #include <QFile>
+#include <QDebug>
 
 #include "MapLoader.h"
 #include "Map.h"
@@ -25,6 +26,10 @@ int main(int argc, char **argv)
 
 			QDataStream stream(&outputFile);
 			stream << map;
+		}
+		else
+		{
+			qDebug() << "Could not open output file for writing";
 		}
 	}
 

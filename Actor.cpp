@@ -14,7 +14,7 @@ Actor::Actor(const QString &filename, Scene *scene)
 
 unsigned int Actor::drawingOrder() const
 {
-	return 0;
+	return 1;
 }
 
 QSGTexture *Actor::texture()
