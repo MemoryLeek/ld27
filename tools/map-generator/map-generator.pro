@@ -21,6 +21,8 @@ HEADERS += MapLoader.h \
 	CollisionMapEntry.h \
 	LookupResult.h \
 	Map.h \
-	QStringEx.h
+	QStringEx.h \
+	QListEx.h \
+    Utilities.h
 
 QMAKE_CXXFLAGS += -std=gnu++11

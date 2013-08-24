@@ -25,7 +25,9 @@ class Map
 
 		QImage m_foreground;
 		QImage m_background;
+
 		QList<QPoint> m_collidables;
+		QList<QPolygon> m_paths;
 };
 
 #endif // MAP_H

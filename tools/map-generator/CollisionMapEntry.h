@@ -5,16 +5,26 @@
 #include <QPair>
 #include <QSet>
 
-using Coordinate = QPair<unsigned int, unsigned int>;
+#include "Utilities.h"
 
 class CollisionMapEntry
 {
 	public:
+		enum EntryType
+		{
+			Collision = 4294901760,
+			Path = 4278255360
+		};
+
+		CollisionMapEntry(EntryType type);
+
 		void addPoint(const int x, const int y);
 
-		QList<QPoint> compile();
+		EntryType type() const;
+		QList<QPoint> compile() const;
 
 	private:
+		EntryType m_type;
 		QSet<Coordinate> m_coordinates;
 };
 

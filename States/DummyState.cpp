@@ -32,10 +32,17 @@ namespace States
 
 		m_player = new Player(map, scene);
 
-		m_bots.append(new Bot(QPolygon(QVector<QPoint>({QPoint(100, 0), QPoint(300, 0), QPoint(500, 200)})), scene));
-		m_bots.last()->addPlayerTracking(m_player);
-		m_bots.append(new Bot(QPolygon(QVector<QPoint>({QPoint(500, 400), QPoint(200, 400)})), scene));
-		m_bots.last()->addPlayerTracking(m_player);
+		const QList<QPolygon> &paths = map->paths();
+
+		for(const QPolygon &path : paths)
+		{
+			qDebug() << "path";
+
+			Bot *bot = new Bot(path, scene);
+			bot->addPlayerTracking(m_player);
+
+			m_bots << bot;
+		}
 	}
 
 	void DummyState::tick(long delta)
