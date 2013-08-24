@@ -6,8 +6,6 @@
 
 #include "OuterBounds.h"
 
-const int OFFSET = 10;
-
 using Coordinate = QPair<unsigned int, unsigned int>;
 
 class CollisionMapEntry
@@ -17,11 +15,9 @@ class CollisionMapEntry
 
 		void addPoint(const int x, const int y);
 
-		QPolygon compile();
+		QList<QPoint> compile();
 
 	private:
-		QPoint findPoint(const QRect &rect);
-
 		QSet<Coordinate> m_coordinates;
 
 		OuterBounds m_topLeft;

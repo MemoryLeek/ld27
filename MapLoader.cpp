@@ -7,8 +7,9 @@
 #include <QDir>
 #include <QDebug>
 
-MapLoader::MapLoader()
+MapLoader::MapLoader(Scene *scene)
 {
+	m_scene = scene;
 	m_fileNameLayerMap =
 	{
 		{ "collision.png", Map::Collision },
@@ -17,12 +18,12 @@ MapLoader::MapLoader()
 	};
 }
 
-Map MapLoader::load(const QString &folder)
+Map *MapLoader::load(const QString &folder)
 {
 	QDir dir(folder);
 	QStringList fileList = dir.entryList(QStringList() << "*.png");
 
-	Map map;
+	Map *map = new Map(m_scene);
 
 	for(const QString &file : fileList)
 	{
@@ -34,13 +35,13 @@ Map MapLoader::load(const QString &folder)
 		{
 			case Map::Background:
 			{
-				map.setBackground(image);
+				map->setBackground(image);
 				break;
 			}
 
 			case Map::Foreground:
 			{
-				map.setForeground(image);
+				map->setForeground(image);
 				break;
 			}
 
@@ -55,7 +56,7 @@ Map MapLoader::load(const QString &folder)
 
 				for(CollisionMapEntry *entry : entries)
 				{
-					map.addCollisionMapEntry(entry);
+					map->addCollisionMapEntry(entry);
 				}
 
 				break;

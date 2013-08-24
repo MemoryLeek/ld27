@@ -8,9 +8,12 @@ CollisionMapAnalyzerResult::CollisionMapAnalyzerResult()
 
 CollisionMapEntry *CollisionMapAnalyzerResult::find(const int x, const int y)
 {
-	for(int xr = x - OFFSET; xr < x + OFFSET; xr++)
+	const int offset = 5;
+	const int size = offset * 2;
+
+	for(int xr = x - offset; xr < x + size; xr++)
 	{
-		for(int yr = y - OFFSET; yr < y + OFFSET; yr++)
+		for(int yr = y - offset; yr < y + size; yr++)
 		{
 			Coordinate query(xr, yr);
 			Coordinate coordinate(x, y);

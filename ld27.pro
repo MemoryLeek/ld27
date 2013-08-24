@@ -26,7 +26,7 @@ SOURCES += \
     Actor.cpp \
     Player.cpp \
     SpriteLoader.cpp \
-    VisionConeDrawable.cpp
+	VisionConeDrawable.cpp \
 	Bot.cpp \
     States/MainMenuState.cpp \
     States/SettingsMenuState.cpp \
@@ -69,7 +69,7 @@ HEADERS += \
     Actor.h \
     Player.h \
     SpriteLoader.h \
-    VisionConeDrawable.h
+	VisionConeDrawable.h \
 	Bot.h \
     States/MainMenuState.h \
     States/SettingsMenuState.h \

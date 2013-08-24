@@ -9,11 +9,12 @@
 class MapLoader
 {
 	public:
-		MapLoader();
+		MapLoader(Scene *scene);
 
-		Map load(const QString &baseName);
+		Map *load(const QString &baseName);
 
 	private:
+		Scene *m_scene;
 		QHash<QString, Map::LayerType> m_fileNameLayerMap;
 };
 
