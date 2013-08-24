@@ -3,13 +3,12 @@
 #include "Bot.h"
 
 Bot::Bot(const QPolygon &path, Scene *scene)
-	: Actor("resources/player.spb", scene),
+	: Actor("resources/guard.spb", scene),
 	  m_path(path),
 	  m_movingForward(true),
 	  m_visionCone(this, scene)
 {
 	reloadPath();
-	m_sprite.setImageIndex(Walking);
 }
 
 float Bot::x() const

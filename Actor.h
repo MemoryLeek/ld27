@@ -18,14 +18,6 @@ class Actor : public IDrawable
 		bool isFlipped() const;
 
 	protected:
-		enum ImageStates
-		{
-			Idle,
-			Walking,
-			Jumping,
-			Falling
-		};
-
 		Scene *m_scene;
 
 		SpriteBundle m_sprite;

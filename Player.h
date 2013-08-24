@@ -20,11 +20,21 @@ class Player : public Actor
 		void jump();
 
 	private:
+		enum ImageStates
+		{
+			Idle,
+			Walking,
+			Jumping,
+			Falling,
+			Clinging
+		};
+
 		float m_xVelocity;
 		float m_yVelocity;
 		float m_xThrust;
 		float m_yThrust;
 		float m_lastDirection;
+
 		float m_x;
 		float m_y;
 
