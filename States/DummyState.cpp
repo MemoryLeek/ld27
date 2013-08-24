@@ -131,7 +131,8 @@ namespace States
 
 	void DummyState::joystickEvent(const JoystickEvent &event)
 	{
-		m_player->setVelocity(event.getAxis().x());
+		m_player->setDirection(event.getAxis().x() / abs(event.getAxis().x()));
+		m_player->setVelocity(abs(event.getAxis().x()));
 	}
 
 	void DummyState::updatePlayerMovement()
