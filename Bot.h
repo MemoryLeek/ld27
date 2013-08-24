@@ -1,7 +1,11 @@
 #ifndef BOT_H
 #define BOT_H
 
+#include "VisionConeDrawable.h"
+
 #include "Actor.h"
+
+class Player;
 
 class Bot : public Actor
 {
@@ -13,6 +17,8 @@ class Bot : public Actor
 
 		void tick(const long delta) override;
 
+		void addPlayerTracking(Player *player);
+
 	private:
 		void reloadPath(bool reverse = false);
 
@@ -20,6 +26,9 @@ class Bot : public Actor
 		QVector<QLineF> m_workPath;
 
 		bool m_movingForward;
+
+		VisionConeDrawable m_visionCone;
+		QVector<Player*> m_trackedPlayers;
 };
 
 #endif // BOT_H

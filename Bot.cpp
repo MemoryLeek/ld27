@@ -1,9 +1,12 @@
+#include "Player.h"
+
 #include "Bot.h"
 
 Bot::Bot(const QPolygon &path, Scene *scene)
 	: Actor("resources/player.spb", scene),
 	  m_path(path),
-	  m_movingForward(true)
+	  m_movingForward(true),
+	  m_visionCone(this, scene)
 {
 	reloadPath();
 	m_sprite.setImageIndex(Walking);
@@ -42,6 +45,18 @@ void Bot::tick(const long delta)
 		m_movingForward = !m_movingForward;
 		reloadPath(!m_movingForward);
 	}
+
+	for(Player *player : m_trackedPlayers)
+	{
+		if(m_visionCone.containsActor(*player))
+			qDebug() << "PLAYER SEEN!";
+	}
+}
+
+void Bot::addPlayerTracking(Player *player)
+{
+	Q_ASSERT(!m_trackedPlayers.contains(player));
+	m_trackedPlayers.append(player);
 }
 
 void Bot::reloadPath(bool reverse)

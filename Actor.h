@@ -15,6 +15,8 @@ class Actor : public IDrawable
 
 		virtual void tick(const long delta) = 0;
 
+		bool isFlipped() const;
+
 	protected:
 		enum ImageStates
 		{

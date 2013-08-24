@@ -21,3 +21,8 @@ QSGTexture *Actor::texture()
 {
 	return m_sprite.currentImage(m_scene, m_flipped);
 }
+
+bool Actor::isFlipped() const
+{
+	return m_flipped;
+}

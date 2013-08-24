@@ -26,7 +26,8 @@ SOURCES += \
     Actor.cpp \
     Player.cpp \
     SpriteLoader.cpp \
-    Bot.cpp
+    Bot.cpp \
+    VisionConeDrawable.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -59,7 +60,8 @@ HEADERS += \
     Actor.h \
     Player.h \
     SpriteLoader.h \
-    Bot.h
+    Bot.h \
+    VisionConeDrawable.h
 
 QMAKE_CXXFLAGS += -std=gnu++11
 

@@ -25,8 +25,11 @@ namespace States
 	void DummyState::initialize(Scene *scene)
 	{
 		m_player = new Player(scene);
+
 		m_bots.append(new Bot(QPolygon(QVector<QPoint>({QPoint(100, 0), QPoint(300, 0), QPoint(500, 200)})), scene));
+		m_bots.last()->addPlayerTracking(m_player);
 		m_bots.append(new Bot(QPolygon(QVector<QPoint>({QPoint(500, 400), QPoint(200, 400)})), scene));
+		m_bots.last()->addPlayerTracking(m_player);
 	}
 
 	void DummyState::tick(long delta)
