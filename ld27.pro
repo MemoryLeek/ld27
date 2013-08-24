@@ -26,8 +26,17 @@ SOURCES += \
     Actor.cpp \
     Player.cpp \
     SpriteLoader.cpp \
-    Bot.cpp \
     VisionConeDrawable.cpp
+	Bot.cpp \
+    States/MainMenuState.cpp \
+    States/SettingsMenuState.cpp \
+    MapLoader.cpp \
+    Map.cpp \
+    CollisionMapAnalyzer.cpp \
+    CollisionMapAnalyzerResult.cpp \
+    CollisionMapEntry.cpp \
+    OuterBounds.cpp \
+    LookupResult.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -60,8 +69,17 @@ HEADERS += \
     Actor.h \
     Player.h \
     SpriteLoader.h \
-    Bot.h \
     VisionConeDrawable.h
+	Bot.h \
+    States/MainMenuState.h \
+    States/SettingsMenuState.h \
+    MapLoader.h \
+    Map.h \
+    CollisionMapAnalyzer.h \
+    CollisionMapAnalyzerResult.h \
+    CollisionMapEntry.h \
+    OuterBounds.h \
+    LookupResult.h
 
 QMAKE_CXXFLAGS += -std=gnu++11
 

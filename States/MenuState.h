@@ -15,16 +15,13 @@ namespace States
 		public:
 			MenuState();
 
-			QList<QObject *> entries();
+			virtual QList<QObject *> entries() = 0;
+
 			int selectedIndex() const;
 
 		private:
 			void keyPressEvent(QKeyEvent *event) override;
 
-			void start();
-			void quit();
-
-			QList<QObject *> m_entries;
 			int m_selectedIndex;
 
 		signals:

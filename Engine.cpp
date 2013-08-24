@@ -5,7 +5,7 @@
 #include "LocalImageProvider.h"
 
 #include "States/LogoState.h"
-#include "States/MenuState.h"
+#include "States/MainMenuState.h"
 #include "States/DummyState.h"
 
 Engine::Engine()
@@ -15,7 +15,7 @@ Engine::Engine()
 	// Registration of QML types
 	qmlRegisterType<Window>("MemoryLeek", 1, 0, "Window");
 	qmlRegisterType<States::LogoState>("MemoryLeek", 1, 0, "LogoState");
-	qmlRegisterType<States::MenuState>("MemoryLeek", 1, 0, "MenuState");
+	qmlRegisterType<States::MainMenuState>("MemoryLeek", 1, 0, "MenuState");
 	qmlRegisterType<States::DummyState>("MemoryLeek", 1, 0, "DummyState");
 
 	// Registration of image providers

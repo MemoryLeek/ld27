@@ -1,26 +1,11 @@
-#include <QGuiApplication>
-
 #include "MenuState.h"
 #include "MenuEntry.h"
-
-#include "States/DummyState.h"
 
 namespace States
 {
 	MenuState::MenuState()
 	{
 		m_selectedIndex = 0;
-		m_entries =
-		{
-			new MenuEntry<MenuState>("Start", this, &MenuState::start),
-			new MenuEntry<MenuState>("Dummy entry (Segfault)", this, 0),
-			new MenuEntry<MenuState>("Quit", this, &MenuState::quit)
-		};
-	}
-
-	QList<QObject *> MenuState::entries()
-	{
-		return m_entries;
 	}
 
 	int MenuState::selectedIndex() const
@@ -32,7 +17,9 @@ namespace States
 	{
 		if(!event->isAutoRepeat())
 		{
-			const int count = m_entries.count();
+			QList<QObject *> list = entries();
+
+			const int count = list.count();
 			const int max = count - 1;
 
 			switch(event->key())
@@ -67,7 +54,9 @@ namespace States
 
 				case Qt::Key_Return:
 				{
-					QObject *object = m_entries[m_selectedIndex];
+					QList<QObject *> list = entries();
+					QObject *object = list[m_selectedIndex];
+
 					IMenuEntry *entry = (IMenuEntry *)object;
 					entry->invoke();
 
@@ -77,15 +66,5 @@ namespace States
 
 			emit selectedIndexChanged();
 		}
-	}
-
-	void MenuState::start()
-	{
-		changeState<States::DummyState>();
-	}
-
-	void MenuState::quit()
-	{
-		qApp->quit();
 	}
 }
