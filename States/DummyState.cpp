@@ -14,9 +14,10 @@ namespace States
 {
 	DummyState::DummyState()
 	{
+		m_player = 0;
 		m_fpsTimer = 0;
 		m_lastFps = 0;
-		m_player = 0;
+		m_reverseTime = false;
 	}
 
 	QString DummyState::fps() const
@@ -47,6 +48,9 @@ namespace States
 
 	void DummyState::tick(long delta)
 	{
+		if(m_reverseTime)
+			delta = -delta;
+
 		m_player->tick(delta);
 		for(Bot *bot : m_bots)
 			bot->tick(delta);
@@ -97,6 +101,12 @@ namespace States
 				m_player->jump();
 				break;
 			}
+
+			case Qt::Key_Control:
+			{
+				m_reverseTime = true;
+				break;
+			}
 		}
 
 //		updatePlayerMovement();
@@ -129,6 +139,12 @@ namespace States
 			{
 				m_player->setDirection(0);
 //				m_keyStates.removeAll(Key::KeyRight);
+				break;
+			}
+
+			case Qt::Key_Control:
+			{
+				m_reverseTime = false;
 				break;
 			}
 		}

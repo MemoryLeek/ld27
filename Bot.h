@@ -20,10 +20,9 @@ class Bot : public Actor
 		void addPlayerTracking(Player *player);
 
 	private:
-		void reloadPath(bool reverse = false);
-
-		const QPolygon m_path;
-		QVector<QLineF> m_workPath;
+		QVector<QLineF> m_path;
+		uint m_currentLine;
+		qreal m_positionInLine;
 
 		bool m_movingForward;
 

@@ -42,6 +42,8 @@ namespace States
 			float m_fps;
 			float m_lastFps;
 
+			bool m_reverseTime;
+
 		signals:
 			void fpsChanged();
 	};

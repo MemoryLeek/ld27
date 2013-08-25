@@ -21,9 +21,10 @@ QSGTexture *Sprite::currentFrame(Scene *scene, const bool flipped)
 	const int i = m_index;
 	const int count = m_frames.count();
 	const int index = i <= count ? i : 0;
-	const int identifier = index + count * flipped;
+	const int foo = index < 0 ? count - 1 : index;
+	const int identifier = foo + count * flipped;
 
-	return m_textures.value(identifier) ?: createTexture(scene, index, flipped);
+	return m_textures.value(identifier) ?: createTexture(scene, foo, flipped);
 }
 
 float Sprite::delay() const

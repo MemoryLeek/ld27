@@ -4,45 +4,70 @@
 
 Bot::Bot(const QPolygon &path, Scene *scene)
 	: Actor("resources/guard.spb", scene),
-	  m_path(path),
+	  m_currentLine(0),
+	  m_positionInLine(0),
 	  m_movingForward(true),
 	  m_visionCone(this, scene)
 {
-	reloadPath();
+	for(int i = 0; i < path.count() - 1; i++)
+		m_workPath.append(QLineF(path.at(i), path.at(i + 1)));
 }
 
 float Bot::x() const
 {
-	return m_workPath.last().x2();
+	return m_workPath.at(m_currentLine).pointAt(m_positionInLine).x();
 }
 
 float Bot::y() const
 {
-	return m_workPath.last().y2();
+	return m_workPath.at(m_currentLine).pointAt(m_positionInLine).y();
 }
 
 void Bot::tick(const long delta)
 {
 	m_sprite.update(delta);
+	m_flipped = m_movingForward;
 
 	qreal movement = 100.0f * (delta / 1000.0f);
+	if(!m_movingForward)
+		movement = -movement;
 
-	QLineF &currentLine = m_workPath.last();
-	if(currentLine.length() - movement > 0)
+	QLineF currentLine = m_workPath.at(m_currentLine);
+	if(m_positionInLine + movement / currentLine.length() >= 0 && m_positionInLine + movement / currentLine.length() <= 1) // On-line movement
 	{
-		currentLine.setLength(currentLine.length() - movement);
+		m_positionInLine += movement / currentLine.length();
 	}
-	else if(m_workPath.count() > 1)
+	else // Line transition
 	{
-		movement -= currentLine.length();
-		m_workPath.removeLast();
-		currentLine = m_workPath.last();
-		currentLine.setLength(currentLine.length() - movement);
-	}
-	else
-	{
-		m_movingForward = !m_movingForward;
-		reloadPath(!m_movingForward);
+		if(m_positionInLine + movement / currentLine.length() >= 1) // Next line in sequence
+		{
+			qDebug() << "Move to next line, at line" << m_currentLine;
+			if(m_currentLine + 1 < m_workPath.count())
+			{
+				m_currentLine++;
+				m_positionInLine = 0;
+			}
+			else
+			{
+				m_movingForward = !m_movingForward;
+			}
+		}
+		else if(m_positionInLine + movement / currentLine.length() <= 0) // Previous line in sequence
+		{
+			qDebug() << "Move to previous line, at line" << m_currentLine;
+			if(m_currentLine > 0)
+			{
+				m_currentLine--;
+				m_positionInLine = 1;
+			}
+			else
+			{
+				m_movingForward = !m_movingForward;
+			}
+		}
+
+		movement -= movement * (movement / currentLine.length());
+		m_positionInLine += movement / currentLine.length();
 	}
 
 	for(Player *player : m_trackedPlayers)
@@ -56,22 +81,4 @@ void Bot::addPlayerTracking(Player *player)
 {
 	Q_ASSERT(!m_trackedPlayers.contains(player));
 	m_trackedPlayers.append(player);
-}
-
-void Bot::reloadPath(bool reverse)
-{
-	m_workPath.clear();
-
-	if(reverse)
-	{
-		for(int i = m_path.count() - 1; i > 0; i--)
-			m_workPath.append(QLineF(m_path.at(i), m_path.at(i - 1)));
-	}
-	else
-	{
-		for(int i = 0; i < m_path.count() - 1; i++)
-			m_workPath.append(QLineF(m_path.at(i), m_path.at(i + 1)));
-	}
-
-	m_flipped = (m_workPath.last().x1() < m_workPath.last().x2()) ? true : false;
 }
