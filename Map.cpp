@@ -13,11 +13,18 @@ void Map::initialize(Scene *scene)
 	QImage foo(size, QImage::Format_ARGB32);
 	QPainter painter(&foo);
 
-	for(const QPolygon &polygon : m_collidables)
+	for(const Collidable &collidable : m_collidables)
 	{
+		const QPolygonF &polygon = collidable.polygon();
+		const QRect &boundingBox = collidable.boundingBox();
+
 		painter.setPen(Qt::red);
 		painter.setBrush(Qt::NoBrush);
 		painter.drawPolygon(polygon);
+
+		painter.setPen(Qt::green);
+		painter.setBrush(Qt::NoBrush);
+		painter.drawRect(boundingBox);
 	}
 
 	QLine spawnLine(m_spawn.x(), 0, m_spawn.x(), size.height());
@@ -71,7 +78,7 @@ int Map::height() const
 	return m_background.height();
 }
 
-QList<QPolygon> Map::collidables() const
+QList<Collidable> Map::collidables() const
 {
 	return m_collidables;
 }

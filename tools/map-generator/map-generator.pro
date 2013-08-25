@@ -13,7 +13,8 @@ SOURCES += main.cpp \
 	CollisionMapAnalyzerResult.cpp \
 	CollisionMapEntry.cpp \
 	LookupResult.cpp \
-	Map.cpp
+	Map.cpp \
+    Collidable.cpp
 
 HEADERS += MapLoader.h \
 	CollisionMapAnalyzer.h \
@@ -23,6 +24,7 @@ HEADERS += MapLoader.h \
 	Map.h \
 	QStringEx.h \
 	QListEx.h \
-    Utilities.h
+    Utilities.h \
+    Collidable.h
 
 QMAKE_CXXFLAGS += -std=gnu++11

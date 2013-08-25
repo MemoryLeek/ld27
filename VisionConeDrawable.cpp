@@ -82,9 +82,11 @@ bool VisionConeDrawable::containsActor(Actor &actor)
 		for(int len = 50; len < rayLength; len += 10)
 		{
 			ray.setLength(len);
-			for(const QPolygonF &collidable : m_map->collidables())
+			for(const Collidable &collidable : m_map->collidables())
 			{
-				if(collidable.containsPoint(ray.p2(), Qt::OddEvenFill))
+				const QPolygonF &polygon = collidable.polygon();
+
+				if(polygon.containsPoint(ray.p2(), Qt::OddEvenFill))
 				{
 					rayHitWall = true;
 					break;

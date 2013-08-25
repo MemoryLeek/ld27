@@ -2,6 +2,7 @@
 #define MAP_H
 
 #include "IDrawable.h"
+#include "Collidable.h"
 
 #include <QHash>
 #include <QImage>
@@ -17,7 +18,7 @@ class Map
 		int width() const;
 		int height() const;
 
-		QList<QPolygon> collidables() const;
+		QList<Collidable> collidables() const;
 		QList<QPolygon> paths() const;
 
 		QPoint spawnPoint() const;
@@ -31,7 +32,7 @@ class Map
 		QImage m_foreground;
 		QImage m_background;
 
-		QList<QPolygon> m_collidables;
+		QList<Collidable> m_collidables;
 		QList<QPolygon> m_paths;
 
 		QPoint m_spawn;

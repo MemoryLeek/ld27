@@ -60,19 +60,21 @@ void Player::tick(const long delta)
 	m_scene->setCameraPosition(cameraPosition, m_map);
 
 	m_isOnGround = false;
-	for(const QPolygonF &collidable : m_map->collidables())
+	for(const Collidable &collidable : m_map->collidables())
 	{
+		const QPolygonF &polygon = collidable.polygon();
+
 		// Check bottom collision
 		for(int i = m_x + 6; i < m_x + playerSize.width() - 6; i++)
 		{
-			while(collidable.containsPoint(QPointF(i, y + playerSize.height() - 2), Qt::OddEvenFill))
+			while(polygon.containsPoint(QPointF(i, y + playerSize.height() - 2), Qt::OddEvenFill))
 			{
 				y--;
 				if(m_yVelocity > 0)
 					m_yVelocity = 0;
 			}
 
-			if(collidable.containsPoint(QPointF(i, y + playerSize.height() - 1), Qt::OddEvenFill))
+			if(!m_isOnGround && polygon.containsPoint(QPointF(i, y + playerSize.height() - 1), Qt::OddEvenFill))
 			{
 				m_isOnGround = true;
 			}
@@ -81,7 +83,7 @@ void Player::tick(const long delta)
 		// Check left collision
 		for(int i = y + 6; i < y + playerSize.height() - 6; i++)
 		{
-			while(collidable.containsPoint(QPointF(x + 4, i), Qt::OddEvenFill))
+			while(polygon.containsPoint(QPointF(x + 4, i), Qt::OddEvenFill))
 			{
 				x++;
 			}
@@ -90,7 +92,7 @@ void Player::tick(const long delta)
 		// Check right collision
 		for(int i = y + 6; i < y + playerSize.height() - 6; i++)
 		{
-			while(collidable.containsPoint(QPointF(x + playerSize.width() - 4, i), Qt::OddEvenFill))
+			while(polygon.containsPoint(QPointF(x + playerSize.width() - 4, i), Qt::OddEvenFill))
 			{
 				x--;
 			}
@@ -99,7 +101,7 @@ void Player::tick(const long delta)
 		// Check top collision
 		for(int i = x + 6; i < x + playerSize.width() - 6; i++)
 		{
-			while(collidable.containsPoint(QPointF(i, y + 1), Qt::OddEvenFill))
+			while(polygon.containsPoint(QPointF(i, y + 1), Qt::OddEvenFill))
 			{
 				y++;
 				m_yVelocity = 100;
@@ -164,7 +166,7 @@ void Player::jump()
 
 	m_jumpSound.play();
 	m_yThrust = -1;
-	m_yVelocity = 300;
+	m_yVelocity = 315;
 }
 
 void Player::respawn()

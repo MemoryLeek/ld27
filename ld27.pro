@@ -33,7 +33,8 @@ SOURCES += \
     MapLoader.cpp \
 	Map.cpp \
 	MapSurface.cpp \
-    JoystickEvent.cpp
+    JoystickEvent.cpp \
+    Collidable.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -74,7 +75,8 @@ HEADERS += \
     Map.h \
     MapLoader.h \
 	MapSurface.h \
-    JoystickEvent.h
+    JoystickEvent.h \
+    Collidable.h
 
 LIBS += -lSDL2
 

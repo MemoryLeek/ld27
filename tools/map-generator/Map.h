@@ -5,6 +5,7 @@
 #include <QImage>
 
 #include "Utilities.h"
+#include "Collidable.h"
 
 class CollisionMapEntry;
 
@@ -28,7 +29,7 @@ class Map
 		QImage m_foreground;
 		QImage m_background;
 
-		QList<QPolygon> m_collidables;
+		QList<Collidable> m_collidables;
 		QList<QPolygon> m_paths;
 
 		QPoint m_spawn;
