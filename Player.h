@@ -45,8 +45,8 @@ class Player : public Actor
 
 		Map *m_map;
 
-		QSoundEffect m_jumpSound;
-		QSoundEffect m_stepSound;
+//		QSoundEffect m_jumpSound;
+//		QSoundEffect m_stepSound;
 		long m_stepSoundTimer;
 };
 

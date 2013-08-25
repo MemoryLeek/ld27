@@ -13,8 +13,8 @@ Bot::Bot(const QPolygon &path, Map *map, Scene *scene)
 	for(int i = 0; i < path.count() - 1; i++)
 		m_path.append(QLineF(path.at(i), path.at(i + 1)));
 
-	m_alarmSound.setSource(QUrl::fromLocalFile("resources/sound/alarm.wav"));
-	m_alarmSound.setLoopCount(3);
+//	m_alarmSound.setSource(QUrl::fromLocalFile("resources/sound/alarm.wav"));
+//	m_alarmSound.setLoopCount(3);
 }
 
 float Bot::x() const
@@ -75,8 +75,8 @@ void Bot::tick(const long delta)
 	{
 		if(m_visionCone.containsActor(*player))
 		{
-			if(!m_alarmSound.isPlaying())
-				m_alarmSound.play();
+//			if(!m_alarmSound.isPlaying())
+//				m_alarmSound.play();
 			player->respawn();
 		}
 	}
