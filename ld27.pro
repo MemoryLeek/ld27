@@ -12,7 +12,6 @@ SOURCES += \
     Window.cpp \
     Engine.cpp \
     States/LogoState.cpp \
-    States/DummyState.cpp \
     Key.cpp \
     Direction.cpp \
     KeyDirectionMapping.cpp \
@@ -34,7 +33,8 @@ SOURCES += \
 	MapSurface.cpp \
     JoystickEvent.cpp \
     Collidable.cpp \
-    SharedState.cpp
+    SharedState.cpp \
+    States/GameState.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -47,7 +47,6 @@ HEADERS += \
 	Engine.h \
 	QStringEx.h \
     States/LogoState.h \
-	States/DummyState.h \
     State.h \
     QTimerEx.h \
 	Container.h \
@@ -76,7 +75,8 @@ HEADERS += \
 	MapSurface.h \
     JoystickEvent.h \
     Collidable.h \
-    SharedState.h
+    SharedState.h \
+    States/GameState.h
 
 LIBS += -lSDL2
 

@@ -3,7 +3,7 @@
 #include "MainMenuState.h"
 #include "MenuEntry.h"
 
-#include "States/DummyState.h"
+#include "States/GameState.h"
 #include "States/SettingsMenuState.h"
 
 namespace States
@@ -25,7 +25,7 @@ namespace States
 
 	void MainMenuState::start()
 	{
-		changeState<States::DummyState>();
+		changeState<States::GameState>();
 	}
 
 	void MainMenuState::settings()

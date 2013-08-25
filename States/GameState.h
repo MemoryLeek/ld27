@@ -1,5 +1,5 @@
-#ifndef DUMMYSTATE_H
-#define DUMMYSTATE_H
+#ifndef GAMESTATE_H
+#define GAMESTATE_H
 
 #include <SDL2/SDL.h>
 
@@ -16,7 +16,7 @@ class SharedState;
 
 namespace States
 {
-	class DummyState : public State
+	class GameState : public State
 	{
 		Q_OBJECT
 
@@ -24,7 +24,7 @@ namespace States
 		Q_PROPERTY(float timePool READ timePool NOTIFY timePoolChanged)
 
 		public:
-			DummyState();
+			GameState();
 
 			QString fps() const;
 			float timePool() const;
@@ -67,4 +67,4 @@ namespace States
 	};
 }
 
-#endif // DUMMYSTATE_H
+#endif // GAMESTATE_H

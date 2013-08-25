@@ -1,6 +1,6 @@
 #include <qmath.h>
 
-#include "DummyState.h"
+#include "GameState.h"
 #include "QStringEx.h"
 #include "Key.h"
 #include "Direction.h"
@@ -13,7 +13,7 @@
 
 namespace States
 {
-	DummyState::DummyState()
+	GameState::GameState()
 	{
 		m_player = 0;
 		m_fpsTimer = 0;
@@ -29,17 +29,17 @@ namespace States
 		setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
 	}
 
-	QString DummyState::fps() const
+	QString GameState::fps() const
 	{
 		return QStringEx::format("%1 FPS", m_lastFps);
 	}
 
-	float DummyState::timePool() const
+	float GameState::timePool() const
 	{
 		return m_timePool;
 	}
 
-	QSGNode *DummyState::updatePaintNode(QSGNode *, QQuickItem::UpdatePaintNodeData *)
+	QSGNode *GameState::updatePaintNode(QSGNode *, QQuickItem::UpdatePaintNodeData *)
 	{
 		int delta = m_timer.restart();
 
@@ -82,18 +82,18 @@ namespace States
 		return m_scene;
 	}
 
-	void DummyState::initialize()
+	void GameState::initialize()
 	{
 		initializeScene();
 		initializeJoystick();
 	}
 
-	void DummyState::complete()
+	void GameState::complete()
 	{
 		/* No implementation */
 	}
 
-	void DummyState::keyPressEvent(QKeyEvent *event)
+	void GameState::keyPressEvent(QKeyEvent *event)
 	{
 		if(!event->isAutoRepeat())
 		{
@@ -138,7 +138,7 @@ namespace States
 		}
 	}
 
-	void DummyState::keyReleaseEvent(QKeyEvent *event)
+	void GameState::keyReleaseEvent(QKeyEvent *event)
 	{
 		if(!event->isAutoRepeat())
 		{
@@ -167,7 +167,7 @@ namespace States
 		}
 	}
 
-	void DummyState::mousePressEvent(QMouseEvent *event)
+	void GameState::mousePressEvent(QMouseEvent *event)
 	{
 		switch(event->button())
 		{
@@ -190,7 +190,7 @@ namespace States
 		}
 	}
 
-	void DummyState::mouseReleaseEvent(QMouseEvent *event)
+	void GameState::mouseReleaseEvent(QMouseEvent *event)
 	{
 		switch(event->button())
 		{
@@ -207,7 +207,7 @@ namespace States
 		}
 	}
 
-	void DummyState::joystickEvent(const JoystickEvent &event)
+	void GameState::joystickEvent(const JoystickEvent &event)
 	{
 		if((m_lastJoystickEvent.buttons() & JoystickEvent::ButtonJump) != (event.buttons() & JoystickEvent::ButtonJump))
 		{
@@ -238,7 +238,7 @@ namespace States
 		m_lastJoystickEvent = event;
 	}
 
-	void DummyState::processJoystick()
+	void GameState::processJoystick()
 	{
 		if(m_joystick)
 		{
@@ -280,7 +280,7 @@ namespace States
 		}
 	}
 
-	void DummyState::initializeScene()
+	void GameState::initializeScene()
 	{
 		Window *window = getComponent<Window>();
 		SharedState *state = getComponent<SharedState>();
@@ -304,7 +304,7 @@ namespace States
 		}
 	}
 
-	void DummyState::initializeJoystick()
+	void GameState::initializeJoystick()
 	{
 		if(SDL_NumJoysticks() > 0)
 		{
