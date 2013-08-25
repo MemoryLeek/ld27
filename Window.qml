@@ -11,54 +11,11 @@ Window
 		color: "black"
 	}
 
-	Repeater
+	Loader
 	{
-		model: window.availableStates
+		id: loader
 		anchors.fill: parent
-
-		Loader
-		{
-			id: loader
-			anchors.fill: parent
-			opacity: 0
-			source: modelData
-
-			states:
-			[
-				State
-				{
-					when: window.activeState != modelData
-
-					PropertyChanges { target: loader; opacity: 0 }
-					PropertyChanges { target: loader; focus: false }
-				},
-				State
-				{
-					name: "ActiveState"
-					when: window.activeState == modelData
-
-					PropertyChanges { target: loader; opacity: 1 }
-					PropertyChanges { target: loader; focus: true }
-				}
-			]
-
-			transitions:
-			[
-				Transition
-				{
-					NumberAnimation { property: "opacity"; duration: 500 }
-				},
-				Transition
-				{
-					to: "ActiveState"
-
-					SequentialAnimation
-					{
-						PauseAnimation { duration: 500; }
-						NumberAnimation { property: "opacity"; duration: 500 }
-					}
-				}
-			]
-		}
+		source: window.activeState
+		focus: true
 	}
 }

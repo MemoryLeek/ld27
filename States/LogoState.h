@@ -13,6 +13,8 @@ namespace States
 			LogoState();
 
 		private:
+			void initialize() override;
+			void complete() override;
 			void timerEvent(QTimerEvent *) override;
 			void keyPressEvent(QKeyEvent *) override;
 

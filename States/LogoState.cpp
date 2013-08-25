@@ -11,6 +11,16 @@ namespace States
 		m_timerId = startTimer(4000);
 	}
 
+	void LogoState::initialize()
+	{
+		/* No implementation */
+	}
+
+	void LogoState::complete()
+	{
+		/* No implementation */
+	}
+
 	void LogoState::timerEvent(QTimerEvent *)
 	{
 		skip();

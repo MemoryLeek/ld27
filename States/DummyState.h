@@ -1,19 +1,22 @@
 #ifndef DUMMYSTATE_H
 #define DUMMYSTATE_H
 
+#include <SDL2/SDL.h>
+
 #include <QSGSimpleRectNode>
 #include <QElapsedTimer>
 
 #include "State.h"
-#include "GameState.h"
+#include "JoystickEvent.h"
 
 class Scene;
 class Player;
 class Bot;
+class SharedState;
 
 namespace States
 {
-	class DummyState : public GameState
+	class DummyState : public State
 	{
 		Q_OBJECT
 
@@ -27,27 +30,36 @@ namespace States
 			float timePool() const;
 
 		private:
-			void initialize(Scene *scene) override;
-			void tick(long delta) override;
-			void keyPressed(QKeyEvent *event) override;
-			void keyReleased(QKeyEvent *event) override;
+			QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *);
+
+			void initialize() override;
+			void complete() override;
+
+			void keyPressEvent(QKeyEvent *event) override;
+			void keyReleaseEvent(QKeyEvent *event) override;
 			void mousePressEvent(QMouseEvent *event) override;
 			void mouseReleaseEvent(QMouseEvent *event) override;
-			void joystickEvent(const JoystickEvent &event) override;
-			void updatePlayerMovement();
+			void joystickEvent(const JoystickEvent &event);
 
-			QList<int> m_keyStates;
+			void processJoystick();
+			void initializeScene();
+			void initializeJoystick();
+
 			JoystickEvent m_lastJoystickEvent;
 
+			Scene *m_scene;
 			Player *m_player;
-			QVector<Bot*> m_bots;
+			SDL_Joystick *m_joystick;
+
+			QElapsedTimer m_timer;
+			QList<Bot *> m_bots;
 
 			float m_fpsTimer;
 			float m_fps;
 			float m_lastFps;
+			float m_timePool;
 
 			bool m_reverseTime;
-			float m_timePool;
 
 		signals:
 			void fpsChanged();

@@ -13,6 +13,16 @@ namespace States
 		return m_selectedIndex;
 	}
 
+	void MenuState::initialize()
+	{
+		/* No implementation */
+	}
+
+	void MenuState::complete()
+	{
+		/* No implementation */
+	}
+
 	void MenuState::keyPressEvent(QKeyEvent *event)
 	{
 		if(!event->isAutoRepeat())

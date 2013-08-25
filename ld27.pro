@@ -20,7 +20,6 @@ SOURCES += \
     IDrawable.cpp \
     Sprite.cpp \
     SpriteBundle.cpp \
-    States/GameState.cpp \
     States/MenuState.cpp \
     LocalImageProvider.cpp \
     Actor.cpp \
@@ -34,7 +33,8 @@ SOURCES += \
 	Map.cpp \
 	MapSurface.cpp \
     JoystickEvent.cpp \
-    Collidable.cpp
+    Collidable.cpp \
+    SharedState.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -60,7 +60,6 @@ HEADERS += \
 	QListEx.h \
     Sprite.h \
     SpriteBundle.h \
-    States/GameState.h \
     States/MenuState.h \
     MenuEntry.h \
     LocalImageProvider.h \
@@ -76,7 +75,8 @@ HEADERS += \
     MapLoader.h \
 	MapSurface.h \
     JoystickEvent.h \
-    Collidable.h
+    Collidable.h \
+    SharedState.h
 
 LIBS += -lSDL2
 

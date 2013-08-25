@@ -20,6 +20,8 @@ namespace States
 			int selectedIndex() const;
 
 		private:
+			void initialize() override;
+			void complete() override;
 			void keyPressEvent(QKeyEvent *event) override;
 
 			int m_selectedIndex;

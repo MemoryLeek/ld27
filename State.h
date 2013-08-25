@@ -9,7 +9,7 @@
 #include "VisualObject.h"
 
 class State
-	: public QQuickItem
+	: public VisualObject<QQuickItem>
 	, public Container
 {
 	protected:

@@ -9,6 +9,7 @@
 #include "Bot.h"
 #include "MapLoader.h"
 #include "Map.h"
+#include "SharedState.h"
 
 namespace States
 {
@@ -19,6 +20,13 @@ namespace States
 		m_lastFps = 0;
 		m_reverseTime = false;
 		m_timePool = 10;
+		m_scene = 0;
+		m_joystick = 0;
+
+		m_timer.start();
+
+		setFlag(QQuickItem::ItemHasContents);
+		setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
 	}
 
 	QString DummyState::fps() const
@@ -31,30 +39,14 @@ namespace States
 		return m_timePool;
 	}
 
-	void DummyState::initialize(Scene *scene)
+	QSGNode *DummyState::updatePaintNode(QSGNode *, QQuickItem::UpdatePaintNodeData *)
 	{
-		MapLoader mapLoader(scene);
-		Map *map = mapLoader.load("resources/maps/2.map");
-		map->initialize(scene);
+		int delta = m_timer.restart();
 
-		m_player = new Player(map, scene);
-
-		const QList<QPolygon> &paths = map->paths();
-
-		for(const QPolygon &path : paths)
-		{
-			Bot *bot = new Bot(path, map, scene);
-			bot->addPlayerTracking(m_player);
-
-			m_bots << bot;
-		}
-	}
-
-	void DummyState::tick(long delta)
-	{
+		m_scene->markDirty(QSGNode::DirtyForceUpdate);
 		m_player->tick(delta);
-
 		m_fps++;
+
 		if((m_fpsTimer += delta) >= 1000)
 		{
 			emit fpsChanged();
@@ -80,109 +72,99 @@ namespace States
 		}
 
 		for(Bot *bot : m_bots)
+		{
 			bot->tick(delta);
-	}
-
-	void DummyState::keyPressed(QKeyEvent *event)
-	{
-		switch(event->key())
-		{
-			case Qt::Key_Up:
-			case Qt::Key_W:
-			{
-				m_keyStates << Key::KeyUp;
-				break;
-			}
-
-			case Qt::Key_Down:
-			case Qt::Key_S:
-			{
-				m_keyStates << Key::KeyDown;
-				break;
-			}
-
-			case Qt::Key_Left:
-			case Qt::Key_A:
-			{
-				m_player->setDirection(-1);
-				m_player->setVelocity(500);
-//				m_keyStates << Key::KeyLeft;
-				break;
-			}
-
-			case Qt::Key_Right:
-			case Qt::Key_D:
-			{
-				m_player->setDirection(1);
-				m_player->setVelocity(500);
-//				m_keyStates << Key::KeyRight;
-				break;
-			}
-
-			case Qt::Key_Space:
-			{
-				m_player->jump();
-				break;
-			}
-
-			case Qt::Key_Control:
-			{
-				m_reverseTime = true;
-				break;
-			}
-
-			case Qt::Key_Return:
-			{
-				m_player->respawn();
-				break;
-			}
 		}
 
-//		updatePlayerMovement();
+		processJoystick();
+		update();
+
+		return m_scene;
 	}
 
-	void DummyState::keyReleased(QKeyEvent *event)
+	void DummyState::initialize()
 	{
-		switch(event->key())
+		initializeScene();
+		initializeJoystick();
+	}
+
+	void DummyState::complete()
+	{
+		/* No implementation */
+	}
+
+	void DummyState::keyPressEvent(QKeyEvent *event)
+	{
+		if(!event->isAutoRepeat())
 		{
-			case Qt::Key_Up:
-			case Qt::Key_W:
+			switch(event->key())
 			{
-				m_keyStates.removeAll(Key::KeyUp);
-				break;
-			}
+				case Qt::Key_Left:
+				case Qt::Key_A:
+				{
+					m_player->setDirection(-1);
+					m_player->setVelocity(500);
 
-			case Qt::Key_Down:
-			case Qt::Key_S:
-			{
-				m_keyStates.removeAll(Key::KeyDown);
-				break;
-			}
+					break;
+				}
 
-			case Qt::Key_Left:
-			case Qt::Key_A:
-			{
-				m_player->setDirection(0);
-//				m_keyStates.removeAll(Key::KeyLeft);
-				break;
-			}
+				case Qt::Key_Right:
+				case Qt::Key_D:
+				{
+					m_player->setDirection(1);
+					m_player->setVelocity(500);
 
-			case Qt::Key_Right:
-			case Qt::Key_D:
-			{
-				m_player->setDirection(0);
-//				m_keyStates.removeAll(Key::KeyRight);
-				break;
-			}
+					break;
+				}
 
-			case Qt::Key_Control:
-			{
-				m_reverseTime = false;
-				break;
+				case Qt::Key_Space:
+				{
+					m_player->jump();
+					break;
+				}
+
+				case Qt::Key_Control:
+				{
+					m_reverseTime = true;
+					break;
+				}
+
+				case Qt::Key_Return:
+				{
+					m_player->respawn();
+					break;
+				}
 			}
 		}
+	}
 
-		//		updatePlayerMovement();
+	void DummyState::keyReleaseEvent(QKeyEvent *event)
+	{
+		if(!event->isAutoRepeat())
+		{
+			switch(event->key())
+			{
+				case Qt::Key_Left:
+				case Qt::Key_A:
+				{
+					m_player->setDirection(0);
+					break;
+				}
+
+				case Qt::Key_Right:
+				case Qt::Key_D:
+				{
+					m_player->setDirection(0);
+					break;
+				}
+
+				case Qt::Key_Control:
+				{
+					m_reverseTime = false;
+					break;
+				}
+			}
+		}
 	}
 
 	void DummyState::mousePressEvent(QMouseEvent *event)
@@ -256,20 +238,78 @@ namespace States
 		m_lastJoystickEvent = event;
 	}
 
-	void DummyState::updatePlayerMovement()
+	void DummyState::processJoystick()
 	{
-//		if(!m_keyStates.isEmpty())
-//		{
-//			const int key = m_keyStates.last();
-//			const int direction = Direction::fromKey(key);
+		if(m_joystick)
+		{
+			SDL_JoystickUpdate();
 
-//			m_direction = direction;
-//			m_velocity = 100;
-//		}
-//		else
-//		{
-//			m_direction = 0;
-//			m_velocity = 0;
-//		}
+			float x = SDL_JoystickGetAxis(m_joystick, 0) / 300.f;
+			float y = SDL_JoystickGetAxis(m_joystick, 1) / 300.f;
+
+			// Deadzone
+			if(x > -10 && x < 10)
+				x = 0;
+			if(y > -10 && y < 10)
+				y = 0;
+
+			// Limits
+			if(x > 100)
+				x = 100;
+			if(x < -100)
+				x = -100;
+			if(y > 100)
+				y = 100;
+			if(y < -100)
+				y = -100;
+
+			JoystickEvent::Buttons buttons = JoystickEvent::ButtonNone;
+			if(SDL_JoystickGetButton(m_joystick, 0))
+				buttons |= JoystickEvent::ButtonJump;
+			if(SDL_JoystickGetButton(m_joystick, 2))
+				buttons |= JoystickEvent::ButtonReverseTime;
+			if(SDL_JoystickGetButton(m_joystick, 3))
+				buttons |= JoystickEvent::ButtonRestart;
+
+			JoystickEvent jsEvent(QVector2D(x, y), buttons);
+			if(jsEvent != m_lastJoystickEvent)
+			{
+				joystickEvent(jsEvent);
+				m_lastJoystickEvent = jsEvent;
+			}
+		}
+	}
+
+	void DummyState::initializeScene()
+	{
+		Window *window = getComponent<Window>();
+		SharedState *state = getComponent<SharedState>();
+		Scene *scene = new Scene(window);
+
+		MapLoader mapLoader(scene);
+		Map *map = mapLoader.load("resources/maps/2.map");
+		map->initialize(scene);
+
+		m_scene = scene;
+		m_player = new Player(map, scene);
+
+		const QList<QPolygon> &paths = map->paths();
+
+		for(const QPolygon &path : paths)
+		{
+			Bot *bot = new Bot(path, map, scene);
+			bot->addPlayerTracking(m_player);
+
+			m_bots << bot;
+		}
+	}
+
+	void DummyState::initializeJoystick()
+	{
+		if(SDL_NumJoysticks() > 0)
+		{
+			qDebug() << "Opening joystick 0";
+			m_joystick = SDL_JoystickOpen(0);
+		}
 	}
 }
