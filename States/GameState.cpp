@@ -66,7 +66,11 @@ namespace States
 				if(y < -100)
 					y = -100;
 
-				JoystickEvent jsEvent(QVector2D(x, y));
+				JoystickEvent::Buttons buttons = JoystickEvent::ButtonNone;
+				if(SDL_JoystickGetButton(m_joystick, 0))
+					buttons |= JoystickEvent::ButtonJump;
+
+				JoystickEvent jsEvent(QVector2D(x, y), buttons);
 				if(jsEvent != m_lastJoystickEvent)
 				{
 					joystickEvent(jsEvent);

@@ -20,6 +20,35 @@ void Map::initialize(Scene *scene)
 		painter.drawPoint(point);
 	}
 
+//	for(const QPolygon &path : m_paths)
+//	{
+//		qDebug() << path.count();
+
+//		const QPoint *previous = 0;
+
+//		for(const QPoint &point : path)
+//		{
+//			if(previous)
+//			{
+//				QLine line(*previous, point);
+
+//				painter.setBrush(Qt::NoBrush);
+//				painter.setPen(Qt::green);
+//				painter.drawLine(line);
+
+//				painter.setBrush(Qt::blue);
+//				painter.setPen(Qt::blue);
+//				painter.drawEllipse(*previous, 10, 10);
+
+//				previous = &point;
+//			}
+//			else
+//			{
+//				previous = &point;
+//			}
+//		}
+//	}
+
 	new MapSurface(MapSurface::Foreground, foo, scene);
 }
 
@@ -40,11 +69,17 @@ bool Map::isCollidable(const int x, const int y)
 	return m_collidables.contains(p);
 }
 
+QList<QPolygon> Map::paths() const
+{
+	return m_paths;
+}
+
 QDataStream &operator >>(QDataStream &stream, Map &map)
 {
 	stream >> map.m_background;
 	stream >> map.m_foreground;
 	stream >> map.m_collidables;
+	stream >> map.m_paths;
 
 	return stream;
 }

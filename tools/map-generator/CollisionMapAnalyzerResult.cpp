@@ -1,7 +1,7 @@
 #include "CollisionMapAnalyzerResult.h"
 #include "CollisionMapEntry.h"
 
-CollisionMapEntry *CollisionMapAnalyzerResult::find(const int x, const int y)
+CollisionMapEntry *CollisionMapAnalyzerResult::find(const int x, const int y, const CollisionMapEntry::EntryType type)
 {
 	const int offset = 5;
 	const int size = offset * 2;
@@ -16,9 +16,12 @@ CollisionMapEntry *CollisionMapAnalyzerResult::find(const int x, const int y)
 
 			if(entry)
 			{
-				return m_index
-					.insert(coordinate, entry)
-					.value();
+				if(entry->type() == type)
+				{
+					return m_index
+						.insert(coordinate, entry)
+						.value();
+				}
 			}
 		}
 	}
@@ -26,10 +29,10 @@ CollisionMapEntry *CollisionMapAnalyzerResult::find(const int x, const int y)
 	return 0;
 }
 
-CollisionMapEntry *CollisionMapAnalyzerResult::createEntry(const int x, const int y)
+CollisionMapEntry *CollisionMapAnalyzerResult::createEntry(const int x, const int y, const CollisionMapEntry::EntryType type)
 {
 	Coordinate coordinate(x, y);
-	CollisionMapEntry *entry = new CollisionMapEntry();
+	CollisionMapEntry *entry = new CollisionMapEntry(type);
 
 	m_entries << entry;
 	m_index[coordinate] = entry;

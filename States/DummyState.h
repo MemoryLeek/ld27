@@ -33,6 +33,7 @@ namespace States
 			void updatePlayerMovement();
 
 			QList<int> m_keyStates;
+			JoystickEvent m_lastJoystickEvent;
 
 			Player *m_player;
 			QVector<Bot*> m_bots;

@@ -3,12 +3,22 @@
 #include "CollisionMapEntry.h"
 #include "LookupResult.h"
 
+CollisionMapEntry::CollisionMapEntry(CollisionMapEntry::EntryType type)
+{
+	m_type = type;
+}
+
 void CollisionMapEntry::addPoint(const int x, const int y)
 {
 	m_coordinates << Coordinate(x, y);
 }
 
-QList<QPoint> CollisionMapEntry::compile()
+CollisionMapEntry::EntryType CollisionMapEntry::type() const
+{
+	return m_type;
+}
+
+QList<QPoint> CollisionMapEntry::compile() const
 {
 	QList<QPoint> points;
 

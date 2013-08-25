@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "CollisionMapAnalyzer.h"
 #include "CollisionMapAnalyzerResult.h"
 #include "CollisionMapEntry.h"
@@ -14,20 +16,22 @@ CollisionMapAnalyzerResult CollisionMapAnalyzer::analyze(const QImage &image)
 		for(int y = 0; y < height; y++)
 		{
 			const unsigned int pixel = image.pixel(x, y);
-			const unsigned int foo = qAlpha(pixel) / 255;
 
-			switch(foo)
+			switch(pixel)
 			{
-				case Collision:
+				case CollisionMapEntry::Collision:
 				{
-					CollisionMapEntry *entry = result.find(x, y) ?: result.createEntry(x, y);
+					CollisionMapEntry *entry = result.find(x, y, CollisionMapEntry::Collision) ?: result.createEntry(x, y, CollisionMapEntry::Collision);
 					entry->addPoint(x, y);
 
 					break;
 				}
 
-				case Path:
+				case CollisionMapEntry::Path:
 				{
+					CollisionMapEntry *entry = result.find(x, y, CollisionMapEntry::Path) ?: result.createEntry(x, y, CollisionMapEntry::Path);
+					entry->addPoint(x, y);
+
 					break;
 				}
 
