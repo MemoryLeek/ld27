@@ -53,6 +53,7 @@ void Bot::tick(const long delta)
 			else
 			{
 				m_movingForward = !m_movingForward;
+				m_positionInLine = 1;
 			}
 		}
 		else if(m_positionInLine + movement / currentLine.length() <= 0) // Previous line in sequence
@@ -65,6 +66,7 @@ void Bot::tick(const long delta)
 			else
 			{
 				m_movingForward = !m_movingForward;
+				m_positionInLine = 0;
 			}
 		}
 
