@@ -104,6 +104,7 @@ namespace States
 			case Qt::Key_A:
 			{
 				m_player->setDirection(-1);
+				m_player->setVelocity(500);
 //				m_keyStates << Key::KeyLeft;
 				break;
 			}
@@ -111,6 +112,7 @@ namespace States
 			case Qt::Key_D:
 			{
 				m_player->setDirection(1);
+				m_player->setVelocity(500);
 //				m_keyStates << Key::KeyRight;
 				break;
 			}
@@ -181,8 +183,13 @@ namespace States
 	{
 		if((m_lastJoystickEvent.buttons() & JoystickEvent::ButtonJump) != (event.buttons() & JoystickEvent::ButtonJump))
 		{
-			if(m_lastJoystickEvent.buttons() & JoystickEvent::ButtonJump)
+			if(!(m_lastJoystickEvent.buttons() & JoystickEvent::ButtonJump))
 				m_player->jump();
+		}
+		if((m_lastJoystickEvent.buttons() & JoystickEvent::ButtonRestart) != (event.buttons() & JoystickEvent::ButtonRestart))
+		{
+			if(!(m_lastJoystickEvent.buttons() & JoystickEvent::ButtonRestart))
+				m_player->respawn();
 		}
 		if((m_lastJoystickEvent.buttons() & JoystickEvent::ButtonReverseTime) != (event.buttons() & JoystickEvent::ButtonReverseTime))
 		{
