@@ -10,17 +10,17 @@ Bot::Bot(const QPolygon &path, Scene *scene)
 	  m_visionCone(this, scene)
 {
 	for(int i = 0; i < path.count() - 1; i++)
-		m_workPath.append(QLineF(path.at(i), path.at(i + 1)));
+		m_path.append(QLineF(path.at(i), path.at(i + 1)));
 }
 
 float Bot::x() const
 {
-	return m_workPath.at(m_currentLine).pointAt(m_positionInLine).x();
+	return m_path.at(m_currentLine).pointAt(m_positionInLine).x();
 }
 
 float Bot::y() const
 {
-	return m_workPath.at(m_currentLine).pointAt(m_positionInLine).y();
+	return m_path.at(m_currentLine).pointAt(m_positionInLine).y();
 }
 
 void Bot::tick(const long delta)
@@ -32,7 +32,7 @@ void Bot::tick(const long delta)
 	if(!m_movingForward)
 		movement = -movement;
 
-	QLineF currentLine = m_workPath.at(m_currentLine);
+	QLineF currentLine = m_path.at(m_currentLine);
 	if(m_positionInLine + movement / currentLine.length() >= 0 && m_positionInLine + movement / currentLine.length() <= 1) // On-line movement
 	{
 		m_positionInLine += movement / currentLine.length();
@@ -41,8 +41,7 @@ void Bot::tick(const long delta)
 	{
 		if(m_positionInLine + movement / currentLine.length() >= 1) // Next line in sequence
 		{
-			qDebug() << "Move to next line, at line" << m_currentLine;
-			if(m_currentLine + 1 < m_workPath.count())
+			if(m_currentLine + 1 < m_path.count())
 			{
 				m_currentLine++;
 				m_positionInLine = 0;
@@ -54,7 +53,6 @@ void Bot::tick(const long delta)
 		}
 		else if(m_positionInLine + movement / currentLine.length() <= 0) // Previous line in sequence
 		{
-			qDebug() << "Move to previous line, at line" << m_currentLine;
 			if(m_currentLine > 0)
 			{
 				m_currentLine--;
