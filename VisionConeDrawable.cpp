@@ -36,69 +36,48 @@ QSGTexture *VisionConeDrawable::texture()
 
 bool VisionConeDrawable::containsActor(Actor &actor)
 {
-	// Do rough bounding box check first
-	QPointF actorPosition(actor.x(), actor.y());
-	QRectF actorBoundingBox(actorPosition, actor.texture()->textureSize());
+	const QPointF actorPosition(actor.x(), actor.y());
+	const QRectF actorBoundingBox(actorPosition, actor.texture()->textureSize());
 
-	QPointF conePosition(x(), y());
-	QRectF coneBoundingBox(conePosition, texture()->textureSize());
-
-	if(!coneBoundingBox.intersects(actorBoundingBox))
-		return false;
-
-	// Finer check if the Actor is inside the bounding box
-	QPolygonF conePolygon;
-	if(!m_bot->isFlipped())
+	QLineF ray(QPointF(x(), y() + 150), actorBoundingBox.center());
+	if(m_bot->isFlipped())
 	{
-		conePolygon.append(QPointF(conePosition.x(), conePosition.y() + 150));
-		conePolygon.append(coneBoundingBox.topRight());
-		conePolygon.append(coneBoundingBox.bottomRight());
+		ray.setP1(QPointF(x() + 500, y() + 150));
+		if(!(ray.angle() > 145 && ray.angle() < 215))
+			return false;
 	}
 	else
 	{
-		conePolygon.append(QPointF(conePosition.x() + 500, conePosition.y() + 150));
-		conePolygon.append(coneBoundingBox.topLeft());
-		conePolygon.append(coneBoundingBox.bottomLeft());
+		if(ray.angle() < 325 && ray.angle() > 35)
+			return false;
 	}
 
-	QPolygonF intersection = conePolygon.intersected(actorBoundingBox);
-
-	// Return if player is not in cone
-	if(intersection.isEmpty())
+	if(ray.length() > 500)
 		return false;
 
-	// Do simple raycasting to 3 points on the character to see if we have true vision
-	QVector<QPointF> tracePoints;
-	tracePoints << QPointF(actorBoundingBox.center().x(), actorBoundingBox.top())
-				<< QPointF(actorBoundingBox.center())
-				<< QPointF(actorBoundingBox.center().x(), actorBoundingBox.bottom());
-
-	for(const QPointF &point : tracePoints)
+	int rayLength = ray.length();
+	bool rayHitWall = false;
+	for(int len = 50; len < rayLength; len += 20)
 	{
-		QLineF ray(conePolygon.at(0), point);
-		int rayLength = ray.length();
+		ray.setLength(len);
 
-		bool rayHitWall = false;
-		for(int len = 50; len < rayLength; len += 10)
+		for(const Collidable &collidable : m_map->collidables())
 		{
-			ray.setLength(len);
-			for(const Collidable &collidable : m_map->collidables())
-			{
-				const QPolygonF &polygon = collidable.polygon();
+			if(!collidable.boundingBox().contains(ray.p2().x(), ray.p2().y()))
+				continue;
 
-				if(polygon.containsPoint(ray.p2(), Qt::OddEvenFill))
-				{
-					rayHitWall = true;
-					break;
-				}\
-			}
-			if(rayHitWall)
+			const QPolygonF &polygon = collidable.polygon();
+
+			if(polygon.containsPoint(ray.p2(), Qt::OddEvenFill))
+			{
+				rayHitWall = true;
 				break;
+			}\
 		}
 
-		if(!rayHitWall)
-			return true;
+		if(rayHitWall)
+			break;
 	}
 
-	return false;
+	return !rayHitWall;
 }
