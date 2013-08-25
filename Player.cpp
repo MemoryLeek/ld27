@@ -63,9 +63,11 @@ void Player::tick(const long delta)
 	for(const Collidable &collidable : m_map->collidables())
 	{
 		const QPolygonF &polygon = collidable.polygon();
+		if(!collidable.boundingBox().contains(QRect(m_x + 6, m_y + 6, playerSize.width() - 6, playerSize.height() - 6)))
+			continue;
 
 		// Check bottom collision
-		for(int i = m_x + 6; i < m_x + playerSize.width() - 6; i++)
+		for(int i = m_x + 6; i < m_x + playerSize.width() - 6; i += 2)
 		{
 			while(polygon.containsPoint(QPointF(i, y + playerSize.height() - 2), Qt::OddEvenFill))
 			{
@@ -81,7 +83,7 @@ void Player::tick(const long delta)
 		}
 
 		// Check left collision
-		for(int i = y + 6; i < y + playerSize.height() - 6; i++)
+		for(int i = y + 6; i < y + playerSize.height() - 6; i += 2)
 		{
 			while(polygon.containsPoint(QPointF(x + 4, i), Qt::OddEvenFill))
 			{
@@ -90,7 +92,7 @@ void Player::tick(const long delta)
 		}
 
 		// Check right collision
-		for(int i = y + 6; i < y + playerSize.height() - 6; i++)
+		for(int i = y + 6; i < y + playerSize.height() - 6; i += 2)
 		{
 			while(polygon.containsPoint(QPointF(x + playerSize.width() - 4, i), Qt::OddEvenFill))
 			{
@@ -99,7 +101,7 @@ void Player::tick(const long delta)
 		}
 
 		// Check top collision
-		for(int i = x + 6; i < x + playerSize.width() - 6; i++)
+		for(int i = x + 6; i < x + playerSize.width() - 6; i += 2)
 		{
 			while(polygon.containsPoint(QPointF(i, y + 1), Qt::OddEvenFill))
 			{
