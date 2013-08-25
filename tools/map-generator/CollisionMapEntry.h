@@ -21,7 +21,7 @@ class CollisionMapEntry
 		void addPoint(const int x, const int y);
 
 		EntryType type() const;
-		QList<QPoint> compile() const;
+		QList<Coordinate> compile() const;
 
 	private:
 		EntryType m_type;

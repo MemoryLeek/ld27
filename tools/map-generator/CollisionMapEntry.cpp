@@ -18,9 +18,9 @@ CollisionMapEntry::EntryType CollisionMapEntry::type() const
 	return m_type;
 }
 
-QList<QPoint> CollisionMapEntry::compile() const
+QList<Coordinate> CollisionMapEntry::compile() const
 {
-	QList<QPoint> points;
+	QList<Coordinate> points;
 
 	foreach(const Coordinate &coordinate, m_coordinates)
 	{
@@ -46,7 +46,7 @@ QList<QPoint> CollisionMapEntry::compile() const
 
 		if(hits < 8)
 		{
-			points << QPoint(x, y);
+			points << coordinate;
 		}
 	}
 

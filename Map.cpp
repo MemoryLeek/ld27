@@ -13,11 +13,11 @@ void Map::initialize(Scene *scene)
 	QImage foo(size, QImage::Format_ARGB32);
 	QPainter painter(&foo);
 
-	for(const QPoint &point : m_collidables)
+	for(const QPolygon &polygon : m_collidables)
 	{
 		painter.setPen(Qt::red);
-		painter.setBrush(Qt::red);
-		painter.drawPoint(point);
+		painter.setBrush(Qt::NoBrush);
+		painter.drawPolygon(polygon);
 	}
 
 //	for(const QPolygon &path : m_paths)
@@ -64,9 +64,10 @@ int Map::height() const
 
 bool Map::isCollidable(const int x, const int y)
 {
-	QPoint p(x, y);
+//	QPoint p(x, y);
 
-	return m_collidables.contains(p);
+//	return m_collidables.contains(p);
+	return false;
 }
 
 QList<QPolygon> Map::paths() const

@@ -3,15 +3,16 @@
 
 #include <QPoint>
 #include <QPair>
+#include <QLine>
 
 using Coordinate = QPair<unsigned int, unsigned int>;
 
 class Utilities
 {
 	public:
-		static bool comparePoint(const QPoint &p1, const QPoint &p2)
+		static bool compareCoordinate(const Coordinate &p1, const Coordinate &p2)
 		{
-			return p1.x() > p2.x();
+			return p1.first > p2.first;
 		}
 };
 
