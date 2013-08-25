@@ -41,12 +41,43 @@ void Player::tick(const long delta)
 	const QPointF playerCenter(playerSize.width() / 2, playerSize.height() / 2);
 	const QPointF cameraPosition(m_x + playerCenter.x(), m_y + playerCenter.y());
 
+	if(m_isOnGround)
+	{
+		if(m_xThrust)
+			m_sprite.setImageIndex(Walking);
+		else
+			m_sprite.setImageIndex(Idle);
+	}
+	else
+	{
+		if(m_yThrust < 0)
+			m_sprite.setImageIndex(Jumping);
+		else
+			m_sprite.setImageIndex(Falling);
+	}
+
 	m_sprite.update(delta);
 	m_scene->setCameraPosition(cameraPosition, m_map);
 
 	m_isOnGround = false;
 	for(const QPolygonF &collidable : m_map->collidables())
 	{
+		// Check bottom collision
+		for(int i = m_x + 6; i < m_x + playerSize.width() - 6; i++)
+		{
+			while(collidable.containsPoint(QPointF(i, y + playerSize.height() - 2), Qt::OddEvenFill))
+			{
+				y--;
+				if(m_yVelocity > 0)
+					m_yVelocity = 0;
+			}
+
+			if(collidable.containsPoint(QPointF(i, y + playerSize.height() - 1), Qt::OddEvenFill))
+			{
+				m_isOnGround = true;
+			}
+		}
+
 		// Check left collision
 		for(int i = y + 6; i < y + playerSize.height() - 6; i++)
 		{
@@ -74,22 +105,6 @@ void Player::tick(const long delta)
 				m_yVelocity = 100;
 			}
 		}
-
-		// Check bottom collision
-		for(int i = m_x + 6; i < m_x + playerSize.width() - 6; i++)
-		{
-			while(collidable.containsPoint(QPointF(i, y + playerSize.height() - 2), Qt::OddEvenFill))
-			{
-				y--;
-				if(m_yVelocity > 0)
-					m_yVelocity = 0;
-			}
-
-			if(collidable.containsPoint(QPointF(i, y + playerSize.height() - 1), Qt::OddEvenFill))
-			{
-				m_isOnGround = true;
-			}
-		}
 	}
 
 	if(m_isOnGround && m_x != x)
@@ -102,12 +117,14 @@ void Player::tick(const long delta)
 		}
 	}
 
-	if(!m_isOnGround && m_yVelocity == 0)
+	if(!m_isOnGround && m_yThrust > 0)
 	{
-		m_yVelocity = 100;
+		m_yVelocity += delta / 3.0f;
+		if(m_yVelocity > 1000)
+			m_yVelocity = 1000;
 	}
 
-	if(m_yVelocity > 100)
+	if(m_yThrust < 0 && m_yVelocity > 100)
 	{
 		m_yVelocity -= delta / 2.0f;
 	}
@@ -131,7 +148,6 @@ void Player::setDirection(const float direction)
 
 	if(m_xThrust != 0)
 	{
-		m_sprite.setImageIndex(Walking);
 		m_flipped = m_xThrust < 0 || (!m_xThrust && m_xThrust < 0);
 		m_lastDirection = m_xThrust;
 	}

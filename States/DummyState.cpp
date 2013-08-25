@@ -126,6 +126,12 @@ namespace States
 				m_reverseTime = true;
 				break;
 			}
+
+			case Qt::Key_Return:
+			{
+				m_player->respawn();
+				break;
+			}
 		}
 
 //		updatePlayerMovement();

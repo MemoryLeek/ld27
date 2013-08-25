@@ -68,7 +68,6 @@ void Bot::tick(const long delta)
 			}
 		}
 
-		movement -= movement * (movement / currentLine.length());
 		m_positionInLine += movement / currentLine.length();
 	}
 
@@ -76,7 +75,8 @@ void Bot::tick(const long delta)
 	{
 		if(m_visionCone.containsActor(*player))
 		{
-			m_alarmSound.play();
+			if(!m_alarmSound.isPlaying())
+				m_alarmSound.play();
 			player->respawn();
 		}
 	}
