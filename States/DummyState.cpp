@@ -48,14 +48,9 @@ namespace States
 
 	void DummyState::tick(long delta)
 	{
-		if(m_reverseTime)
-			delta = -delta;
-
 		m_player->tick(delta);
-		for(Bot *bot : m_bots)
-			bot->tick(delta);
-		m_fps++;
 
+		m_fps++;
 		if((m_fpsTimer += delta) >= 1000)
 		{
 			emit fpsChanged();
@@ -64,6 +59,12 @@ namespace States
 			m_fpsTimer = 0;
 			m_fps = 0;
 		}
+
+		if(m_reverseTime)
+			delta = -delta;
+
+		for(Bot *bot : m_bots)
+			bot->tick(delta);
 	}
 
 	void DummyState::keyPressed(QKeyEvent *event)
