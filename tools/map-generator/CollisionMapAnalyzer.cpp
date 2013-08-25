@@ -21,7 +21,7 @@ CollisionMapAnalyzerResult CollisionMapAnalyzer::analyze(const QImage &image)
 			{
 				case CollisionMapEntry::Collision:
 				{
-					CollisionMapEntry *entry = result.find(x, y, CollisionMapEntry::Collision) ?: result.createEntry(x, y, CollisionMapEntry::Collision);
+					CollisionMapEntry *entry = result.find(x, y, CollisionMapEntry::Collision);
 					entry->addPoint(x, y);
 
 					break;
@@ -29,7 +29,23 @@ CollisionMapAnalyzerResult CollisionMapAnalyzer::analyze(const QImage &image)
 
 				case CollisionMapEntry::Path:
 				{
-					CollisionMapEntry *entry = result.find(x, y, CollisionMapEntry::Path) ?: result.createEntry(x, y, CollisionMapEntry::Path);
+					CollisionMapEntry *entry = result.find(x, y, CollisionMapEntry::Path);
+					entry->addPoint(x, y);
+
+					break;
+				}
+
+				case CollisionMapEntry::Spawn:
+				{
+					CollisionMapEntry *entry = result.createEntry(x, y, CollisionMapEntry::Spawn);
+					entry->addPoint(x, y);
+
+					break;
+				}
+
+				case CollisionMapEntry::Goal:
+				{
+					CollisionMapEntry *entry = result.find(x, y, CollisionMapEntry::Goal);
 					entry->addPoint(x, y);
 
 					break;

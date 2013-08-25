@@ -13,7 +13,9 @@ class CollisionMapEntry
 		enum EntryType
 		{
 			Collision = 4294901760,
-			Path = 4278255360
+			Path = 4278255360,
+			Spawn = 4278190335,
+			Goal = 4294967040
 		};
 
 		CollisionMapEntry(EntryType type);

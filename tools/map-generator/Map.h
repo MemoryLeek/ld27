@@ -4,6 +4,8 @@
 #include <QHash>
 #include <QImage>
 
+#include "Utilities.h"
+
 class CollisionMapEntry;
 
 class Map
@@ -28,6 +30,9 @@ class Map
 
 		QList<QPolygon> m_collidables;
 		QList<QPolygon> m_paths;
+
+		QPoint m_spawn;
+		QRect m_goal;
 };
 
 #endif // MAP_H

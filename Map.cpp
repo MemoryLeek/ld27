@@ -20,6 +20,15 @@ void Map::initialize(Scene *scene)
 		painter.drawPolygon(polygon);
 	}
 
+	QLine spawnLine(m_spawn.x(), 0, m_spawn.x(), size.height());
+
+	painter.setBrush(Qt::blue);
+	painter.setPen(Qt::blue);
+	painter.drawLine(spawnLine);
+	painter.drawEllipse(m_spawn, 10, 10);
+
+	painter.fillRect(m_goal, Qt::yellow);
+
 //	for(const QPolygon &path : m_paths)
 //	{
 //		qDebug() << path.count();
@@ -64,6 +73,16 @@ int Map::height() const
 
 bool Map::isCollidable(const int x, const int y)
 {
+	QPoint point(x, y);
+
+	for(const QPolygon &polygon : m_collidables)
+	{
+		if(polygon.containsPoint(point, Qt::OddEvenFill))
+		{
+			return true;
+		}
+	}
+
 //	QPoint p(x, y);
 
 //	return m_collidables.contains(p);
@@ -81,6 +100,8 @@ QDataStream &operator >>(QDataStream &stream, Map &map)
 	stream >> map.m_foreground;
 	stream >> map.m_collidables;
 	stream >> map.m_paths;
+	stream >> map.m_spawn;
+	stream >> map.m_goal;
 
 	return stream;
 }

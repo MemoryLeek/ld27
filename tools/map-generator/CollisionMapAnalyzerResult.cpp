@@ -26,7 +26,7 @@ CollisionMapEntry *CollisionMapAnalyzerResult::find(const int x, const int y, co
 		}
 	}
 
-	return 0;
+	return createEntry(x, y, type);
 }
 
 CollisionMapEntry *CollisionMapAnalyzerResult::createEntry(const int x, const int y, const CollisionMapEntry::EntryType type)

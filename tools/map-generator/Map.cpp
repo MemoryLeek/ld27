@@ -21,10 +21,10 @@ void Map::addCollisionMapEntry(CollisionMapEntry *entry)
 		case CollisionMapEntry::Collision:
 		{
 			QPolygon polygon;
-			QList<Coordinate> list = entry->compile();
-			QSet<Coordinate> source = QSet<Coordinate>::fromList(list);
 			QSet<Coordinate> target;
 
+			const QList<Coordinate> list = entry->compile();
+			const QSet<Coordinate> source = QSet<Coordinate>::fromList(list);
 			const Coordinate *point = &list[0];
 
 			while(point)
@@ -92,6 +92,36 @@ void Map::addCollisionMapEntry(CollisionMapEntry *entry)
 
 			break;
 		}
+
+		case CollisionMapEntry::Spawn:
+		{
+			const QList<Coordinate> points = entry->compile();
+			const QPoint spawn(points[0].first, points[0].second);
+			const QPoint adjusted = spawn - QPoint(0, 60);
+
+			m_spawn = adjusted;
+
+			break;
+		}
+
+		case CollisionMapEntry::Goal:
+		{
+			QPolygon polygon;
+			QList<Coordinate> points = entry->compile();
+			QListIterator<Coordinate> iterator(points);
+
+			while(iterator.hasNext())
+			{
+				const Coordinate &coordinate = iterator.next();
+				const QPoint point(coordinate.first, coordinate.second);
+
+				polygon << point;
+			}
+
+			m_goal = polygon.boundingRect();
+
+			break;
+		}
 	}
 }
 
@@ -101,6 +131,8 @@ QDataStream &operator <<(QDataStream &stream, const Map &map)
 	stream << map.m_foreground;
 	stream << map.m_collidables;
 	stream << map.m_paths;
+	stream << map.m_spawn;
+	stream << map.m_goal;
 
 	return stream;
 }
