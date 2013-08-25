@@ -37,47 +37,57 @@ QSGTexture *VisionConeDrawable::texture()
 bool VisionConeDrawable::containsActor(Actor &actor)
 {
 	const QPointF actorPosition(actor.x(), actor.y());
-	const QRectF actorBoundingBox(actorPosition, actor.texture()->textureSize());
+	const QPointF botPosition(m_bot->x(), m_bot->y());
 
-	QLineF ray(QPointF(x(), y() + 77), actorBoundingBox.center());
-	if(m_bot->isFlipped())
+	const QRectF actorBoundingBox(actorPosition, actor.texture()->textureSize());
+	const QRectF botBoundingBox(botPosition, m_bot->texture()->textureSize());
+
+	const QLineF ray(botBoundingBox.center(), actorBoundingBox.center());
+	const QList<Collidable> &collidables = m_map->collidables();
+
+	if(ray.length() < 300)
 	{
-		ray.setP1(QPointF(x() + 300, y() + 77));
-		if(!(ray.angle() > 165 && ray.angle() < 195))
-			return false;
+		if(m_bot->isFlipped())
+		{
+			if(!(ray.angle() > 165 && ray.angle() < 195))
+			{
+				return false;
+			}
+		}
+		else
+		{
+			if(ray.angle() < 345 && ray.angle() > 15)
+			{
+				return false;
+			}
+		}
+
+		const float length = ray.length();
+		const float step = 1.0f / length;
+
+		for(const Collidable &collidable : collidables)
+		{
+			const QPolygonF &polygon = collidable.polygon();
+			const QRectF &boundingBox = collidable.boundingBox();
+
+			for(float i = 0.0f; i < 1.0f; i += step)
+			{
+				const QPointF &point = ray.pointAt(i);
+
+				if(boundingBox.contains(point))
+				{
+					if(polygon.containsPoint(point, Qt::OddEvenFill))
+					{
+						return false;
+					}
+				}
+			}
+		}
+
+		return true;
 	}
 	else
 	{
-		if(ray.angle() < 345 && ray.angle() > 15)
-			return false;
-	}
-
-	if(ray.length() > 300)
 		return false;
-
-	int rayLength = ray.length();
-	bool rayHitWall = false;
-	for(int len = 10; len < rayLength; len += 2)
-	{
-		ray.setLength(len);
-
-		for(const Collidable &collidable : m_map->collidables())
-		{
-			if(!collidable.boundingBox().contains(ray.p2().x(), ray.p2().y()))
-				continue;
-
-			const QPolygonF &polygon = collidable.polygon();
-
-			if(polygon.containsPoint(ray.p2(), Qt::OddEvenFill))
-			{
-				rayHitWall = true;
-				break;
-			}\
-		}
-
-		if(rayHitWall)
-			break;
 	}
-
-	return !rayHitWall;
 }

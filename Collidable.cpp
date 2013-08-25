@@ -19,4 +19,6 @@ QDataStream &operator >>(QDataStream &stream, Collidable &collidable)
 {
 	stream >> collidable.m_polygon;
 	stream >> collidable.m_boundingBox;
+
+	return stream;
 }

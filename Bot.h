@@ -26,7 +26,7 @@ class Bot : public Actor
 		Map *m_map;
 
 		QVector<QLineF> m_path;
-		uint m_currentLine;
+		int m_currentLine;
 		qreal m_positionInLine;
 
 		bool m_movingForward;
