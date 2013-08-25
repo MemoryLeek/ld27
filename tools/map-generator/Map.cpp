@@ -27,7 +27,7 @@ void Map::addCollisionMapEntry(CollisionMapEntry *entry)
 			const QSet<Coordinate> source = QSet<Coordinate>::fromList(list);
 			const Coordinate *point = &list[0];
 
-			while(point)
+			for(int iterator = 0; point; iterator ++)
 			{
 				QMap<int, const Coordinate *> candidates;
 
@@ -60,7 +60,12 @@ void Map::addCollisionMapEntry(CollisionMapEntry *entry)
 					point = c;
 
 					target << *point;
-					polygon << QPoint(point->first, point->second);
+
+					if(iterator == 10)
+					{
+						polygon << QPoint(point->first, point->second);
+						iterator = 0;
+					}
 				}
 				else
 				{
