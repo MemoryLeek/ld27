@@ -34,13 +34,15 @@ SOURCES += \
     JoystickEvent.cpp \
     Collidable.cpp \
     SharedState.cpp \
-    States/GameState.cpp
+    States/GameState.cpp \
+    States/GoalState.cpp
 
 OTHER_FILES += \
     Window.qml \
     States/LogoState.qml \
     States/MenuState.qml \
-    States/GameState.qml
+    States/GameState.qml \
+    States/GoalState.qml
 
 HEADERS += \
     Window.h \
@@ -76,7 +78,8 @@ HEADERS += \
     JoystickEvent.h \
     Collidable.h \
     SharedState.h \
-    States/GameState.h
+    States/GameState.h \
+    States/GoalState.h
 
 LIBS += -lSDL2
 

@@ -1,9 +1,13 @@
 #include "Scene.h"
 #include "Map.h"
+#include "Window.h"
+#include "SharedState.h"
 
 #include "Player.h"
 
-Player::Player(Map *map, Scene *scene)
+#include <QGuiApplication>
+
+Player::Player(Map *map, Scene *scene, Window *window)
 	: Actor("resources/player.spb", scene),
 	  m_xVelocity(500),
 	  m_yVelocity(100),
@@ -16,6 +20,7 @@ Player::Player(Map *map, Scene *scene)
 	  m_map(map),
 	  m_stepSoundTimer(0)
 {
+	m_window = window;
 //	m_jumpSound.setSource(QUrl::fromLocalFile("resources/sound/jump.wav"));
 //	m_jumpSound.setVolume(0.5);
 //	m_stepSound.setSource(QUrl::fromLocalFile("resources/sound/step.wav"));
@@ -41,6 +46,7 @@ void Player::tick(const long delta)
 	const QPointF playerCenter(playerSize.width() / 2, playerSize.height() / 2);
 	const QPointF cameraPosition(m_x + playerCenter.x(), m_y + playerCenter.y());
 	const QRectF playerBoundingBox(x, y, playerSize.width(), playerSize.height());
+	const QRect &goal = m_map->goal();
 
 	if(m_isOnGround)
 	{
@@ -138,6 +144,13 @@ void Player::tick(const long delta)
 	else
 	{
 		m_yThrust = 1;
+	}
+
+	bool reachedGoal = goal.contains(x, y);
+
+	if(reachedGoal)
+	{
+		m_window->setActiveState("GoalState");
 	}
 
 	m_x = x;

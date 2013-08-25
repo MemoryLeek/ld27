@@ -65,7 +65,7 @@ void Map::initialize(Scene *scene)
 //		}
 //	}
 
-	new MapSurface(MapSurface::Foreground, foo, scene);
+//	new MapSurface(MapSurface::Foreground, foo, scene);
 }
 
 int Map::width() const
@@ -91,6 +91,11 @@ QList<QPolygon> Map::paths() const
 QPoint Map::spawnPoint() const
 {
 	return m_spawn;
+}
+
+QRect Map::goal() const
+{
+	return m_goal;
 }
 
 QDataStream &operator >>(QDataStream &stream, Map &map)

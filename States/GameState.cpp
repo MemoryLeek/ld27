@@ -286,12 +286,14 @@ namespace States
 		SharedState *state = getComponent<SharedState>();
 		Scene *scene = new Scene(window);
 
+		QString filename = state->currentMap();
+
 		MapLoader mapLoader(scene);
-		Map *map = mapLoader.load("resources/maps/2.map");
+		Map *map = mapLoader.load(filename);
 		map->initialize(scene);
 
 		m_scene = scene;
-		m_player = new Player(map, scene);
+		m_player = new Player(map, scene, window);
 
 		const QList<QPolygon> &paths = map->paths();
 

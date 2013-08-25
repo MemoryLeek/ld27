@@ -6,11 +6,13 @@
 #include "Actor.h"
 
 class Map;
+class Window;
+class SharedState;
 
 class Player : public Actor
 {
 	public:
-		Player(Map *map, Scene *scene);
+		Player(Map *map, Scene *scene, Window *window);
 
 		float x() const override;
 		float y() const override;
@@ -44,6 +46,7 @@ class Player : public Actor
 		bool m_isOnGround;
 
 		Map *m_map;
+		Window *m_window;
 
 //		QSoundEffect m_jumpSound;
 //		QSoundEffect m_stepSound;

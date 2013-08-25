@@ -22,6 +22,7 @@ class Map
 		QList<QPolygon> paths() const;
 
 		QPoint spawnPoint() const;
+		QRect goal() const;
 
 	private:
 		friend QDataStream &operator >>(QDataStream &stream, Map &map);
