@@ -171,7 +171,7 @@ void Player::jump()
 
 //	m_jumpSound.play();
 	m_yThrust = -1;
-	m_yVelocity = 320;
+	m_yVelocity = 323;
 }
 
 void Player::respawn()
