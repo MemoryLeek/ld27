@@ -17,8 +17,7 @@ class Map
 		int width() const;
 		int height() const;
 
-		bool isCollidable(const int x, const int y);
-
+		QList<QPolygon> collidables() const;
 		QList<QPolygon> paths() const;
 
 	private:

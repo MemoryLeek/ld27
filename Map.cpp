@@ -71,22 +71,9 @@ int Map::height() const
 	return m_background.height();
 }
 
-bool Map::isCollidable(const int x, const int y)
+QList<QPolygon> Map::collidables() const
 {
-	QPoint point(x, y);
-
-	for(const QPolygon &polygon : m_collidables)
-	{
-		if(polygon.containsPoint(point, Qt::OddEvenFill))
-		{
-			return true;
-		}
-	}
-
-//	QPoint p(x, y);
-
-//	return m_collidables.contains(p);
-	return false;
+	return m_collidables;
 }
 
 QList<QPolygon> Map::paths() const

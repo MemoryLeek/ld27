@@ -12,6 +12,7 @@ Player::Player(Map *map, Scene *scene)
 	  m_lastDirection(0),
 	  m_x(200),
 	  m_y(1400),
+	  m_isOnGround(false),
 	  m_map(map)
 {
 
@@ -29,8 +30,8 @@ float Player::y() const
 
 void Player::tick(const long delta)
 {
-	const float x = m_x + (m_xThrust * m_xVelocity) * (delta / 1000.0f);
-	const float y = m_y + (m_yThrust * m_yVelocity) * (delta / 1000.0f);
+	float x = m_x + (m_xThrust * m_xVelocity) * (delta / 1000.0f);
+	float y = m_y + (m_yThrust * m_yVelocity) * (delta / 1000.0f);
 
 	const QSGTexture *t = texture();
 	const QSize playerSize = t->textureSize();
@@ -40,53 +41,57 @@ void Player::tick(const long delta)
 	m_sprite.update(delta);
 	m_scene->setCameraPosition(cameraPosition, m_map);
 
-	const QLineF lx(m_x, m_y, x, m_y);
-	const QLineF ly(m_x, m_y, m_x, y);
-
-	if(lx.length() > 0)
+	m_isOnGround = false;
+	for(const QPolygonF &collidable : m_map->collidables())
 	{
-		int i = 0;
-
-		for(; i <= lx.length(); i++)
+		// Check left collision
+		for(int i = y + 6; i < y + playerSize.height() - 6; i++)
 		{
-			const int rx = m_x + (i * m_xThrust) + playerSize.width() * (m_xThrust > 0);
-			const int ry = y + playerSize.height() * (m_yThrust > 0);
-
-			const bool isCollidable = m_map->isCollidable(rx, ry);
-
-			if(isCollidable)
+			while(collidable.containsPoint(QPointF(x + 4, i), Qt::OddEvenFill))
 			{
-				break;
+				x++;
 			}
 		}
 
-		if(i > lx.length())
+		// Check right collision
+		for(int i = y + 6; i < y + playerSize.height() - 6; i++)
 		{
-			m_x = x;
+			while(collidable.containsPoint(QPointF(x + playerSize.width() - 4, i), Qt::OddEvenFill))
+			{
+				x--;
+			}
+		}
+
+		// Check top collision
+		for(int i = x + 6; i < x + playerSize.width() - 6; i++)
+		{
+			while(collidable.containsPoint(QPointF(i, y + 1), Qt::OddEvenFill))
+			{
+				y++;
+				m_yVelocity = 100;
+			}
+		}
+
+		// Check bottom collision
+		for(int i = m_x + 6; i < m_x + playerSize.width() - 6; i++)
+		{
+			while(collidable.containsPoint(QPointF(i, y + playerSize.height() - 2), Qt::OddEvenFill))
+			{
+				y--;
+				if(m_yVelocity > 0)
+					m_yVelocity = 0;
+			}
+
+			if(collidable.containsPoint(QPointF(i, y + playerSize.height() - 1), Qt::OddEvenFill))
+			{
+				m_isOnGround = true;
+			}
 		}
 	}
 
-	if(ly.length() > 0)
+	if(!m_isOnGround && m_yVelocity == 0)
 	{
-		int i = 0;
-
-		for(; i <= ly.length(); i++)
-		{
-			const int rx = x + playerSize.width() * (m_xThrust > 0);
-			const int ry = m_y + ((i - 1) * m_yThrust) + playerSize.height() * (m_yThrust > 0);
-
-			const bool isCollidable = m_map->isCollidable(rx, ry);
-
-			if(isCollidable)
-			{
-				break;
-			}
-		}
-
-		if(i > ly.length())
-		{
-			m_y = y;
-		}
+		m_yVelocity = 100;
 	}
 
 	if(m_yVelocity > 100)
@@ -98,27 +103,8 @@ void Player::tick(const long delta)
 		m_yThrust = 1;
 	}
 
-//	if(m_x < 0)
-//	{
-//		m_x = 0;
-//	}
-
-//	if(m_x + playerSize.width() > m_map->width())
-//	{
-//		m_x = m_map->width() - playerSize.width();
-//	}
-
-//	if(m_y < 0)
-//	{
-//		m_y = 0;
-//	}
-
-//	if(m_y + playerSize.height() > m_map->height())
-//	{
-//		m_y = m_map->height() - playerSize.height();
-//	}
-
-
+	m_x = x;
+	m_y = y;
 }
 
 void Player::setVelocity(const float velocity)
@@ -144,6 +130,9 @@ void Player::setDirection(const float direction)
 
 void Player::jump()
 {
+	if(!m_isOnGround)
+		return;
+
 	m_yThrust = -1;
 	m_yVelocity = 300;
 }

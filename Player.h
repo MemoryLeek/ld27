@@ -38,6 +38,8 @@ class Player : public Actor
 		float m_x;
 		float m_y;
 
+		bool m_isOnGround;
+
 		Map *m_map;
 };
 
