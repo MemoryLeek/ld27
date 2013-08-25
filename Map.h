@@ -20,6 +20,8 @@ class Map
 		QList<QPolygon> collidables() const;
 		QList<QPolygon> paths() const;
 
+		QPoint spawnPoint() const;
+
 	private:
 		friend QDataStream &operator >>(QDataStream &stream, Map &map);
 

@@ -18,6 +18,7 @@ class Player : public Actor
 		void setVelocity(const float velocity);
 		void setDirection(const float direction);
 		void jump();
+		void respawn();
 
 	private:
 		enum ImageStates

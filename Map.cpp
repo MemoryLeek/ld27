@@ -81,6 +81,11 @@ QList<QPolygon> Map::paths() const
 	return m_paths;
 }
 
+QPoint Map::spawnPoint() const
+{
+	return m_spawn;
+}
+
 QDataStream &operator >>(QDataStream &stream, Map &map)
 {
 	stream >> map.m_background;

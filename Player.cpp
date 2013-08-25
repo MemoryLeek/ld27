@@ -136,3 +136,9 @@ void Player::jump()
 	m_yThrust = -1;
 	m_yVelocity = 300;
 }
+
+void Player::respawn()
+{
+	m_x = m_map->spawnPoint().x();
+	m_y = m_map->spawnPoint().y();
+}

@@ -70,8 +70,8 @@ void Bot::tick(const long delta)
 
 	for(Player *player : m_trackedPlayers)
 	{
-//		if(m_visionCone.containsActor(*player))
-//			qDebug() << "PLAYER SEEN!";
+		if(m_visionCone.containsActor(*player))
+			player->respawn();
 	}
 }
 
