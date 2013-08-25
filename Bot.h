@@ -30,7 +30,7 @@ class Bot : public Actor
 		qreal m_positionInLine;
 
 		bool m_movingForward;
-		long m_directionSwitchDelay;
+//		long m_directionSwitchDelay;
 
 		VisionConeDrawable m_visionCone;
 		QVector<Player*> m_trackedPlayers;

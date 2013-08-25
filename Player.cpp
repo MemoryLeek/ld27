@@ -9,18 +9,22 @@
 
 Player::Player(Map *map, Scene *scene, Window *window)
 	: Actor("resources/player.spb", scene),
-	  m_xVelocity(500),
+	  m_xVelocity(200),
 	  m_yVelocity(100),
 	  m_xThrust(0),
 	  m_yThrust(1),
 	  m_lastDirection(0),
-	  m_x(200),
-	  m_y(1400),
+	  m_x(0),
+	  m_y(0),
 	  m_isOnGround(false),
 	  m_map(map),
 	  m_stepSoundTimer(0)
 {
+	const QPoint &p = map->spawnPoint();
+
 	m_window = window;
+	m_x = p.x();
+	m_y = p.y();
 //	m_jumpSound.setSource(QUrl::fromLocalFile("resources/sound/jump.wav"));
 //	m_jumpSound.setVolume(0.5);
 //	m_stepSound.setSource(QUrl::fromLocalFile("resources/sound/step.wav"));

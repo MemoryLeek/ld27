@@ -1,7 +1,7 @@
 #include "LogoState.h"
 #include "QTimerEx.h"
 
-#include "States/MainMenuState.h"
+#include "States/GameState.h"
 
 namespace States
 {
@@ -39,6 +39,6 @@ namespace States
 		m_skipping = true;
 
 		killTimer(m_timerId);
-		changeState<States::MainMenuState>();
+		changeState<States::GameState>();
 	}
 }

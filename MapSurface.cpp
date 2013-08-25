@@ -6,8 +6,6 @@ MapSurface::MapSurface(const SurfaceLevel surfaceLevel, const QImage &image, Sce
 {
 	m_surfaceLevel = surfaceLevel;
 	m_texture = scene->createTexture(image);
-
-	qDebug() << "MapSurface";
 }
 
 MapSurface::~MapSurface()

@@ -9,7 +9,7 @@ IDrawable::IDrawable(Scene *scene)
 
 IDrawable::~IDrawable()
 {
-	m_scene->remove(this);
+//	m_scene->remove(this);
 }
 
 bool IDrawable::compare(IDrawable *d1, IDrawable *d2)

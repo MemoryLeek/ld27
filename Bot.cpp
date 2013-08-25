@@ -8,7 +8,7 @@ Bot::Bot(const QPolygon &path, Map *map, Scene *scene)
 	  m_currentLine(0),
 	  m_positionInLine(0),
 	  m_movingForward(true),
-	  m_directionSwitchDelay(0),
+//	  m_directionSwitchDelay(0),
 	  m_visionCone(this, map, scene)
 {
 	for(int i = 0; i < path.count() - 1; i++)
@@ -30,22 +30,22 @@ float Bot::y() const
 
 void Bot::tick(const long delta)
 {
-	if(m_directionSwitchDelay <= 0) // Don't flip direction when we're idling
-	{
+//	if(m_directionSwitchDelay <= 0) // Don't flip direction when we're idling
+//	{
 		m_sprite.update(delta);
 		m_flipped = m_movingForward;
-	}
+//	}
 
 	qreal movement = 100.0f * (delta / 1000.0f);
 	if(!m_movingForward)
 		movement = -movement;
 
 	QLineF currentLine = m_path.at(m_currentLine);
-	if(m_directionSwitchDelay >= 0)
-	{
-		m_directionSwitchDelay -= delta;
-	}
-	else if(m_positionInLine + movement / currentLine.length() >= 0 && m_positionInLine + movement / currentLine.length() <= 1) // On-line movement
+//	if(m_directionSwitchDelay >= 0)
+//	{
+//		m_directionSwitchDelay -= delta;
+//	}
+	if(m_positionInLine + movement / currentLine.length() >= 0 && m_positionInLine + movement / currentLine.length() <= 1) // On-line movement
 	{
 		m_positionInLine += movement / currentLine.length();
 	}
@@ -62,7 +62,7 @@ void Bot::tick(const long delta)
 			{
 				m_movingForward = !m_movingForward;
 				m_positionInLine = 1;
-				m_directionSwitchDelay = 1500;
+//				m_directionSwitchDelay = 1500;
 			}
 		}
 		else if(m_positionInLine + movement / currentLine.length() <= 0) // Previous line in sequence
@@ -76,7 +76,7 @@ void Bot::tick(const long delta)
 			{
 				m_movingForward = !m_movingForward;
 				m_positionInLine = 0;
-				m_directionSwitchDelay = 1500;
+//				m_directionSwitchDelay = 1500;
 			}
 		}
 

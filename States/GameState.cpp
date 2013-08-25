@@ -103,7 +103,7 @@ namespace States
 				case Qt::Key_A:
 				{
 					m_player->setDirection(-1);
-					m_player->setVelocity(500);
+					m_player->setVelocity(200);
 
 					break;
 				}
@@ -112,7 +112,7 @@ namespace States
 				case Qt::Key_D:
 				{
 					m_player->setDirection(1);
-					m_player->setVelocity(500);
+					m_player->setVelocity(200);
 
 					break;
 				}
@@ -232,7 +232,7 @@ namespace States
 		else
 		{
 			m_player->setDirection(event.axis().x() / abs(event.axis().x()));
-			m_player->setVelocity(abs(event.axis().x()) * 5);
+			m_player->setVelocity(abs(event.axis().x()) * 2);
 		}
 
 		m_lastJoystickEvent = event;
