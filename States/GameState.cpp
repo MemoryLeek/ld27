@@ -69,6 +69,8 @@ namespace States
 				JoystickEvent::Buttons buttons = JoystickEvent::ButtonNone;
 				if(SDL_JoystickGetButton(m_joystick, 0))
 					buttons |= JoystickEvent::ButtonJump;
+				if(SDL_JoystickGetButton(m_joystick, 2))
+					buttons |= JoystickEvent::ButtonReverseTime;
 
 				JoystickEvent jsEvent(QVector2D(x, y), buttons);
 				if(jsEvent != m_lastJoystickEvent)

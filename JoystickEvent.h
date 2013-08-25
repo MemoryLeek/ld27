@@ -9,7 +9,8 @@ class JoystickEvent
 		enum Button
 		{
 			ButtonNone,
-			ButtonJump
+			ButtonJump,
+			ButtonReverseTime
 		};
 		Q_DECLARE_FLAGS(Buttons, Button)
 

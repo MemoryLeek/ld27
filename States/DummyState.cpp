@@ -178,9 +178,21 @@ namespace States
 			if(m_lastJoystickEvent.buttons() & JoystickEvent::ButtonJump)
 				m_player->jump();
 		}
+		if((m_lastJoystickEvent.buttons() & JoystickEvent::ButtonReverseTime) != (event.buttons() & JoystickEvent::ButtonReverseTime))
+		{
+			m_reverseTime = (m_lastJoystickEvent.buttons() & JoystickEvent::ButtonReverseTime) ? false : true;
+		}
 
-		m_player->setDirection(event.axis().x() / abs(event.axis().x()));
-		m_player->setVelocity(abs(event.axis().x()));
+
+		if(event.axis().x() == 0)
+		{
+			m_player->setDirection(0);
+		}
+		else
+		{
+			m_player->setDirection(event.axis().x() / abs(event.axis().x()));
+			m_player->setVelocity(abs(event.axis().x()) * 5);
+		}
 
 		m_lastJoystickEvent = event;
 	}
