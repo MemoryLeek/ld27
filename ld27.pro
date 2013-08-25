@@ -1,4 +1,4 @@
-QT += quick
+QT += quick multimedia
 
 TARGET = ld27
 DESTDIR = bin
@@ -25,7 +25,7 @@ SOURCES += \
     LocalImageProvider.cpp \
     Actor.cpp \
     Player.cpp \
-    SpriteLoader.cpp \
+	SpriteLoader.cpp \
 	VisionConeDrawable.cpp \
 	Bot.cpp \
     States/MainMenuState.cpp \

@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <QSoundEffect>
+
 #include "Actor.h"
 
 class Map;
@@ -42,6 +44,10 @@ class Player : public Actor
 		bool m_isOnGround;
 
 		Map *m_map;
+
+		QSoundEffect m_jumpSound;
+		QSoundEffect m_stepSound;
+		long m_stepSoundTimer;
 };
 
 #endif // PLAYER_H
