@@ -13,6 +13,7 @@ namespace States
 		m_joystick = NULL;
 
 		setFlag(QQuickItem::ItemHasContents);
+		setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
 	}
 
 	GameState::~GameState()

@@ -34,7 +34,7 @@ namespace States
 	void DummyState::initialize(Scene *scene)
 	{
 		MapLoader mapLoader(scene);
-		Map *map = mapLoader.load("resources/maps/1.map");
+		Map *map = mapLoader.load("resources/maps/2.map");
 		map->initialize(scene);
 
 		m_player = new Player(map, scene);
@@ -43,8 +43,6 @@ namespace States
 
 		for(const QPolygon &path : paths)
 		{
-			qDebug() << "path";
-
 			Bot *bot = new Bot(path, map, scene);
 			bot->addPlayerTracking(m_player);
 
@@ -89,18 +87,21 @@ namespace States
 	{
 		switch(event->key())
 		{
+			case Qt::Key_Up:
 			case Qt::Key_W:
 			{
 				m_keyStates << Key::KeyUp;
 				break;
 			}
 
+			case Qt::Key_Down:
 			case Qt::Key_S:
 			{
 				m_keyStates << Key::KeyDown;
 				break;
 			}
 
+			case Qt::Key_Left:
 			case Qt::Key_A:
 			{
 				m_player->setDirection(-1);
@@ -109,6 +110,7 @@ namespace States
 				break;
 			}
 
+			case Qt::Key_Right:
 			case Qt::Key_D:
 			{
 				m_player->setDirection(1);
@@ -143,18 +145,21 @@ namespace States
 	{
 		switch(event->key())
 		{
+			case Qt::Key_Up:
 			case Qt::Key_W:
 			{
 				m_keyStates.removeAll(Key::KeyUp);
 				break;
 			}
 
+			case Qt::Key_Down:
 			case Qt::Key_S:
 			{
 				m_keyStates.removeAll(Key::KeyDown);
 				break;
 			}
 
+			case Qt::Key_Left:
 			case Qt::Key_A:
 			{
 				m_player->setDirection(0);
@@ -162,6 +167,7 @@ namespace States
 				break;
 			}
 
+			case Qt::Key_Right:
 			case Qt::Key_D:
 			{
 				m_player->setDirection(0);
@@ -176,7 +182,47 @@ namespace States
 			}
 		}
 
-//		updatePlayerMovement();
+		//		updatePlayerMovement();
+	}
+
+	void DummyState::mousePressEvent(QMouseEvent *event)
+	{
+		switch(event->button())
+		{
+			case Qt::LeftButton:
+			{
+				m_reverseTime = true;
+				break;
+			}
+
+			case Qt::RightButton:
+			{
+				m_player->jump();
+				break;
+			}
+
+			default:
+			{
+				break;
+			}
+		}
+	}
+
+	void DummyState::mouseReleaseEvent(QMouseEvent *event)
+	{
+		switch(event->button())
+		{
+			case Qt::LeftButton:
+			{
+				m_reverseTime = false;
+				break;
+			}
+
+			default:
+			{
+				break;
+			}
+		}
 	}
 
 	void DummyState::joystickEvent(const JoystickEvent &event)
