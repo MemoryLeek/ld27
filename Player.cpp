@@ -6,13 +6,13 @@
 Player::Player(Map *map, Scene *scene)
 	: Actor("resources/player.spb", scene),
 	  m_xVelocity(500),
+	  m_yVelocity(100),
+	  m_xThrust(0),
+	  m_yThrust(1),
 	  m_lastDirection(0),
 	  m_x(200),
 	  m_y(1400),
-	  m_map(map),
-	  m_xThrust(0),
-	  m_yThrust(1),
-	  m_yVelocity(100)
+	  m_map(map)
 {
 
 }
