@@ -16,12 +16,12 @@ VisionConeDrawable::VisionConeDrawable(Bot *bot, Map *map, Scene *scene)
 
 float VisionConeDrawable::x() const
 {
-	return (m_bot->isFlipped()) ? m_bot->x() - 500 + 16 : m_bot->x() + 16;
+	return (m_bot->isFlipped()) ? m_bot->x() - 300 + 16 : m_bot->x() + 16;
 }
 
 float VisionConeDrawable::y() const
 {
-	return m_bot->y() - 135;
+	return m_bot->y() - 62;
 }
 
 unsigned int VisionConeDrawable::drawingOrder() const
@@ -39,25 +39,25 @@ bool VisionConeDrawable::containsActor(Actor &actor)
 	const QPointF actorPosition(actor.x(), actor.y());
 	const QRectF actorBoundingBox(actorPosition, actor.texture()->textureSize());
 
-	QLineF ray(QPointF(x(), y() + 150), actorBoundingBox.center());
+	QLineF ray(QPointF(x(), y() + 77), actorBoundingBox.center());
 	if(m_bot->isFlipped())
 	{
-		ray.setP1(QPointF(x() + 500, y() + 150));
-		if(!(ray.angle() > 145 && ray.angle() < 215))
+		ray.setP1(QPointF(x() + 300, y() + 77));
+		if(!(ray.angle() > 165 && ray.angle() < 195))
 			return false;
 	}
 	else
 	{
-		if(ray.angle() < 325 && ray.angle() > 35)
+		if(ray.angle() < 345 && ray.angle() > 15)
 			return false;
 	}
 
-	if(ray.length() > 500)
+	if(ray.length() > 300)
 		return false;
 
 	int rayLength = ray.length();
 	bool rayHitWall = false;
-	for(int len = 50; len < rayLength; len += 20)
+	for(int len = 10; len < rayLength; len += 2)
 	{
 		ray.setLength(len);
 
