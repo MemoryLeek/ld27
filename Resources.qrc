@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/QML">
         <file>Window.qml</file>
-        <file>States/DummyState.qml</file>
         <file>States/LogoState.qml</file>
         <file>States/MenuState.qml</file>
+        <file>States/GameState.qml</file>
     </qresource>
 </RCC>

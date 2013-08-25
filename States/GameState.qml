@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import MemoryLeek 1.0
 
-DummyState
+GameState
 {
 	id: context
 	focus: true

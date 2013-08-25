@@ -39,8 +39,8 @@ SOURCES += \
 OTHER_FILES += \
     Window.qml \
     States/LogoState.qml \
-    States/DummyState.qml \
-    States/MenuState.qml
+    States/MenuState.qml \
+    States/GameState.qml
 
 HEADERS += \
     Window.h \

@@ -18,7 +18,7 @@ Engine::Engine()
 	qmlRegisterType<Window>("MemoryLeek", 1, 0, "Window");
 	qmlRegisterType<States::LogoState>("MemoryLeek", 1, 0, "LogoState");
 	qmlRegisterType<States::MainMenuState>("MemoryLeek", 1, 0, "MenuState");
-	qmlRegisterType<States::GameState>("MemoryLeek", 1, 0, "DummyState");
+	qmlRegisterType<States::GameState>("MemoryLeek", 1, 0, "GameState");
 
 	// Registration of components
 	registerComponent(m_sharedState);
