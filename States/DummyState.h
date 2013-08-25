@@ -18,11 +18,13 @@ namespace States
 		Q_OBJECT
 
 		Q_PROPERTY(QString fps READ fps NOTIFY fpsChanged)
+		Q_PROPERTY(float timePool READ timePool NOTIFY timePoolChanged)
 
 		public:
 			DummyState();
 
 			QString fps() const;
+			float timePool() const;
 
 		private:
 			void initialize(Scene *scene) override;
@@ -43,9 +45,11 @@ namespace States
 			float m_lastFps;
 
 			bool m_reverseTime;
+			float m_timePool;
 
 		signals:
 			void fpsChanged();
+			void timePoolChanged();
 	};
 }
 

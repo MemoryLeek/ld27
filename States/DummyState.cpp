@@ -18,11 +18,17 @@ namespace States
 		m_fpsTimer = 0;
 		m_lastFps = 0;
 		m_reverseTime = false;
+		m_timePool = 10;
 	}
 
 	QString DummyState::fps() const
 	{
 		return QStringEx::format("%1 FPS", m_lastFps);
+	}
+
+	float DummyState::timePool() const
+	{
+		return m_timePool;
 	}
 
 	void DummyState::initialize(Scene *scene)
@@ -60,8 +66,20 @@ namespace States
 			m_fps = 0;
 		}
 
-		if(m_reverseTime)
+		if(m_reverseTime && m_timePool > 0)
+		{
+			m_timePool -= delta / 1000.f;
+			emit timePoolChanged();
 			delta = -delta;
+		}
+
+		if(!m_reverseTime && m_timePool < 10)
+		{
+			m_timePool += delta / 1000.f;
+			if(m_timePool > 10)
+				m_timePool = 10;
+			emit timePoolChanged();
+		}
 
 		for(Bot *bot : m_bots)
 			bot->tick(delta);
