@@ -45,7 +45,7 @@ namespace States
 		{
 			qDebug() << "path";
 
-			Bot *bot = new Bot(path, scene);
+			Bot *bot = new Bot(path, map, scene);
 			bot->addPlayerTracking(m_player);
 
 			m_bots << bot;

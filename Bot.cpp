@@ -2,15 +2,19 @@
 
 #include "Bot.h"
 
-Bot::Bot(const QPolygon &path, Scene *scene)
+Bot::Bot(const QPolygon &path, Map *map, Scene *scene)
 	: Actor("resources/guard.spb", scene),
+	  m_map(map),
 	  m_currentLine(0),
 	  m_positionInLine(0),
 	  m_movingForward(true),
-	  m_visionCone(this, scene)
+	  m_visionCone(this, map, scene)
 {
 	for(int i = 0; i < path.count() - 1; i++)
 		m_path.append(QLineF(path.at(i), path.at(i + 1)));
+
+	m_alarmSound.setSource(QUrl::fromLocalFile("resources/sound/alarm.wav"));
+	m_alarmSound.setLoopCount(3);
 }
 
 float Bot::x() const
@@ -71,7 +75,10 @@ void Bot::tick(const long delta)
 	for(Player *player : m_trackedPlayers)
 	{
 		if(m_visionCone.containsActor(*player))
+		{
+			m_alarmSound.play();
 			player->respawn();
+		}
 	}
 }
 

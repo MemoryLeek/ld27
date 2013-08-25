@@ -1,16 +1,19 @@
 #ifndef BOT_H
 #define BOT_H
 
+#include <QSoundEffect>
+
 #include "VisionConeDrawable.h"
 
 #include "Actor.h"
 
 class Player;
+class Map;
 
 class Bot : public Actor
 {
 	public:
-		Bot(const QPolygon &path, Scene *scene);
+		Bot(const QPolygon &path, Map *map, Scene *scene);
 
 		float x() const override;
 		float y() const override;
@@ -20,6 +23,8 @@ class Bot : public Actor
 		void addPlayerTracking(Player *player);
 
 	private:
+		Map *m_map;
+
 		QVector<QLineF> m_path;
 		uint m_currentLine;
 		qreal m_positionInLine;
@@ -28,6 +33,8 @@ class Bot : public Actor
 
 		VisionConeDrawable m_visionCone;
 		QVector<Player*> m_trackedPlayers;
+
+		QSoundEffect m_alarmSound;
 };
 
 #endif // BOT_H
