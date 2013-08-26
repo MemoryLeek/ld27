@@ -35,7 +35,7 @@ class Bot : public Actor
 		VisionConeDrawable m_visionCone;
 		QVector<Player*> m_trackedPlayers;
 
-//		QSoundEffect m_alarmSound;
+		QSoundEffect m_alarmSound;
 };
 
 #endif // BOT_H

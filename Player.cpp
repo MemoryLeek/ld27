@@ -25,9 +25,9 @@ Player::Player(Map *map, Scene *scene, Window *window)
 	m_window = window;
 	m_x = p.x();
 	m_y = p.y();
-//	m_jumpSound.setSource(QUrl::fromLocalFile("resources/sound/jump.wav"));
-//	m_jumpSound.setVolume(0.5);
-//	m_stepSound.setSource(QUrl::fromLocalFile("resources/sound/step.wav"));
+	m_jumpSound.setSource(QUrl::fromLocalFile("resources/sound/jump.wav"));
+	m_jumpSound.setVolume(0.5);
+	m_stepSound.setSource(QUrl::fromLocalFile("resources/sound/step.wav"));
 }
 
 float Player::x() const
@@ -129,7 +129,7 @@ void Player::tick(const long delta)
 		m_stepSoundTimer += delta;
 		if(m_stepSoundTimer > 250)
 		{
-//			m_stepSound.play();
+			m_stepSound.play();
 			m_stepSoundTimer = 0;
 		}
 	}
@@ -186,7 +186,7 @@ void Player::jump()
 	if(!m_isOnGround)
 		return;
 
-//	m_jumpSound.play();
+	m_jumpSound.play();
 	m_yThrust = -1;
 	m_yVelocity = 323;
 }
