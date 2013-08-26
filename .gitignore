@@ -27,5 +27,6 @@ Makefile.Release
 ld27
 ld27.tar.gz
 ld27.zip
+TimeLord*
 object_script.ld27.Debug
 object_script.ld27.Release

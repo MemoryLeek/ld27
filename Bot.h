@@ -1,7 +1,7 @@
 #ifndef BOT_H
 #define BOT_H
 
-#include <QSoundEffect>
+//#include <QSoundEffect>
 
 #include "VisionConeDrawable.h"
 
@@ -35,7 +35,7 @@ class Bot : public Actor
 		VisionConeDrawable m_visionCone;
 		QVector<Player*> m_trackedPlayers;
 
-		QSoundEffect m_alarmSound;
+//		QSoundEffect m_alarmSound;
 };
 
 #endif // BOT_H

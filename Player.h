@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <QSoundEffect>
+//#include <QSoundEffect>
 
 #include "Actor.h"
 
@@ -48,9 +48,9 @@ class Player : public Actor
 		Map *m_map;
 		Window *m_window;
 
-		QSoundEffect m_jumpSound;
-		QSoundEffect m_stepSound;
-		long m_stepSoundTimer;
+//		QSoundEffect m_jumpSound;
+//		QSoundEffect m_stepSound;
+//		long m_stepSoundTimer;
 };
 
 #endif // PLAYER_H

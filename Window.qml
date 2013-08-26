@@ -4,6 +4,7 @@ import MemoryLeek 1.0
 Window
 {
 	id: window
+	title: "Time Lord"
 
 	Rectangle
 	{
