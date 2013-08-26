@@ -265,11 +265,11 @@ namespace States
 
 			JoystickEvent::Buttons buttons = JoystickEvent::ButtonNone;
 			#ifdef Q_OS_WIN32
-			if(SDL_JoystickGetButton(m_joystick, 13))
+			if(SDL_JoystickGetButton(m_joystick, 10))
 				buttons |= JoystickEvent::ButtonJump;
-			if(SDL_JoystickGetButton(m_joystick, 11))
-				buttons |= JoystickEvent::ButtonReverseTime;
 			if(SDL_JoystickGetButton(m_joystick, 12))
+				buttons |= JoystickEvent::ButtonReverseTime;
+			if(SDL_JoystickGetButton(m_joystick, 13))
 				buttons |= JoystickEvent::ButtonRestart;
 			#else
 			if(SDL_JoystickGetButton(m_joystick, 0))
