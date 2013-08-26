@@ -5,7 +5,7 @@
 
 namespace States
 {
-	class GoalState : public State
+	class GoalState : public State<QQuickItem>
 	{
 		public:
 			GoalState();

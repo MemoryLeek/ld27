@@ -1,3 +1,5 @@
+#include <QPainter>
+
 #include "MapSurface.h"
 #include "Scene.h"
 
@@ -5,12 +7,7 @@ MapSurface::MapSurface(const SurfaceLevel surfaceLevel, const QImage &image, Sce
 	: IDrawable(scene)
 {
 	m_surfaceLevel = surfaceLevel;
-	m_texture = scene->createTexture(image);
-}
-
-MapSurface::~MapSurface()
-{
-	delete m_texture;
+	m_image = image;
 }
 
 float MapSurface::x() const
@@ -28,7 +25,7 @@ unsigned int MapSurface::drawingOrder() const
 	return m_surfaceLevel;
 }
 
-QSGTexture *MapSurface::texture()
+void MapSurface::draw(QPainter *painter, const int cx, const int cy, const int delta)
 {
-	return m_texture;
+	painter->drawImage(-cx, -cy, m_image);
 }

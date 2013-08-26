@@ -1,15 +1,15 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include <QQuickItem>
 #include <QRegularExpression>
 
 #include "Window.h"
 #include "Container.h"
 #include "VisualObject.h"
 
+template<class T>
 class State
-	: public VisualObject<QQuickItem>
+	: public VisualObject<T>
 	, public Container
 {
 	protected:

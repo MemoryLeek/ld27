@@ -1,30 +1,35 @@
+#include <QGuiApplication>
+#include <QPainter>
+
 #include "Scene.h"
 #include "Map.h"
 #include "Window.h"
 #include "SharedState.h"
 
 #include "Player.h"
-
-#include <QGuiApplication>
+#include "SpriteLoader.h"
 
 Player::Player(Map *map, Scene *scene, Window *window)
-	: Actor("resources/player.spb", scene),
-	  m_xVelocity(200),
-	  m_yVelocity(100),
-	  m_xThrust(0),
-	  m_yThrust(1),
-	  m_lastDirection(0),
-	  m_x(0),
-	  m_y(0),
-	  m_isOnGround(false),
-	  m_map(map),
-	  m_stepSoundTimer(0)
+	: IDrawable(scene)
 {
 	const QPoint &p = map->spawnPoint();
 
+	SpriteLoader spriteLoader;
+	SpriteBundle sprite = spriteLoader.load("resources/player.spb");
+
+	m_sprite = sprite;
+	m_xVelocity = 0;
+	m_yVelocity = 100;
+	m_xThrust = 0;
+	m_yThrust = 1;
+	m_lastDirection = 0;
+	m_isOnGround = false;
+	m_flipped = false;
+	m_map = map;
 	m_window = window;
 	m_x = p.x();
 	m_y = p.y();
+	m_scene = scene;
 //	m_jumpSound.setSource(QUrl::fromLocalFile("resources/sound/jump.wav"));
 //	m_jumpSound.setVolume(0.5);
 //	m_stepSound.setSource(QUrl::fromLocalFile("resources/sound/step.wav"));
@@ -40,15 +45,28 @@ float Player::y() const
 	return m_y;
 }
 
-void Player::tick(const long delta)
+int Player::width() const
+{
+	return 32;
+}
+
+int Player::height() const
+{
+	return 64;
+}
+
+unsigned int Player::drawingOrder() const
+{
+	return 1;
+}
+
+void Player::draw(QPainter *painter, const int cx, const int cy, const int delta)
 {
 	float x = m_x + (m_xThrust * m_xVelocity) * (delta / 1000.0f);
 	float y = m_y + (m_yThrust * m_yVelocity) * (delta / 1000.0f);
 
-	const QSGTexture *t = texture();
-	const QSize playerSize = t->textureSize();
-	const QPointF playerCenter(playerSize.width() / 2, playerSize.height() / 2);
-	const QPointF cameraPosition(m_x + playerCenter.x(), m_y + playerCenter.y());
+	const QImage &texture = m_sprite.currentImage(m_flipped);
+	const QSize playerSize = texture.size();
 	const QRectF playerBoundingBox(x, y, playerSize.width(), playerSize.height());
 	const QRect &goal = m_map->goal();
 
@@ -68,7 +86,6 @@ void Player::tick(const long delta)
 	}
 
 	m_sprite.update(delta);
-	m_scene->setCameraPosition(cameraPosition, m_map);
 	m_isOnGround = false;
 
 	for(const Collidable &collidable : m_map->collidables())
@@ -159,6 +176,12 @@ void Player::tick(const long delta)
 
 	m_x = x;
 	m_y = y;
+
+	const QPoint cameraPosition(cx, cy);
+	const QPoint position(m_x, m_y);
+	const QPoint adjusted = position - cameraPosition;
+
+	painter->drawImage(adjusted, texture);
 }
 
 void Player::setVelocity(const float velocity)

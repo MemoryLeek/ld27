@@ -4,24 +4,24 @@
 #include "IDrawable.h"
 #include "SpriteBundle.h"
 
-class Actor : public IDrawable
-{
-	public:
-		Actor(const QString &filename, Scene *scene);
+//class Actor : public IDrawable
+//{
+//	public:
+//		Actor(const QString &filename, Scene *scene);
 
-		unsigned int drawingOrder() const override;
+//		unsigned int drawingOrder() const override;
 
-		QSGTexture *texture() override;
+////		QSGTexture *texture() override;
 
-		virtual void tick(const long delta) = 0;
+////		virtual void tick(const long delta) = 0;
 
-		bool isFlipped() const;
+//		bool isFlipped() const;
 
-	protected:
-		Scene *m_scene;
+//	protected:
+//		Scene *m_scene;
 
-		SpriteBundle m_sprite;
-		bool m_flipped;
-};
+//		SpriteBundle m_sprite;
+//		bool m_flipped;
+//};
 
 #endif // ACTOR_H

@@ -1,17 +1,17 @@
+#include <QPainter>
+
+#include "VisionConeDrawable.h"
+#include "Player.h"
 #include "Bot.h"
 #include "Map.h"
 #include "Scene.h"
 
-#include "VisionConeDrawable.h"
-
 VisionConeDrawable::VisionConeDrawable(Bot *bot, Map *map, Scene *scene)
-	: IDrawable(scene),
-	  m_bot(bot),
-	  m_map(map)
+	: IDrawable(scene)
 {
-	QImage image("resources/viewcone.png");
-	m_texture = scene->createTexture(image);
-	m_textureFlipped = scene->createTexture(image.mirrored(true, false));
+	m_bot = bot;
+	m_map = map;
+	m_image = QImage("resources/viewcone.png");
 }
 
 float VisionConeDrawable::x() const
@@ -29,18 +29,26 @@ unsigned int VisionConeDrawable::drawingOrder() const
 	return m_bot->drawingOrder() + 1;
 }
 
-QSGTexture *VisionConeDrawable::texture()
+void VisionConeDrawable::draw(QPainter *painter, const int cx, const int cy, const int delta)
 {
-	return (m_bot->isFlipped()) ? m_textureFlipped : m_texture;
+	const QImage &m = m_image.mirrored(m_bot->isFlipped(), false);
+	const QPoint cameraPosition(cx, cy);
+	const QPoint position(x(), y());
+	const QPoint adjusted = position - cameraPosition;
+
+	painter->drawImage(adjusted, m);
 }
 
-bool VisionConeDrawable::containsActor(Actor &actor)
+bool VisionConeDrawable::containsActor(const Player &actor)
 {
 	const QPointF actorPosition(actor.x(), actor.y());
 	const QPointF botPosition(m_bot->x(), m_bot->y());
 
-	const QRectF actorBoundingBox(actorPosition, actor.texture()->textureSize());
-	const QRectF botBoundingBox(botPosition, m_bot->texture()->textureSize());
+	const QSize playerSize(32, 64);
+	const QSize botSize(32, 64);
+
+	const QRectF actorBoundingBox(actorPosition, playerSize);
+	const QRectF botBoundingBox(botPosition, botSize);
 
 	const QLineF ray(botBoundingBox.center(), actorBoundingBox.center());
 	const QList<Collidable> &collidables = m_map->collidables();

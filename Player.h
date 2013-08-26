@@ -3,13 +3,14 @@
 
 #include <QSoundEffect>
 
-#include "Actor.h"
+#include "SpriteBundle.h"
+#include "IDrawable.h"
 
 class Map;
 class Window;
 class SharedState;
 
-class Player : public Actor
+class Player : public IDrawable
 {
 	public:
 		Player(Map *map, Scene *scene, Window *window);
@@ -17,7 +18,12 @@ class Player : public Actor
 		float x() const override;
 		float y() const override;
 
-		void tick(const long delta) override;
+		int width() const;
+		int height() const;
+
+		unsigned int drawingOrder() const override;
+
+		void draw(QPainter *painter, const int cx, const int cy, const int delta) override;
 
 		void setVelocity(const float velocity);
 		void setDirection(const float direction);
@@ -44,9 +50,12 @@ class Player : public Actor
 		float m_y;
 
 		bool m_isOnGround;
+		bool m_flipped;
 
 		Map *m_map;
 		Window *m_window;
+		SpriteBundle m_sprite;
+		Scene *m_scene;
 
 //		QSoundEffect m_jumpSound;
 //		QSoundEffect m_stepSound;

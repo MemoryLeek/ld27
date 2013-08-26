@@ -16,7 +16,7 @@ void Sprite::update(const int delta)
 	m_index = index;
 }
 
-QSGTexture *Sprite::currentFrame(Scene *scene, const bool flipped)
+QImage Sprite::currentFrame(const bool flipped)
 {
 	const int i = m_index;
 	const int count = m_frames.count();
@@ -24,7 +24,14 @@ QSGTexture *Sprite::currentFrame(Scene *scene, const bool flipped)
 	const int foo = index < 0 ? count - 1 : index;
 	const int identifier = foo + count * flipped;
 
-	return m_textures.value(identifier) ?: createTexture(scene, foo, flipped);
+	const QImage &m = m_textures.value(identifier);
+
+	if(m.isNull())
+	{
+		return createTexture(foo, flipped);
+	}
+
+	return m;
 }
 
 float Sprite::delay() const
@@ -37,11 +44,10 @@ int Sprite::frameCount() const
 	return m_frames.count();
 }
 
-QSGTexture *Sprite::createTexture(Scene *scene, const int index, const bool flipped)
+QImage Sprite::createTexture(const int index, const bool flipped)
 {
 	QImage image = m_frames[index];
 	QImage adjusted = image.mirrored(flipped, false);
-	QSGTexture *texture = scene->createTexture(adjusted);
 
 	const int count = m_frames.count();
 	const int identifier = index + count * flipped;
@@ -49,7 +55,7 @@ QSGTexture *Sprite::createTexture(Scene *scene, const int index, const bool flip
 	qDebug() << "Creating new texture with id" << identifier;
 
 	return m_textures
-		.insert(identifier, texture)
+		.insert(identifier, adjusted)
 		.value();
 }
 

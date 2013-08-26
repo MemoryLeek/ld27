@@ -1,13 +1,12 @@
 #ifndef VISIONCONEDRAWABLE_H
 #define VISIONCONEDRAWABLE_H
 
-#include "Actor.h"
-
 #include "IDrawable.h"
 
 class Bot;
 class Map;
 class Scene;
+class Player;
 
 class VisionConeDrawable : public IDrawable
 {
@@ -16,17 +15,18 @@ class VisionConeDrawable : public IDrawable
 
 		float x() const override;
 		float y() const override;
-		unsigned int drawingOrder() const override;
-		QSGTexture *texture() override;
 
-		bool containsActor(Actor &actor);
+		unsigned int drawingOrder() const override;
+
+		void draw(QPainter *painter, const int cx, const int cy, const int delta) override;
+
+		bool containsActor(const Player &actor);
 
 	private:
 		Bot *m_bot;
 		Map *m_map;
 
-		QSGTexture *m_texture;
-		QSGTexture *m_textureFlipped;
+		QImage m_image;
 };
 
 #endif // VISIONCONEDRAWABLE_H

@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 
-#include <QSGSimpleRectNode>
+#include <QQuickPaintedItem>
 #include <QElapsedTimer>
 
 #include "State.h"
@@ -13,10 +13,11 @@ class Scene;
 class Player;
 class Bot;
 class SharedState;
+class Window;
 
 namespace States
 {
-	class GameState : public State
+	class GameState : public State<QQuickPaintedItem>
 	{
 		Q_OBJECT
 
@@ -30,11 +31,10 @@ namespace States
 			float timePool() const;
 
 		private:
-			QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *);
-
 			void initialize() override;
 			void complete() override;
 
+			void paint(QPainter *painter) override;
 			void keyPressEvent(QKeyEvent *event) override;
 			void keyReleaseEvent(QKeyEvent *event) override;
 			void mousePressEvent(QMouseEvent *event) override;
@@ -47,6 +47,7 @@ namespace States
 
 			JoystickEvent m_lastJoystickEvent;
 
+			Window *m_window;
 			Scene *m_scene;
 			Player *m_player;
 			SDL_Joystick *m_joystick;

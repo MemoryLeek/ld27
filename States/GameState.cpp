@@ -22,6 +22,7 @@ namespace States
 		m_timePool = 10;
 		m_scene = 0;
 		m_joystick = 0;
+		m_window = 0;
 
 		m_timer.start();
 
@@ -39,13 +40,14 @@ namespace States
 		return m_timePool;
 	}
 
-	QSGNode *GameState::updatePaintNode(QSGNode *, QQuickItem::UpdatePaintNodeData *)
+	void GameState::paint(QPainter *painter)
 	{
 		int delta = m_timer.restart();
 
-		m_scene->markDirty(QSGNode::DirtyForceUpdate);
-		m_player->tick(delta);
-		m_fps++;
+		const int width = m_window->width();
+		const int height = m_window->height();
+		const int x = qMax(0.0f, m_player->x() - (width / 2));
+		const int y = qMax(0.0f, m_player->y() - (height / 2));
 
 		if((m_fpsTimer += delta) >= 1000)
 		{
@@ -71,15 +73,11 @@ namespace States
 			emit timePoolChanged();
 		}
 
-		for(Bot *bot : m_bots)
-		{
-			bot->tick(delta);
-		}
+		m_scene->draw(painter, x, y, delta);
+		m_fps++;
 
 		processJoystick();
 		update();
-
-		return m_scene;
 	}
 
 	void GameState::initialize()
@@ -293,6 +291,7 @@ namespace States
 		map->initialize(scene);
 
 		m_scene = scene;
+		m_window = window;
 		m_player = new Player(map, scene, window);
 
 		const QList<QPolygon> &paths = map->paths();

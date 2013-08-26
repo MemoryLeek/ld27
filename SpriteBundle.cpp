@@ -19,10 +19,10 @@ void SpriteBundle::setImageIndex(const int index)
 	m_index = index;
 }
 
-QSGTexture *SpriteBundle::currentImage(Scene *scene, bool flipped)
+QImage SpriteBundle::currentImage(bool flipped)
 {
 	Sprite &image = m_sprites[m_index];
-	QSGTexture *frame = image.currentFrame(scene, flipped);
+	QImage frame = image.currentFrame(flipped);
 
 	return frame;
 }

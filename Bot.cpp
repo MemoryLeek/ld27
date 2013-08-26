@@ -1,18 +1,29 @@
-#include "Player.h"
+#include <QPainter>
 
+#include "Player.h"
 #include "Bot.h"
+#include "SpriteLoader.h"
+#include "VisionConeDrawable.h"
 
 Bot::Bot(const QPolygon &path, Map *map, Scene *scene)
-	: Actor("resources/guard.spb", scene),
-	  m_map(map),
-	  m_currentLine(0),
-	  m_positionInLine(0),
-	  m_movingForward(true),
-//	  m_directionSwitchDelay(0),
-	  m_visionCone(this, map, scene)
+	: IDrawable(scene)
 {
+	SpriteLoader spriteLoader;
+	SpriteBundle sprite = spriteLoader.load("resources/guard.spb");
+
+	m_sprite = sprite;
+	m_map = map;
+	m_currentLine = 0;
+	m_positionInLine = 0;
+	m_movingForward = true;
+	//	  m_directionSwitchDelay(0),
+	m_visionCone = new VisionConeDrawable(this, map, scene);
+	m_flipped = false;
+
 	for(int i = 0; i < path.count() - 1; i++)
+	{
 		m_path.append(QLineF(path.at(i), path.at(i + 1)));
+	}
 
 //	m_alarmSound.setSource(QUrl::fromLocalFile("resources/sound/alarm.wav"));
 //	m_alarmSound.setLoopCount(3);
@@ -28,7 +39,12 @@ float Bot::y() const
 	return m_path.at(m_currentLine).pointAt(m_positionInLine).y();
 }
 
-void Bot::tick(const long delta)
+unsigned int Bot::drawingOrder() const
+{
+	return 1;
+}
+
+void Bot::draw(QPainter *painter, const int cx, const int cy, const int delta)
 {
 //	if(m_directionSwitchDelay <= 0) // Don't flip direction when we're idling
 //	{
@@ -85,17 +101,29 @@ void Bot::tick(const long delta)
 
 	for(Player *player : m_trackedPlayers)
 	{
-		if(m_visionCone.containsActor(*player))
+		if(m_visionCone->containsActor(*player))
 		{
 //			if(!m_alarmSound.isPlaying())
 //				m_alarmSound.play();
 			player->respawn();
 		}
 	}
+
+	const QImage &m = m_sprite.currentImage(m_flipped);
+	const QPoint cameraPosition(cx, cy);
+	const QPoint position(x(), y());
+	const QPoint adjusted = position - cameraPosition;
+
+	painter->drawImage(adjusted, m);
 }
 
 void Bot::addPlayerTracking(Player *player)
 {
 	Q_ASSERT(!m_trackedPlayers.contains(player));
 	m_trackedPlayers.append(player);
+}
+
+bool Bot::isFlipped() const
+{
+	return m_flipped;
 }

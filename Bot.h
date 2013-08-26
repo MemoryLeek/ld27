@@ -3,24 +3,28 @@
 
 #include <QSoundEffect>
 
-#include "VisionConeDrawable.h"
-
-#include "Actor.h"
+#include "IDrawable.h"
+#include "SpriteBundle.h"
 
 class Player;
 class Map;
+class VisionConeDrawable;
 
-class Bot : public Actor
+class Bot : public IDrawable
 {
 	public:
 		Bot(const QPolygon &path, Map *map, Scene *scene);
 
-		float x() const override;
-		float y() const override;
+		float x() const;
+		float y() const;
 
-		void tick(const long delta) override;
+		unsigned int drawingOrder() const override;
+
+		void draw(QPainter *painter, const int cx, const int cy, const int delta) override;
 
 		void addPlayerTracking(Player *player);
+
+		bool isFlipped() const;
 
 	private:
 		Map *m_map;
@@ -29,10 +33,12 @@ class Bot : public Actor
 		int m_currentLine;
 		qreal m_positionInLine;
 
+		bool m_flipped;
 		bool m_movingForward;
 //		long m_directionSwitchDelay;
 
-		VisionConeDrawable m_visionCone;
+		SpriteBundle m_sprite;
+		VisionConeDrawable *m_visionCone;
 		QVector<Player*> m_trackedPlayers;
 
 //		QSoundEffect m_alarmSound;

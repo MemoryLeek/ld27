@@ -5,7 +5,7 @@
 
 namespace States
 {
-	class MenuState : public State
+	class MenuState : public State<QQuickItem>
 	{
 		Q_OBJECT
 

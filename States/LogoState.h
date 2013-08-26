@@ -5,7 +5,7 @@
 
 namespace States
 {
-	class LogoState : public State
+	class LogoState : public State<QQuickItem>
 	{
 		Q_OBJECT
 

@@ -18,7 +18,7 @@ class SpriteBundle
 		void update(const int delta);
 		void setImageIndex(const int index);
 
-		QSGTexture *currentImage(Scene *scene, bool flipped);
+		QImage currentImage(bool flipped);
 
 		int spriteCount() const;
 		int imageIndex() const;
