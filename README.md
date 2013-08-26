@@ -4,7 +4,7 @@
 
 You can download our submission at http://www.ludumdare.com/compo/ludum-dare-27/?action=preview&uid=7989
 
-It's currently quite buggy and crashed on Windows. We will try to fix this within the next few days
+It's currently quite buggy and crashes randomly on Windows. We will try to fix this within the next few days
 and if it doesn't require too many changes we will update our submission.
 
 We might also do a polished post-LD version, if we do you will be able to find it here.
