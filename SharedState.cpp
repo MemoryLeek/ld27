@@ -6,7 +6,8 @@ SharedState::SharedState()
 	m_availableMaps =
 	{
 		"resources/maps/1.map",
-		"resources/maps/2.map"
+		"resources/maps/2.map",
+		"resources/maps/3.map"
 	};
 }
 
