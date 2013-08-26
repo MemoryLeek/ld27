@@ -1,12 +1,13 @@
 # Ludum Dare #27
 
-This is the repo we will use during Ludum Dare 27.
-You'll be able to see our progress and all changes here in real time during the event.
-
 ## How to get the game
 
-As usual we will provide binaries for Linux, OS X and Windows when the compo is over,
-but you are always welcome to build the source yourself.
+You can download our submission at http://www.ludumdare.com/compo/ludum-dare-27/?action=preview&uid=7989
+
+It's currently quite buggy and crashed on Windows. We will try to fix this within the next few days
+and if it doesn't require too many changes we will update our submission.
+
+We might also do a polished post-LD version, if we do you will be able to find it here.
 
 We also have Jenkins set up for continuous integration at https://ci.kwarf.com/job/ld27/
 where you can download binaries for every working commit.
