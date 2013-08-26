@@ -23,7 +23,10 @@ QString SharedState::currentMap() const
 
 void SharedState::nextMap()
 {
-	m_currentMap++;
+	if(m_currentMap == m_availableMaps.count() - 1)
+		m_currentMap = 0;
+	else
+		m_currentMap++;
 }
 
 void SharedState::previousMap()
