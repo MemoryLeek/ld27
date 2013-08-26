@@ -14,7 +14,7 @@ where you can download binaries for every working commit.
 
 ## Compiling the source
 
-This project requires Qt5.1.
+This project requires Qt5.1 and SDL 2.0.
 
 ### Linux
 
