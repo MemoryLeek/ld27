@@ -264,12 +264,21 @@ namespace States
 				y = -100;
 
 			JoystickEvent::Buttons buttons = JoystickEvent::ButtonNone;
+			#ifdef Q_WS_WIN
+			if(SDL_JoystickGetButton(m_joystick, 13))
+				buttons |= JoystickEvent::ButtonJump;
+			if(SDL_JoystickGetButton(m_joystick, 11))
+				buttons |= JoystickEvent::ButtonReverseTime;
+			if(SDL_JoystickGetButton(m_joystick, 12))
+				buttons |= JoystickEvent::ButtonRestart;
+			#else
 			if(SDL_JoystickGetButton(m_joystick, 0))
 				buttons |= JoystickEvent::ButtonJump;
 			if(SDL_JoystickGetButton(m_joystick, 2))
 				buttons |= JoystickEvent::ButtonReverseTime;
 			if(SDL_JoystickGetButton(m_joystick, 3))
 				buttons |= JoystickEvent::ButtonRestart;
+			#endif
 
 			JoystickEvent jsEvent(QVector2D(x, y), buttons);
 			if(jsEvent != m_lastJoystickEvent)
