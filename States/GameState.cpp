@@ -264,7 +264,7 @@ namespace States
 				y = -100;
 
 			JoystickEvent::Buttons buttons = JoystickEvent::ButtonNone;
-			#ifdef Q_WS_WIN
+			#ifdef Q_OS_WIN32
 			if(SDL_JoystickGetButton(m_joystick, 13))
 				buttons |= JoystickEvent::ButtonJump;
 			if(SDL_JoystickGetButton(m_joystick, 11))
