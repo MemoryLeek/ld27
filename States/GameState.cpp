@@ -59,11 +59,6 @@ namespace States
 		m_map->draw(context, cx, cy, delta);
 		m_player->draw(context, cx, cy, delta);
 
-		for(Bot *bot : m_bots)
-		{
-			bot->draw(context, cx, cy, delta);
-		}
-
 		if((m_fpsTimer += delta) >= 1000)
 		{
 			emit fpsChanged();
@@ -71,6 +66,26 @@ namespace States
 			m_lastFps = m_fps;
 			m_fpsTimer = 0;
 			m_fps = 0;
+		}
+
+		if(m_reverseTime && m_timePool > 0)
+		{
+			m_timePool -= delta / 1000.f;
+			emit timePoolChanged();
+			delta = -delta;
+		}
+
+		if(!m_reverseTime && m_timePool < 10)
+		{
+			m_timePool += delta / 1000.f;
+			if(m_timePool > 10)
+				m_timePool = 10;
+			emit timePoolChanged();
+		}
+
+		for(Bot *bot : m_bots)
+		{
+			bot->draw(context, cx, cy, delta);
 		}
 
 		m_compositor.composite(context, painter);
