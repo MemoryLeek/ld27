@@ -59,7 +59,7 @@ void Map::draw(FrameDrawingContext &context, const int cx, const int cy, const i
 
 #ifndef QT_NO_DEBUG
 	QPoint cameraPosition(cx, cy);
-	QImage &surface = context.foreground();
+	Surface &surface = context.foreground();
 
 	QPainter painter(&surface);
 	painter.translate(-cameraPosition);
