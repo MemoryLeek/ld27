@@ -17,7 +17,6 @@ class Scene
 	public:
 		Scene(QQuickWindow *window);
 
-		void setCameraPosition(const QPoint &position, Map *map = 0);
 		void draw(QPainter *painter, const int cx, const int cy, const int delta);
 
 	private:
@@ -28,8 +27,6 @@ class Scene
 		QQuickWindow *m_window;
 
 		bool m_dirty;
-
-		QPoint m_cameraPosition;
 };
 
 #endif // SCENE_H

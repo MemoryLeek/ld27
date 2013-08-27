@@ -5,29 +5,12 @@
 #include <QSGSimpleTextureNode>
 
 class Scene;
+class FrameDrawingContext;
 
 class IDrawable
 {
-	friend class Scene;
-
 	public:
-		IDrawable(Scene *scene);
-
-		virtual ~IDrawable();
-
-		virtual float x() const = 0;
-		virtual float y() const = 0;
-
-		virtual unsigned int drawingOrder() const = 0;
-
-		virtual void draw(QPainter *painter, const int cx, const int cy, const int delta) = 0;
-
-//		virtual QSGTexture *texture() = 0;
-
-		static bool compare(IDrawable *d1, IDrawable *d2);
-
-	private:
-		Scene *m_scene;
+		virtual void draw(FrameDrawingContext &context, const int cx, const int cy, const int delta) = 0;
 };
 
 #endif // IDRAWABLE_H

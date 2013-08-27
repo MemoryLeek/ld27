@@ -10,13 +10,15 @@
 class Scene;
 class MapSurface;
 
-class Map
+class Map : public IDrawable
 {
 	public:
 		void initialize(Scene *scene);
 
 		int width() const;
 		int height() const;
+
+		void draw(FrameDrawingContext &context, const int cx, const int cy, const int delta) override;
 
 		QList<Collidable> collidables() const;
 		QList<QPolygon> paths() const;

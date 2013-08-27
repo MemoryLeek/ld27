@@ -14,6 +14,7 @@ class Player;
 class Bot;
 class SharedState;
 class Window;
+class Map;
 
 namespace States
 {
@@ -50,6 +51,7 @@ namespace States
 			Window *m_window;
 			Scene *m_scene;
 			Player *m_player;
+			Map *m_map;
 			SDL_Joystick *m_joystick;
 
 			QElapsedTimer m_timer;

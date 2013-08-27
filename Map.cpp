@@ -3,38 +3,12 @@
 #include "Map.h"
 #include "Scene.h"
 #include "MapSurface.h"
+#include "FrameDrawingContext.h"
 
 void Map::initialize(Scene *scene)
 {
 	m_backgroundSurface = new MapSurface(MapSurface::Background, m_background, scene);
 	m_foregroundSurface = new MapSurface(MapSurface::Foreground, m_foreground, scene);
-
-	QSize size = m_background.size();
-	QImage foo(size, QImage::Format_ARGB32);
-	QPainter painter(&foo);
-
-	for(const Collidable &collidable : m_collidables)
-	{
-		const QPolygonF &polygon = collidable.polygon();
-		const QRect &boundingBox = collidable.boundingBox();
-
-		painter.setPen(Qt::red);
-		painter.setBrush(Qt::NoBrush);
-		painter.drawPolygon(polygon);
-
-		painter.setPen(Qt::green);
-		painter.setBrush(Qt::NoBrush);
-		painter.drawRect(boundingBox);
-	}
-
-	QLine spawnLine(m_spawn.x(), 0, m_spawn.x(), size.height());
-
-	painter.setBrush(Qt::blue);
-	painter.setPen(Qt::blue);
-	painter.drawLine(spawnLine);
-	painter.drawEllipse(m_spawn, 10, 10);
-
-	painter.fillRect(m_goal, Qt::yellow);
 
 //	for(const QPolygon &path : m_paths)
 //	{
@@ -76,6 +50,34 @@ int Map::width() const
 int Map::height() const
 {
 	return m_background.height();
+}
+
+void Map::draw(FrameDrawingContext &context, const int cx, const int cy, const int delta)
+{
+	m_backgroundSurface->draw(context, cx, cy, delta);
+	m_foregroundSurface->draw(context, cx, cy, delta);
+
+#ifndef QT_NO_DEBUG
+	QPoint cameraPosition(cx, cy);
+	QImage *surface = context.createSurface(2);
+
+	QPainter painter(surface);
+	painter.translate(-cameraPosition);
+
+	for(const Collidable &collidable : m_collidables)
+	{
+		const QPolygonF &polygon = collidable.polygon();
+		const QRect &boundingBox = collidable.boundingBox();
+
+		painter.setPen(Qt::red);
+		painter.setBrush(Qt::NoBrush);
+		painter.drawPolygon(polygon);
+
+		painter.setPen(Qt::green);
+		painter.setBrush(Qt::NoBrush);
+		painter.drawRect(boundingBox);
+	}
+#endif
 }
 
 QList<Collidable> Map::collidables() const

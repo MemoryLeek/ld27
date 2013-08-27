@@ -1,13 +1,13 @@
 #include <QPainter>
 
 #include "VisionConeDrawable.h"
+#include "FrameDrawingContext.h"
 #include "Player.h"
 #include "Bot.h"
 #include "Map.h"
 #include "Scene.h"
 
 VisionConeDrawable::VisionConeDrawable(Bot *bot, Map *map, Scene *scene)
-	: IDrawable(scene)
 {
 	m_bot = bot;
 	m_map = map;
@@ -29,14 +29,17 @@ unsigned int VisionConeDrawable::drawingOrder() const
 	return m_bot->drawingOrder() + 1;
 }
 
-void VisionConeDrawable::draw(QPainter *painter, const int cx, const int cy, const int delta)
+void VisionConeDrawable::draw(FrameDrawingContext &context, const int cx, const int cy, const int delta)
 {
 	const QImage &m = m_image.mirrored(m_bot->isFlipped(), false);
 	const QPoint cameraPosition(cx, cy);
 	const QPoint position(x(), y());
 	const QPoint adjusted = position - cameraPosition;
 
-	painter->drawImage(adjusted, m);
+	QImage *surface = context.createSurface(2);
+	QPainter painter(surface);
+
+	painter.drawImage(adjusted, m);
 }
 
 bool VisionConeDrawable::containsActor(const Player &actor)

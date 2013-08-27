@@ -18,9 +18,9 @@ class Bot : public IDrawable
 		float x() const;
 		float y() const;
 
-		unsigned int drawingOrder() const override;
+		unsigned int drawingOrder() const;
 
-		void draw(QPainter *painter, const int cx, const int cy, const int delta) override;
+		void draw(FrameDrawingContext &context, const int cx, const int cy, const int delta) override;
 
 		void addPlayerTracking(Player *player);
 

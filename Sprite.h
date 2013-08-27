@@ -15,18 +15,15 @@ class Sprite
 
 		void update(const int delta);
 
-		QImage currentFrame(const bool flipped);
+		QImage currentFrame(const bool flipped) const;
 
 		float delay() const;
 		int frameCount() const;
 
 	private:
-		QImage createTexture(const int index, const bool flipped);
-
 		friend QDataStream &operator >>(QDataStream &stream, Sprite &sprite);
 
 		QList<QImage> m_frames;
-		QHash<int, QImage> m_textures;
 
 		float m_delay;
 		float m_index;

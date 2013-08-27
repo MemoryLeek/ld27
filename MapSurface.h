@@ -16,12 +16,12 @@ class MapSurface : public IDrawable
 
 		MapSurface(const SurfaceLevel surfaceLevel, const QImage &image, Scene *scene);
 
-		float x() const override;
-		float y() const override;
+		float x() const;
+		float y() const;
 
-		unsigned int drawingOrder() const override;
+		unsigned int drawingOrder() const;
 
-		void draw(QPainter *painter, const int cx, const int cy, const int delta) override;
+		void draw(FrameDrawingContext &context, const int cx, const int cy, const int delta) override;
 
 	private:
 		SurfaceLevel m_surfaceLevel;

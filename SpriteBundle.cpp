@@ -19,10 +19,10 @@ void SpriteBundle::setImageIndex(const int index)
 	m_index = index;
 }
 
-QImage SpriteBundle::currentImage(bool flipped)
+QImage SpriteBundle::currentImage(bool flipped) const
 {
-	Sprite &image = m_sprites[m_index];
-	QImage frame = image.currentFrame(flipped);
+	const Sprite &image = m_sprites[m_index];
+	const QImage &frame = image.currentFrame(flipped);
 
 	return frame;
 }

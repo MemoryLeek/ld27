@@ -15,15 +15,15 @@ class Player : public IDrawable
 	public:
 		Player(Map *map, Scene *scene, Window *window);
 
-		float x() const override;
-		float y() const override;
+		float x() const;
+		float y() const;
 
 		int width() const;
 		int height() const;
 
-		unsigned int drawingOrder() const override;
+		unsigned int drawingOrder() const;
 
-		void draw(QPainter *painter, const int cx, const int cy, const int delta) override;
+		void draw(FrameDrawingContext &context, const int cx, const int cy, const int delta) override;
 
 		void setVelocity(const float velocity);
 		void setDirection(const float direction);

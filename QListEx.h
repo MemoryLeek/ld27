@@ -10,7 +10,7 @@ template<class T>
 class QListEx : public QList<T>
 {
 	public:
-		void sort(bool (*lessThan)(T &, T &))
+		void sort(bool (*lessThan)(const T &, const T &))
 		{
 			qSort(this->begin(), this->end(), lessThan);
 		}

@@ -5,12 +5,11 @@
 #include "Map.h"
 #include "Window.h"
 #include "SharedState.h"
-
+#include "FrameDrawingContext.h"
 #include "Player.h"
 #include "SpriteLoader.h"
 
 Player::Player(Map *map, Scene *scene, Window *window)
-	: IDrawable(scene)
 {
 	const QPoint &p = map->spawnPoint();
 
@@ -60,10 +59,12 @@ unsigned int Player::drawingOrder() const
 	return 1;
 }
 
-void Player::draw(QPainter *painter, const int cx, const int cy, const int delta)
+void Player::draw(FrameDrawingContext &context, const int cx, const int cy, const int delta)
 {
 	float x = m_x + (m_xThrust * m_xVelocity) * (delta / 1000.0f);
 	float y = m_y + (m_yThrust * m_yVelocity) * (delta / 1000.0f);
+
+//	QPainter painter(surface);
 
 	const QImage &texture = m_sprite.currentImage(m_flipped);
 	const QSize playerSize = texture.size();
@@ -177,11 +178,13 @@ void Player::draw(QPainter *painter, const int cx, const int cy, const int delta
 	m_x = x;
 	m_y = y;
 
-	const QPoint cameraPosition(cx, cy);
-	const QPoint position(m_x, m_y);
-	const QPoint adjusted = position - cameraPosition;
+	QPoint position(m_x, m_y);
+	QPoint cameraPosition(cx, cy);
+	QPoint adjusted = position - cameraPosition;
 
-	painter->drawImage(adjusted, texture);
+	QImage *m = context.createSurface(1); //texture, m_x - cx, m_y - cy,
+	QPainter painter(m);
+	painter.drawImage(adjusted, texture);
 }
 
 void Player::setVelocity(const float velocity)

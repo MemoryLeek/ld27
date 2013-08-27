@@ -4,9 +4,9 @@
 #include "Bot.h"
 #include "SpriteLoader.h"
 #include "VisionConeDrawable.h"
+#include "FrameDrawingContext.h"
 
 Bot::Bot(const QPolygon &path, Map *map, Scene *scene)
-	: IDrawable(scene)
 {
 	SpriteLoader spriteLoader;
 	SpriteBundle sprite = spriteLoader.load("resources/guard.spb");
@@ -44,7 +44,7 @@ unsigned int Bot::drawingOrder() const
 	return 1;
 }
 
-void Bot::draw(QPainter *painter, const int cx, const int cy, const int delta)
+void Bot::draw(FrameDrawingContext &context, const int cx, const int cy, const int delta)
 {
 //	if(m_directionSwitchDelay <= 0) // Don't flip direction when we're idling
 //	{
@@ -114,7 +114,10 @@ void Bot::draw(QPainter *painter, const int cx, const int cy, const int delta)
 	const QPoint position(x(), y());
 	const QPoint adjusted = position - cameraPosition;
 
-	painter->drawImage(adjusted, m);
+	QImage *surface = context.createSurface(1);
+	QPainter painter(surface);
+
+	painter.drawImage(adjusted, m);
 }
 
 void Bot::addPlayerTracking(Player *player)

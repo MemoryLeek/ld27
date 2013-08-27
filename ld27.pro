@@ -35,7 +35,9 @@ SOURCES += \
     Collidable.cpp \
     SharedState.cpp \
     States/GameState.cpp \
-    States/GoalState.cpp
+    States/GoalState.cpp \
+    FrameDrawingContext.cpp \
+    Surface.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -79,7 +81,10 @@ HEADERS += \
     Collidable.h \
     SharedState.h \
     States/GameState.h \
-    States/GoalState.h
+    States/GoalState.h \
+    FrameDrawingContext.h \
+    Surface.h \
+    ICollectionItem.h
 
 LIBS += -lSDL2
 

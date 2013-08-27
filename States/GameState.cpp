@@ -10,6 +10,7 @@
 #include "MapLoader.h"
 #include "Map.h"
 #include "SharedState.h"
+#include "FrameDrawingContext.h"
 
 namespace States
 {
@@ -23,6 +24,7 @@ namespace States
 		m_scene = 0;
 		m_joystick = 0;
 		m_window = 0;
+		m_map = 0;
 
 		m_timer.start();
 
@@ -44,10 +46,20 @@ namespace States
 	{
 		int delta = m_timer.restart();
 
+		FrameDrawingContext context(painter);
+
 		const int width = m_window->width();
 		const int height = m_window->height();
-		const int x = qMax(0.0f, m_player->x() - (width / 2));
-		const int y = qMax(0.0f, m_player->y() - (height / 2));
+		const int cx = qMax(0.0f, m_player->x() - (width / 2));
+		const int cy = qMax(0.0f, m_player->y() - (height / 2));
+
+		m_player->draw(context, cx, cy, delta);
+		m_map->draw(context, cx, cy, delta);
+
+		for(Bot *bot : m_bots)
+		{
+			bot->draw(context, cx, cy, delta);
+		}
 
 		if((m_fpsTimer += delta) >= 1000)
 		{
@@ -58,25 +70,25 @@ namespace States
 			m_fps = 0;
 		}
 
-		if(m_reverseTime && m_timePool > 0)
-		{
-			m_timePool -= delta / 1000.f;
-			emit timePoolChanged();
-			delta = -delta;
-		}
+//		if(m_reverseTime && m_timePool > 0)
+//		{
+//			m_timePool -= delta / 1000.f;
+//			emit timePoolChanged();
+//			delta = -delta;
+//		}
 
-		if(!m_reverseTime && m_timePool < 10)
-		{
-			m_timePool += delta / 1000.f;
-			if(m_timePool > 10)
-				m_timePool = 10;
-			emit timePoolChanged();
-		}
+//		if(!m_reverseTime && m_timePool < 10)
+//		{
+//			m_timePool += delta / 1000.f;
+//			if(m_timePool > 10)
+//				m_timePool = 10;
+//			emit timePoolChanged();
+//		}
 
-		m_scene->draw(painter, x, y, delta);
+//		m_scene->draw(painter, x, y, delta);
 		m_fps++;
 
-		processJoystick();
+//		processJoystick();
 		update();
 	}
 
@@ -293,6 +305,7 @@ namespace States
 		m_scene = scene;
 		m_window = window;
 		m_player = new Player(map, scene, window);
+		m_map = map;
 
 		const QList<QPolygon> &paths = map->paths();
 

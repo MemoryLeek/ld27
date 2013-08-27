@@ -18,7 +18,7 @@ class SpriteBundle
 		void update(const int delta);
 		void setImageIndex(const int index);
 
-		QImage currentImage(bool flipped);
+		QImage currentImage(bool flipped) const;
 
 		int spriteCount() const;
 		int imageIndex() const;
