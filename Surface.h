@@ -2,28 +2,25 @@
 #define SURFACE_H
 
 #include <QImage>
+#include <QPaintDevice>
 
 #include "ICollectionItem.h"
+#include "DeferredPaintEngine.h"
 
-class Surface : public ICollectionItem<Surface>
+class Surface : public QPaintDevice
 {
 	public:
-		Surface(QSize size, const int order);
-		Surface(QImage *image, QPoint position, const int order);
+		Surface(const QSize &size);
 
-		QImage *image();
-		QPoint position() const;
+		QPaintEngine *paintEngine() const override;
 
-		bool isManaged() const;
-
-		static bool compare(const Surface &s1, const Surface &s2);
+		void draw(QPainter *painter) const;
 
 	private:
-		QImage *m_image;
-		QPoint m_position;
+		int metric(PaintDeviceMetric metric) const override;
 
-		int m_order;
-		bool m_managed;
+		DeferredPaintEngine m_engine;
+		QSize m_size;
 };
 
 #endif // SURFACE_H

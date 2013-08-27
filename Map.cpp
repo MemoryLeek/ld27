@@ -5,10 +5,10 @@
 #include "MapSurface.h"
 #include "FrameDrawingContext.h"
 
-void Map::initialize(Scene *scene)
+void Map::initialize()
 {
-	m_backgroundSurface = new MapSurface(MapSurface::Background, m_background, scene);
-	m_foregroundSurface = new MapSurface(MapSurface::Foreground, m_foreground, scene);
+	m_backgroundSurface = new MapSurface(MapSurface::Background, m_background);
+	m_foregroundSurface = new MapSurface(MapSurface::Foreground, m_foreground);
 
 //	for(const QPolygon &path : m_paths)
 //	{
@@ -59,9 +59,9 @@ void Map::draw(FrameDrawingContext &context, const int cx, const int cy, const i
 
 #ifndef QT_NO_DEBUG
 	QPoint cameraPosition(cx, cy);
-	QImage *surface = context.createSurface(2);
+	QImage &surface = context.foreground();
 
-	QPainter painter(surface);
+	QPainter painter(&surface);
 	painter.translate(-cameraPosition);
 
 	for(const Collidable &collidable : m_collidables)

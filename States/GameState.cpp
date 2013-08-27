@@ -44,13 +44,12 @@ namespace States
 
 	void GameState::paint(QPainter *painter)
 	{
-		int delta = m_timer.restart();
+		const QRect &rect = painter->window();
+		const QSize &size = rect.size();
 
-		QRect r = painter->window();
-		QSize s = r.size();
+		FrameDrawingContext context(size);
 
-		FrameDrawingContext context(s);
-
+		const int delta = m_timer.restart();
 		const int width = m_window->width();
 		const int height = m_window->height();
 		const int cx = qMax(0.0f, m_player->x() - (width / 2));
@@ -88,11 +87,10 @@ namespace States
 //			emit timePoolChanged();
 //		}
 
-//		m_scene->draw(painter, x, y, delta);
 		m_compositor.composite(context, painter);
 		m_fps++;
 
-//		processJoystick();
+		processJoystick();
 		update();
 	}
 
@@ -304,7 +302,7 @@ namespace States
 
 		MapLoader mapLoader(scene);
 		Map *map = mapLoader.load(filename);
-		map->initialize(scene);
+		map->initialize();
 
 		m_scene = scene;
 		m_window = window;

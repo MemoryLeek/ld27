@@ -3,18 +3,18 @@
 #include "FrameDrawingContext.h"
 
 FrameDrawingContext::FrameDrawingContext(const QSize &size)
-	: m_background(size, QImage::Format_ARGB32)
-	, m_foreground(size, QImage::Format_ARGB32)
+	: m_background(size)
+	, m_foreground(size)
 {
 
 }
 
-QImage &FrameDrawingContext::background()
+Surface &FrameDrawingContext::background()
 {
 	return m_background;
 }
 
-QImage &FrameDrawingContext::foreground()
+Surface &FrameDrawingContext::foreground()
 {
 	return m_foreground;
 }

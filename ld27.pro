@@ -38,7 +38,8 @@ SOURCES += \
     States/GoalState.cpp \
     FrameDrawingContext.cpp \
     Surface.cpp \
-    Compositor.cpp
+    Compositor.cpp \
+    DeferredPaintEngine.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -86,7 +87,9 @@ HEADERS += \
     FrameDrawingContext.h \
     Surface.h \
     ICollectionItem.h \
-    Compositor.h
+    Compositor.h \
+    DeferredPaintEngine.h \
+    RenderingCommand.h
 
 LIBS += -lSDL2
 

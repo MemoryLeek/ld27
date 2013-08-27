@@ -12,12 +12,12 @@ class FrameDrawingContext
 	public:
 		FrameDrawingContext(const QSize &size);
 
-		QImage &background();
-		QImage &foreground();
+		Surface &background();
+		Surface &foreground();
 
 	private:
-		QImage m_background;
-		QImage m_foreground;
+		Surface m_background;
+		Surface m_foreground;
 };
 
 #endif // FRAMEDRAWINGCONTEXT_H

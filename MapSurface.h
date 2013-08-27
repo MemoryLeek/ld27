@@ -14,12 +14,7 @@ class MapSurface : public IDrawable
 			Foreground = 3
 		};
 
-		MapSurface(const SurfaceLevel surfaceLevel, const QImage &image, Scene *scene);
-
-		float x() const;
-		float y() const;
-
-		unsigned int drawingOrder() const;
+		MapSurface(const SurfaceLevel surfaceLevel, const QImage &image);
 
 		void draw(FrameDrawingContext &context, const int cx, const int cy, const int delta) override;
 

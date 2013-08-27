@@ -2,37 +2,47 @@
 
 #include "Surface.h"
 
-Surface::Surface(QSize size, const int order)
+Surface::Surface(const QSize &size)
+	: m_size(size)
 {
-	m_image = new QImage(size, QImage::Format_ARGB32);
-	m_order = order;
-	m_managed = true;
+
 }
 
-Surface::Surface(QImage *image, QPoint position, const int order)
+QPaintEngine *Surface::paintEngine() const
 {
-	m_image = image;
-	m_position = position;
-	m_order = order;
-	m_managed = false;
+	Surface *surface = const_cast<Surface *>(this);
+	DeferredPaintEngine &engine = surface->m_engine;
+
+	return &engine;
 }
 
-QImage *Surface::image()
+void Surface::draw(QPainter *painter) const
 {
-	return m_image;
+	m_engine.draw(painter);
 }
 
-QPoint Surface::position() const
+int Surface::metric(QPaintDevice::PaintDeviceMetric metric) const
 {
-	return m_position;
-}
+	switch(metric)
+	{
+		case QPaintDevice::PdmWidth:
+		{
+			return m_size.width();
+		}
 
-bool Surface::isManaged() const
-{
-	return m_managed;
-}
+		case QPaintDevice::PdmHeight:
+		{
+			return m_size.height();
+		}
 
-bool Surface::compare(const Surface &s1, const Surface &s2)
-{
-	return s1.m_order < s2.m_order;
+		case QPaintDevice::PdmDepth:
+		{
+			return 32;
+		}
+
+		default:
+		{
+			return 0;
+		}
+	}
 }
