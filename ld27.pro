@@ -37,7 +37,8 @@ SOURCES += \
     States/GameState.cpp \
     States/GoalState.cpp \
     FrameDrawingContext.cpp \
-    Surface.cpp
+    Surface.cpp \
+    Compositor.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -84,7 +85,8 @@ HEADERS += \
     States/GoalState.h \
     FrameDrawingContext.h \
     Surface.h \
-    ICollectionItem.h
+    ICollectionItem.h \
+    Compositor.h
 
 LIBS += -lSDL2
 

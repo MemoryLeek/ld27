@@ -46,15 +46,18 @@ namespace States
 	{
 		int delta = m_timer.restart();
 
-		FrameDrawingContext context(painter);
+		QRect r = painter->window();
+		QSize s = r.size();
+
+		FrameDrawingContext context(s);
 
 		const int width = m_window->width();
 		const int height = m_window->height();
 		const int cx = qMax(0.0f, m_player->x() - (width / 2));
 		const int cy = qMax(0.0f, m_player->y() - (height / 2));
 
-		m_player->draw(context, cx, cy, delta);
 		m_map->draw(context, cx, cy, delta);
+		m_player->draw(context, cx, cy, delta);
 
 		for(Bot *bot : m_bots)
 		{
@@ -86,6 +89,7 @@ namespace States
 //		}
 
 //		m_scene->draw(painter, x, y, delta);
+		m_compositor.composite(context, painter);
 		m_fps++;
 
 //		processJoystick();

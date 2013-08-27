@@ -27,5 +27,24 @@ unsigned int MapSurface::drawingOrder() const
 
 void MapSurface::draw(FrameDrawingContext &context, const int cx, const int cy, const int delta)
 {
-	context.addSurface(&m_image, -cx, -cy, m_surfaceLevel);
+	switch(m_surfaceLevel)
+	{
+		case Background:
+		{
+			QImage &m = context.background();
+			QPainter painter(&m);
+			painter.drawImage(-cx, -cy, m_image);
+
+			break;
+		}
+
+		case Foreground:
+		{
+			QImage &m = context.foreground();
+			QPainter painter(&m);
+			painter.drawImage(-cx, -cy, m_image);
+
+			break;
+		}
+	}
 }

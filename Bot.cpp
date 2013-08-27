@@ -114,8 +114,8 @@ void Bot::draw(FrameDrawingContext &context, const int cx, const int cy, const i
 	const QPoint position(x(), y());
 	const QPoint adjusted = position - cameraPosition;
 
-	QImage *surface = context.createSurface(1);
-	QPainter painter(surface);
+	QImage &surface = context.background();
+	QPainter painter(&surface);
 
 	painter.drawImage(adjusted, m);
 }

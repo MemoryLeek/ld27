@@ -10,15 +10,14 @@
 class FrameDrawingContext
 {
 	public:
-		FrameDrawingContext(QPainter *painter);
-		~FrameDrawingContext();
+		FrameDrawingContext(const QSize &size);
 
-		QImage *createSurface(const int order);
-		QImage *addSurface(QImage *image, const int x, const int y, const int order);
+		QImage &background();
+		QImage &foreground();
 
 	private:
-		QPainter *m_painter;
-		QListEx<Surface> m_surfaces;
+		QImage m_background;
+		QImage m_foreground;
 };
 
 #endif // FRAMEDRAWINGCONTEXT_H

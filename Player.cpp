@@ -182,8 +182,8 @@ void Player::draw(FrameDrawingContext &context, const int cx, const int cy, cons
 	QPoint cameraPosition(cx, cy);
 	QPoint adjusted = position - cameraPosition;
 
-	QImage *m = context.createSurface(1); //texture, m_x - cx, m_y - cy,
-	QPainter painter(m);
+	QImage &m = context.background(); //texture, m_x - cx, m_y - cy,
+	QPainter painter(&m);
 	painter.drawImage(adjusted, texture);
 }
 

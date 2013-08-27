@@ -8,6 +8,7 @@
 
 #include "State.h"
 #include "JoystickEvent.h"
+#include "Compositor.h"
 
 class Scene;
 class Player;
@@ -53,6 +54,7 @@ namespace States
 			Player *m_player;
 			Map *m_map;
 			SDL_Joystick *m_joystick;
+			Compositor m_compositor;
 
 			QElapsedTimer m_timer;
 			QList<Bot *> m_bots;

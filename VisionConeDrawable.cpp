@@ -36,8 +36,8 @@ void VisionConeDrawable::draw(FrameDrawingContext &context, const int cx, const 
 	const QPoint position(x(), y());
 	const QPoint adjusted = position - cameraPosition;
 
-	QImage *surface = context.createSurface(2);
-	QPainter painter(surface);
+	QImage &surface = context.background();
+	QPainter painter(&surface);
 
 	painter.drawImage(adjusted, m);
 }
