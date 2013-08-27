@@ -109,6 +109,8 @@ void Bot::draw(FrameDrawingContext &context, const int cx, const int cy, const i
 		}
 	}
 
+	m_visionCone->draw(context, cx, cy, delta);
+
 	const QImage &m = m_sprite.currentImage(m_flipped);
 	const QPoint cameraPosition(cx, cy);
 	const QPoint position(x(), y());

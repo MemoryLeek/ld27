@@ -1,6 +1,6 @@
 QT += quick multimedia
 
-TARGET = ld27
+TARGET = TimeLord
 DESTDIR = bin
 
 OBJECTS_DIR = build

@@ -49,7 +49,8 @@ namespace States
 
 		FrameDrawingContext context(size);
 
-		const int delta = m_timer.restart();
+		int delta = m_timer.restart();
+
 		const int width = m_window->width();
 		const int height = m_window->height();
 		const int cx = qMax(0.0f, m_player->x() - (width / 2));
@@ -71,21 +72,6 @@ namespace States
 			m_fpsTimer = 0;
 			m_fps = 0;
 		}
-
-//		if(m_reverseTime && m_timePool > 0)
-//		{
-//			m_timePool -= delta / 1000.f;
-//			emit timePoolChanged();
-//			delta = -delta;
-//		}
-
-//		if(!m_reverseTime && m_timePool < 10)
-//		{
-//			m_timePool += delta / 1000.f;
-//			if(m_timePool > 10)
-//				m_timePool = 10;
-//			emit timePoolChanged();
-//		}
 
 		m_compositor.composite(context, painter);
 		m_fps++;
