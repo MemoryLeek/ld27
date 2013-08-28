@@ -219,6 +219,8 @@ void Player::jump()
 
 void Player::respawn()
 {
-	m_x = m_map->spawnPoint().x();
-	m_y = m_map->spawnPoint().y();
+	m_window->setActiveState("DeathState");
+
+//	m_x = m_map->spawnPoint().x();
+//	m_y = m_map->spawnPoint().y();
 }

@@ -5,5 +5,6 @@
         <file>States/MenuState.qml</file>
         <file>States/GameState.qml</file>
         <file>States/GoalState.qml</file>
+        <file>States/DeathState.qml</file>
     </qresource>
 </RCC>

@@ -7,6 +7,8 @@
 
 class SharedState;
 class LocalImageProvider;
+class FrameImageProvider;
+class Compositor;
 
 class Engine
 	: public QQmlEngine
@@ -16,8 +18,10 @@ class Engine
 		Engine();
 
 	private:
-		LocalImageProvider *m_localImageProvider;
+		Compositor *m_compositor;
 		SharedState *m_sharedState;
+		LocalImageProvider *m_localImageProvider;
+		FrameImageProvider *m_frameImageProvider;
 };
 
 #endif // ENGINE_H

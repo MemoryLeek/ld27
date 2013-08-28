@@ -39,14 +39,17 @@ SOURCES += \
     FrameDrawingContext.cpp \
     Surface.cpp \
     Compositor.cpp \
-    DeferredPaintEngine.cpp
+    DeferredPaintEngine.cpp \
+    States/DeathState.cpp \
+    FrameImageProvider.cpp
 
 OTHER_FILES += \
     Window.qml \
     States/LogoState.qml \
     States/MenuState.qml \
     States/GameState.qml \
-    States/GoalState.qml
+    States/GoalState.qml \
+    States/DeathState.qml
 
 HEADERS += \
     Window.h \
@@ -89,7 +92,9 @@ HEADERS += \
     ICollectionItem.h \
     Compositor.h \
     DeferredPaintEngine.h \
-    RenderingCommand.h
+    RenderingCommand.h \
+    States/DeathState.h \
+    FrameImageProvider.h
 
 LIBS += -lSDL2
 

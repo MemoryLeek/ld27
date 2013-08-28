@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "SharedState.h"
 #include "FrameDrawingContext.h"
+#include "Compositor.h"
 
 namespace States
 {
@@ -88,7 +89,7 @@ namespace States
 			bot->draw(context, cx, cy, delta);
 		}
 
-		m_compositor.composite(context, painter);
+		m_compositor->composite(context, painter);
 		m_fps++;
 
 		processJoystick();
@@ -297,6 +298,7 @@ namespace States
 	{
 		Window *window = getComponent<Window>();
 		SharedState *state = getComponent<SharedState>();
+		Compositor *compositor = getComponent<Compositor>();
 		Scene *scene = new Scene(window);
 
 		QString filename = state->currentMap();
@@ -306,6 +308,7 @@ namespace States
 		map->initialize();
 
 		m_scene = scene;
+		m_compositor = compositor;
 		m_window = window;
 		m_player = new Player(map, scene, window);
 		m_map = map;
