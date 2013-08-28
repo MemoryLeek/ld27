@@ -52,14 +52,14 @@ int Map::height() const
 	return m_background.height();
 }
 
-void Map::draw(FrameDrawingContext &context, const int cx, const int cy, const int delta)
+void Map::draw(FrameDrawingContext *context, const int cx, const int cy, const int delta)
 {
 	m_backgroundSurface->draw(context, cx, cy, delta);
 	m_foregroundSurface->draw(context, cx, cy, delta);
 
 #ifndef QT_NO_DEBUG
 	QPoint cameraPosition(cx, cy);
-	Surface &surface = context.foreground();
+	Surface &surface = context->foreground();
 
 	QPainter painter(&surface);
 	painter.translate(-cameraPosition);

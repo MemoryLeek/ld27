@@ -2,6 +2,7 @@
 #define DEFERREDPAINTENGINE_H
 
 #include <QPaintEngine>
+#include <QAtomicInt>
 #include <QList>
 
 class IRenderingCommand;
@@ -13,7 +14,7 @@ class DeferredPaintEngine : public QPaintEngine
 
 		void draw(QPainter *painter) const;
 
-		bool begin(QPaintDevice *pdev) override;
+		bool begin(QPaintDevice *) override;
 		bool end() override;
 
 		void drawEllipse(const QRectF &r) override;
@@ -25,13 +26,13 @@ class DeferredPaintEngine : public QPaintEngine
 		void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr) override;
 		void drawPoints(const QPointF *points, int pointCount) override;
 		void drawPoints(const QPoint *points, int pointCount) override;
-		void drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode) override;
-		void drawPolygon(const QPoint *points, int pointCount, PolygonDrawMode mode) override;
+		void drawPolygon(const QPointF *, int, PolygonDrawMode) override;
+		void drawPolygon(const QPoint *, int, PolygonDrawMode) override;
 		void drawRects(const QRectF *rects, int rectCount) override;
 		void drawRects(const QRect *rects, int rectCount) override;
 		void drawTextItem(const QPointF &p, const QTextItem &textItem) override;
 		void drawTiledPixmap(const QRectF &r, const QPixmap &pixmap, const QPointF &s) override;
-		void updateState(const QPaintEngineState &state) override;
+		void updateState(const QPaintEngineState &) override;
 
 		Type type() const override;
 

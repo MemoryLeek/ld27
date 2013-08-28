@@ -3,14 +3,17 @@
 
 #include <QPainter>
 
-class FrameDrawingContext;
+#include "FrameDrawingContext.h"
 
 class Compositor
 {
 	public:
-		Compositor();
+		QImage lastFrame() const;
 
-		void composite(FrameDrawingContext &context, QPainter *painter);
+		void composite(FrameDrawingContext *context, QPainter *painter);
+
+	private:
+		QSharedPointer<FrameDrawingContext> m_lastFrame;
 };
 
 #endif // COMPOSITOR_H

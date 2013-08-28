@@ -13,15 +13,14 @@ class VisionConeDrawable;
 class Bot : public IDrawable
 {
 	public:
-		Bot(const QPolygon &path, Map *map, Scene *scene);
+		Bot(const QPolygon &path, Map *map);
 
 		float x() const;
 		float y() const;
 
 		unsigned int drawingOrder() const;
 
-		void draw(FrameDrawingContext &context, const int cx, const int cy, const int delta) override;
-
+		void draw(FrameDrawingContext *context, const int cx, const int cy, const int delta) override;
 		void addPlayerTracking(Player *player);
 
 		bool isFlipped() const;

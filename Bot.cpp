@@ -6,7 +6,7 @@
 #include "VisionConeDrawable.h"
 #include "FrameDrawingContext.h"
 
-Bot::Bot(const QPolygon &path, Map *map, Scene *scene)
+Bot::Bot(const QPolygon &path, Map *map)
 {
 	SpriteLoader spriteLoader;
 	SpriteBundle sprite = spriteLoader.load("resources/guard.spb");
@@ -17,7 +17,7 @@ Bot::Bot(const QPolygon &path, Map *map, Scene *scene)
 	m_positionInLine = 0;
 	m_movingForward = true;
 	//	  m_directionSwitchDelay(0),
-	m_visionCone = new VisionConeDrawable(this, map, scene);
+	m_visionCone = new VisionConeDrawable(this, map);
 	m_flipped = false;
 
 	for(int i = 0; i < path.count() - 1; i++)
@@ -44,7 +44,7 @@ unsigned int Bot::drawingOrder() const
 	return 1;
 }
 
-void Bot::draw(FrameDrawingContext &context, const int cx, const int cy, const int delta)
+void Bot::draw(FrameDrawingContext *context, const int cx, const int cy, const int delta)
 {
 //	if(m_directionSwitchDelay <= 0) // Don't flip direction when we're idling
 //	{
@@ -116,7 +116,7 @@ void Bot::draw(FrameDrawingContext &context, const int cx, const int cy, const i
 	const QPoint position(x(), y());
 	const QPoint adjusted = position - cameraPosition;
 
-	Surface &surface = context.background();
+	Surface &surface = context->background();
 	QPainter painter(&surface);
 
 	painter.drawImage(adjusted, m);

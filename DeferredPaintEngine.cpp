@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "DeferredPaintEngine.h"
 #include "RenderingCommand.h"
 
@@ -16,7 +18,7 @@ void DeferredPaintEngine::draw(QPainter *painter) const
 		command->invoke(painter);
 	}
 }
-bool DeferredPaintEngine::begin(QPaintDevice *pdev)
+bool DeferredPaintEngine::begin(QPaintDevice *)
 {
 	return true;
 }
@@ -71,12 +73,12 @@ void DeferredPaintEngine::drawPoints(const QPoint *points, int pointCount)
 	m_commands << new RenderingCommand<const QPoint *, int>(&QPainter::drawPoints, points, pointCount);
 }
 
-void DeferredPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPaintEngine::PolygonDrawMode mode)
+void DeferredPaintEngine::drawPolygon(const QPointF *, int, QPaintEngine::PolygonDrawMode)
 {
-//	m_commands << new RenderingCommand<const QPointF *, int, QPaintEngine::PolygonDrawMode>(&QPainter::drawPolygon, points, pointCount, mode);
+
 }
 
-void DeferredPaintEngine::drawPolygon(const QPoint *points, int pointCount, QPaintEngine::PolygonDrawMode mode)
+void DeferredPaintEngine::drawPolygon(const QPoint *, int, QPaintEngine::PolygonDrawMode)
 {
 
 }
@@ -101,7 +103,7 @@ void DeferredPaintEngine::drawTiledPixmap(const QRectF &r, const QPixmap &pixmap
 	m_commands << new RenderingCommand<const QRectF &, const QPixmap &, const QPointF &>(&QPainter::drawTiledPixmap, r, pixmap, s);
 }
 
-void DeferredPaintEngine::updateState(const QPaintEngineState &state)
+void DeferredPaintEngine::updateState(const QPaintEngineState &)
 {
 
 }

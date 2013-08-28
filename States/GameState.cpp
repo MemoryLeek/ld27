@@ -47,7 +47,7 @@ namespace States
 		const QRect &rect = painter->window();
 		const QSize &size = rect.size();
 
-		FrameDrawingContext context(size);
+		FrameDrawingContext *context = new FrameDrawingContext(size);
 
 		int delta = m_timer.restart();
 
@@ -314,7 +314,7 @@ namespace States
 
 		for(const QPolygon &path : paths)
 		{
-			Bot *bot = new Bot(path, map, scene);
+			Bot *bot = new Bot(path, map);
 			bot->addPlayerTracking(m_player);
 
 			m_bots << bot;

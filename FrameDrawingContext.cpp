@@ -3,10 +3,14 @@
 #include "FrameDrawingContext.h"
 
 FrameDrawingContext::FrameDrawingContext(const QSize &size)
-	: m_background(size)
-	, m_foreground(size)
+	: m_size(size)
 {
 
+}
+
+QSize FrameDrawingContext::size() const
+{
+	return m_size;
 }
 
 Surface &FrameDrawingContext::background()
