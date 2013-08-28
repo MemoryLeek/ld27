@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlComponent>
 #include <QOpenGLContext>
+#include <QFontDatabase>
 #include <QDir>
 
 #include "Engine.h"
@@ -9,6 +10,17 @@
 int main(int argc, char **argv)
 {
 	QGuiApplication application(argc, argv);
+
+	QFontDatabase fontDatabase;
+	QDir directory("resources/fonts");
+	QStringList filter = { "*.ttf", "*.otf" };
+	QStringList availableFonts = directory.entryList(filter);
+
+	foreach(const QString &file, availableFonts)
+	{
+		const QString &path = directory.filePath(file);
+		fontDatabase.addApplicationFont(path);
+	}
 
 	Engine engine;
 
