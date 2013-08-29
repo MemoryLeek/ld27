@@ -8,6 +8,7 @@
 #include "FrameDrawingContext.h"
 #include "Player.h"
 #include "SpriteLoader.h"
+#include "Surface.h"
 
 Player::Player(Map *map, Scene *scene, Window *window)
 {
@@ -59,7 +60,7 @@ unsigned int Player::drawingOrder() const
 	return 1;
 }
 
-void Player::draw(FrameDrawingContext *context, const int cx, const int cy, const int delta)
+void Player::draw(FrameDrawingContext &context, const int cx, const int cy, const int delta)
 {
 	float x = m_x + (m_xThrust * m_xVelocity) * (delta / 1000.0f);
 	float y = m_y + (m_yThrust * m_yVelocity) * (delta / 1000.0f);
@@ -182,7 +183,7 @@ void Player::draw(FrameDrawingContext *context, const int cx, const int cy, cons
 	QPoint cameraPosition(cx, cy);
 	QPoint adjusted = position - cameraPosition;
 
-	Surface &m = context->background(); //texture, m_x - cx, m_y - cy,
+	Surface &m = context.background(); //texture, m_x - cx, m_y - cy,
 	QPainter painter(&m);
 	painter.drawImage(adjusted, texture);
 }

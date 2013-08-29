@@ -1,17 +1,16 @@
 #ifndef FRAMEDRAWINGCONTEXT_H
 #define FRAMEDRAWINGCONTEXT_H
 
-#include <QPainter>
-#include <QImage>
+#include <QSize>
+#include <QSharedPointer>
 
-#include "Surface.h"
-#include "QListEx.h"
-
-class Compositor;
+class Surface;
+class Frame;
 
 class FrameDrawingContext
 {
 	public:
+		FrameDrawingContext();
 		FrameDrawingContext(const QSize &size);
 
 		QSize size() const;
@@ -20,10 +19,8 @@ class FrameDrawingContext
 		Surface &foreground();
 
 	private:
+		QSharedPointer<Frame> m_frame;
 		QSize m_size;
-
-		Surface m_background;
-		Surface m_foreground;
 };
 
 #endif // FRAMEDRAWINGCONTEXT_H

@@ -1,11 +1,12 @@
 #include "Compositor.h"
 #include "FrameDrawingContext.h"
+#include "Surface.h"
 
-QImage Compositor::lastFrame() const
+QImage Compositor::lastFrame()
 {
-	const QSize size = m_lastFrame->size();
-	const Surface &background = m_lastFrame->background();
-	const Surface &foreground = m_lastFrame->foreground();
+	const QSize size = m_lastFrame.size();
+	const Surface &background = m_lastFrame.background();
+	const Surface &foreground = m_lastFrame.foreground();
 
 	QImage image(size, QImage::Format_RGB888);
 	QPainter painter(&image);
@@ -16,13 +17,13 @@ QImage Compositor::lastFrame() const
 	return image;
 }
 
-void Compositor::composite(FrameDrawingContext *context, QPainter *painter)
+void Compositor::composite(FrameDrawingContext &context, QPainter *painter)
 {
-	const Surface &background = context->background();
-	const Surface &foreground = context->foreground();
+	const Surface &background = context.background();
+	const Surface &foreground = context.foreground();
 
 	background.draw(painter);
 	foreground.draw(painter);
 
-	m_lastFrame.reset(context);
+	m_lastFrame = context;
 }

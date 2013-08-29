@@ -10,7 +10,7 @@ class FrameDrawingContext;
 class IDrawable
 {
 	public:
-		virtual void draw(FrameDrawingContext *context, const int cx, const int cy, const int delta) = 0;
+		virtual void draw(FrameDrawingContext &context, const int cx, const int cy, const int delta) = 0;
 };
 
 #endif // IDRAWABLE_H

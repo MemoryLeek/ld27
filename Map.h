@@ -18,7 +18,7 @@ class Map : public IDrawable
 		int width() const;
 		int height() const;
 
-		void draw(FrameDrawingContext *context, const int cx, const int cy, const int delta) override;
+		void draw(FrameDrawingContext &context, const int cx, const int cy, const int delta) override;
 
 		QList<Collidable> collidables() const;
 		QList<QPolygon> paths() const;

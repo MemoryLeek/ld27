@@ -1,9 +1,16 @@
 #include <QScopedPointer>
 
 #include "FrameDrawingContext.h"
+#include "Frame.h"
+
+FrameDrawingContext::FrameDrawingContext()
+{
+
+}
 
 FrameDrawingContext::FrameDrawingContext(const QSize &size)
-	: m_size(size)
+	: m_frame(new Frame)
+	, m_size(size)
 {
 
 }
@@ -15,10 +22,10 @@ QSize FrameDrawingContext::size() const
 
 Surface &FrameDrawingContext::background()
 {
-	return m_background;
+	return m_frame->background();
 }
 
 Surface &FrameDrawingContext::foreground()
 {
-	return m_foreground;
+	return m_frame->foreground();
 }

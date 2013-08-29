@@ -23,7 +23,7 @@ class Player : public IDrawable
 
 		unsigned int drawingOrder() const;
 
-		void draw(FrameDrawingContext *context, const int cx, const int cy, const int delta) override;
+		void draw(FrameDrawingContext &context, const int cx, const int cy, const int delta) override;
 
 		void setVelocity(const float velocity);
 		void setDirection(const float direction);

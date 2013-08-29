@@ -11,12 +11,12 @@ class Compositor : public QObject
 	Q_OBJECT
 
 	public:
-		QImage lastFrame() const;
+		QImage lastFrame();
 
-		void composite(FrameDrawingContext *context, QPainter *painter);
+		void composite(FrameDrawingContext &context, QPainter *painter);
 
 	private:
-		QSharedPointer<FrameDrawingContext> m_lastFrame;
+		FrameDrawingContext m_lastFrame;
 };
 
 Q_DECLARE_METATYPE(Compositor *)

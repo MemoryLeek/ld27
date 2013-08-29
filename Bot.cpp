@@ -5,6 +5,7 @@
 #include "SpriteLoader.h"
 #include "VisionConeDrawable.h"
 #include "FrameDrawingContext.h"
+#include "Surface.h"
 
 Bot::Bot(const QPolygon &path, Map *map)
 {
@@ -44,7 +45,7 @@ unsigned int Bot::drawingOrder() const
 	return 1;
 }
 
-void Bot::draw(FrameDrawingContext *context, const int cx, const int cy, const int delta)
+void Bot::draw(FrameDrawingContext &context, const int cx, const int cy, const int delta)
 {
 //	if(m_directionSwitchDelay <= 0) // Don't flip direction when we're idling
 //	{
@@ -116,7 +117,7 @@ void Bot::draw(FrameDrawingContext *context, const int cx, const int cy, const i
 	const QPoint position(x(), y());
 	const QPoint adjusted = position - cameraPosition;
 
-	Surface &surface = context->background();
+	Surface &surface = context.background();
 	QPainter painter(&surface);
 
 	painter.drawImage(adjusted, m);

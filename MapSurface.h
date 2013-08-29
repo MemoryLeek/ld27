@@ -16,7 +16,7 @@ class MapSurface : public IDrawable
 
 		MapSurface(const SurfaceLevel surfaceLevel, const QImage &image);
 
-		void draw(FrameDrawingContext *context, const int cx, const int cy, const int delta) override;
+		void draw(FrameDrawingContext &context, const int cx, const int cy, const int delta) override;
 
 	private:
 		SurfaceLevel m_surfaceLevel;

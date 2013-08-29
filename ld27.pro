@@ -41,7 +41,8 @@ SOURCES += \
     Compositor.cpp \
     DeferredPaintEngine.cpp \
     States/DeathState.cpp \
-    FrameImageProvider.cpp
+    FrameImageProvider.cpp \
+    Frame.cpp
 
 OTHER_FILES += \
     Window.qml \
@@ -94,7 +95,8 @@ HEADERS += \
     DeferredPaintEngine.h \
     RenderingCommand.h \
     States/DeathState.h \
-    FrameImageProvider.h
+    FrameImageProvider.h \
+    Frame.h
 
 LIBS += -lSDL2
 

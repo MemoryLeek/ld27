@@ -18,7 +18,7 @@ class VisionConeDrawable : public IDrawable
 
 		unsigned int drawingOrder() const;
 
-		void draw(FrameDrawingContext *context, const int cx, const int cy, const int delta) override;
+		void draw(FrameDrawingContext &context, const int cx, const int cy, const int delta) override;
 
 		bool containsActor(const Player &actor);
 

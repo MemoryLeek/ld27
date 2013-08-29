@@ -48,7 +48,7 @@ namespace States
 		const QRect &rect = painter->window();
 		const QSize &size = rect.size();
 
-		FrameDrawingContext *context = new FrameDrawingContext(size);
+		FrameDrawingContext context(size);
 
 		int delta = m_timer.restart();
 
