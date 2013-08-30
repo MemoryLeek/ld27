@@ -12,7 +12,7 @@ namespace States
 
 	QSGNode *GoalState::updatePaintNode(QSGNode *node, QQuickItem::UpdatePaintNodeData *)
 	{
-		changeState<States::GameState>();
+//		changeState<States::GameState>();
 
 		return node;
 	}

@@ -13,6 +13,8 @@ class MapSurface;
 class Map : public IDrawable
 {
 	public:
+		~Map();
+
 		void initialize();
 
 		int width() const;

@@ -3,20 +3,31 @@
 
 #include <QQuickItem>
 
-#include "State.h"
+#include "MenuState.h"
+
+class StateHandler;
 
 namespace States
 {
-	class DeathState : public State<QQuickItem>
+	class DeathState : public MenuState
 	{
 		Q_OBJECT
 
 		public:
 			DeathState();
 
+			QList<QObject *> entries() override;
+
 		private:
+			void retry();
+			void quit();
+
 			void initialize() override;
 			void complete() override;
+
+			StateHandler *m_stateHandler;
+
+			QList<QObject *> m_entries;
 	};
 }
 

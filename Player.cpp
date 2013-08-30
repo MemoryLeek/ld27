@@ -9,8 +9,12 @@
 #include "Player.h"
 #include "SpriteLoader.h"
 #include "Surface.h"
+#include "StateHandler.h"
 
-Player::Player(Map *map, Scene *scene, Window *window)
+#include "States/GoalState.h"
+#include "States/DeathState.h"
+
+Player::Player(Map *map, StateHandler *stateHandler)
 {
 	const QPoint &p = map->spawnPoint();
 
@@ -26,10 +30,9 @@ Player::Player(Map *map, Scene *scene, Window *window)
 	m_isOnGround = false;
 	m_flipped = false;
 	m_map = map;
-	m_window = window;
+	m_stateHandler = stateHandler;
 	m_x = p.x();
 	m_y = p.y();
-	m_scene = scene;
 //	m_jumpSound.setSource(QUrl::fromLocalFile("resources/sound/jump.wav"));
 //	m_jumpSound.setVolume(0.5);
 //	m_stepSound.setSource(QUrl::fromLocalFile("resources/sound/step.wav"));
@@ -173,7 +176,7 @@ void Player::draw(FrameDrawingContext &context, const int cx, const int cy, cons
 
 	if(reachedGoal)
 	{
-		m_window->setActiveState("GoalState");
+		m_stateHandler->changeState<States::GoalState>();
 	}
 
 	m_x = x;
@@ -220,7 +223,7 @@ void Player::jump()
 
 void Player::respawn()
 {
-	m_window->setActiveState("DeathState");
+	m_stateHandler->changeState<States::DeathState>();
 
 //	m_x = m_map->spawnPoint().x();
 //	m_y = m_map->spawnPoint().y();

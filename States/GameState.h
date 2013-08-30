@@ -28,6 +28,7 @@ namespace States
 
 		public:
 			GameState();
+			~GameState();
 
 			QString fps() const;
 			float timePool() const;

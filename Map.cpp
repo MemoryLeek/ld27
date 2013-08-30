@@ -5,6 +5,12 @@
 #include "MapSurface.h"
 #include "FrameDrawingContext.h"
 
+Map::~Map()
+{
+	delete m_backgroundSurface;
+	delete m_foregroundSurface;
+}
+
 void Map::initialize()
 {
 	m_backgroundSurface = new MapSurface(MapSurface::Background, m_background);

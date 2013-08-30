@@ -1,5 +1,6 @@
 #include "LogoState.h"
 #include "QTimerEx.h"
+#include "StateHandler.h"
 
 #include "States/GameState.h"
 
@@ -13,7 +14,7 @@ namespace States
 
 	void LogoState::initialize()
 	{
-		/* No implementation */
+		m_stateHandler = getComponent<StateHandler>();
 	}
 
 	void LogoState::complete()
@@ -36,9 +37,9 @@ namespace States
 
 	void LogoState::skip()
 	{
-		m_skipping = true;
-
 		killTimer(m_timerId);
-		changeState<States::GameState>();
+
+		m_skipping = true;
+		m_stateHandler->changeState<States::GameState>();
 	}
 }

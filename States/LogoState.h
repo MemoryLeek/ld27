@@ -3,6 +3,8 @@
 
 #include "State.h"
 
+class StateHandler;
+
 namespace States
 {
 	class LogoState : public State<QQuickItem>
@@ -17,6 +19,8 @@ namespace States
 			void complete() override;
 			void timerEvent(QTimerEvent *) override;
 			void keyPressEvent(QKeyEvent *) override;
+
+			StateHandler *m_stateHandler;
 
 			bool m_skipping;
 			int m_timerId;

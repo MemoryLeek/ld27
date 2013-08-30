@@ -7,13 +7,13 @@
 #include "IDrawable.h"
 
 class Map;
-class Window;
+class StateHandler;
 class SharedState;
 
 class Player : public IDrawable
 {
 	public:
-		Player(Map *map, Scene *scene, Window *window);
+		Player(Map *map, StateHandler *stateHandler);
 
 		float x() const;
 		float y() const;
@@ -53,9 +53,8 @@ class Player : public IDrawable
 		bool m_flipped;
 
 		Map *m_map;
-		Window *m_window;
+		StateHandler *m_stateHandler;
 		SpriteBundle m_sprite;
-		Scene *m_scene;
 
 //		QSoundEffect m_jumpSound;
 //		QSoundEffect m_stepSound;

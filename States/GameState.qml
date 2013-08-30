@@ -5,6 +5,19 @@ GameState
 {
 	id: context
 	focus: true
+	opacity: 0
+
+	states: State
+	{
+		when: context.visible
+
+		PropertyChanges { target: context; opacity: 1; }
+	}
+
+	transitions: Transition
+	{
+		PropertyAnimation { property: "opacity"; duration: 200; }
+	}
 
 	Rectangle
 	{

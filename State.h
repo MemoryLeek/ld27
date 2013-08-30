@@ -13,18 +13,7 @@ class State
 	, public Container
 {
 	protected:
-		template<class TState>
-		void changeState()
-		{
-			const QMetaObject &metaObject = TState::staticMetaObject;
-			const QString &className = metaObject.className();
-			const QString name = QRegularExpression("::(.*)$")
-				.match(className)
-				.captured(1);
 
-			Window *window = getComponent<Window>();
-			window->setActiveState(name);
-		}
 };
 
 #endif // STATE_H

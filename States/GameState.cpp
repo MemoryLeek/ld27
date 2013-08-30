@@ -12,6 +12,7 @@
 #include "SharedState.h"
 #include "FrameDrawingContext.h"
 #include "Compositor.h"
+#include "StateHandler.h"
 
 namespace States
 {
@@ -31,6 +32,11 @@ namespace States
 
 		setFlag(QQuickItem::ItemHasContents);
 		setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
+	}
+
+	GameState::~GameState()
+	{
+		delete m_map;
 	}
 
 	QString GameState::fps() const
@@ -299,6 +305,7 @@ namespace States
 		Window *window = getComponent<Window>();
 		SharedState *state = getComponent<SharedState>();
 		Compositor *compositor = getComponent<Compositor>();
+		StateHandler *stateHandler = getComponent<StateHandler>();
 		Scene *scene = new Scene(window);
 
 		QString filename = state->currentMap();
@@ -310,7 +317,7 @@ namespace States
 		m_scene = scene;
 		m_compositor = compositor;
 		m_window = window;
-		m_player = new Player(map, scene, window);
+		m_player = new Player(map, stateHandler);
 		m_map = map;
 
 		const QList<QPolygon> &paths = map->paths();

@@ -25,12 +25,12 @@ namespace States
 
 	void MainMenuState::start()
 	{
-		changeState<States::GameState>();
+//		changeState<States::GameState>();
 	}
 
 	void MainMenuState::settings()
 	{
-		changeState<States::SettingsMenuState>();
+//		changeState<States::SettingsMenuState>();
 	}
 
 	void MainMenuState::quit()

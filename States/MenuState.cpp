@@ -27,7 +27,7 @@ namespace States
 	{
 		if(!event->isAutoRepeat())
 		{
-			QList<QObject *> list = entries();
+			const QList<QObject *> &list = entries();
 
 			const int count = list.count();
 			const int max = count - 1;

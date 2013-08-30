@@ -6,6 +6,7 @@
 #include "FrameImageProvider.h"
 #include "SharedState.h"
 #include "Compositor.h"
+#include "StateHandler.h"
 
 #include "States/LogoState.h"
 #include "States/MainMenuState.h"
@@ -17,6 +18,7 @@ Engine::Engine()
 {
 	m_compositor = new Compositor();
 	m_sharedState = new SharedState();
+	m_stateHandler = new StateHandler(this);
 	m_localImageProvider = new LocalImageProvider();
 	m_frameImageProvider = new FrameImageProvider(m_compositor);
 
@@ -31,6 +33,7 @@ Engine::Engine()
 	// Registration of components
 	registerComponent(m_sharedState);
 	registerComponent(m_compositor);
+	registerComponent(m_stateHandler);
 
 	// Registration of image providers
 	addImageProvider("local", m_localImageProvider);
